@@ -1,0 +1,4 @@
+Pupil detection
+
+We found a suitable threshold for identifying the pupil throughout the video
+

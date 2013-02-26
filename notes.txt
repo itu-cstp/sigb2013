@@ -1,0 +1,4 @@
+== Pupil detection ==
+PupilThr: 108
+
+
