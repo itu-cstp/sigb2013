@@ -6,5 +6,8 @@ then blob size thressholds 4200-6000 are used to find appropriate blobs.
 Doesn't work when eye is looking down. Be more loose with circularity
 Ellipse is a weird format in cv2
 
+We do not use dans "extend" property (area / area of bounding box) because 
+we use circularity, which gives "the same" but better.
+
 Since we have an ellipse we use it's center for pointing out the center and not
 blob analysis on the the contour
