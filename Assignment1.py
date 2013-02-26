@@ -9,9 +9,6 @@ import numpy as np
 import math
 import sys
 
-
-
-
 inputFile = "Sequences/eye1.avi"
 outputFile = "eyeTrackerResult.mp4"
 
@@ -27,7 +24,9 @@ frameNr =0
 
 props = RegionProps()
 def GetPupil(gray,thr):
-
+    """
+    Doesn't work when eye is looking down. Be more loose with circularity
+    """
     tempResultImg = cv2.cvtColor(gray,cv2.COLOR_GRAY2BGR)
     cv2.circle(tempResultImg,(100,200), 2, (0,0,255),4)
     # cv2.imshow("TempResults",tempResultImg)
@@ -40,20 +39,18 @@ def GetPupil(gray,thr):
     matchA = 0.0
     for con in contours:
         a = cv2.contourArea(con)
+
+        if(a==0):
+            continue; # A can apparently be zero. wtf
         p = cv2.arcLength(con, True)
-        # r2 = a/math.pi
-        # r = math.sqrt(r2)
-        # periPerfect = 2*math.pi*r
-        # m = periPerfect/p
-        # m = p/((2*math.pi)*math.sqrt(a/math.pi))
-        m = p/(2.0*math.sqrt(math.pi * float(a)))
-        print "a: " +str(a)
-        print "p: " + str(p)
-        print "circ: " + str(m)
-        if (m<1.7):
+        m = p/(2.0*math.sqrt(math.pi * a))
+        if (m<1.9):
             if (a>matchA):
                 matchA = a
                 match = con
+
+    match = [cv2.fitEllipse(match)]
+
     return match
 
 
@@ -129,6 +126,13 @@ def update(I):
     glints = GetGlints(gray,sliderVals['glintThr'])
     FilterPupilGlint(pupils,glints)
 
+    pupils = GetPupil(gray, 108)
+
+    for pupil in pupils:
+        cv2.ellipse(img, pupil,(0,255,0),2)
+        cv2.circle(img,(int(pupil[0][0]),int(pupil[0][1])),5,(0,255,0)) # Since we have an allipse 
+
+
     #Do template matching
     global leftTemplate
     global rightTemplate
@@ -142,8 +146,8 @@ def update(I):
     # for non-windows machines we print the values of the threshold in the original image
     if sys.platform != 'win32':
         step=18
-        cv2.putText(img, "pupilThr :"+str(sliderVals['pupilThr']), (x, y+step), cv2.FONT_HERSHEY_PLAIN, 1.0, (255, 255, 255), lineType=cv2.CV_AA)
-        cv2.putText(img, "glintThr :"+str(sliderVals['glintThr']), (x, y+2*step), cv2.FONT_HERSHEY_PLAIN, 1.0, (255, 255, 255), lineType=cv2.CV_AA)
+    #    cv2.putText(img, "pupilThr :"+str(sliderVals['pupilThr']), (x, y+step), cv2.FONT_HERSHEY_PLAIN, 1.0, (255, 255, 255), lineType=cv2.CV_AA)
+    #    cv2.putText(img, "glintThr :"+str(sliderVals['glintThr']), (x, y+2*step), cv2.FONT_HERSHEY_PLAIN, 1.0, (255, 255, 255), lineType=cv2.CV_AA)
     cv2.imshow('Result',img)
 
 		#Uncomment these lines as your methods start to work to display the result in the
@@ -284,16 +288,14 @@ def onSlidersChange(dummy=None):
 #--------------------------
 #         main
 #--------------------------
-#run(inputFile)
+run(inputFile)
 
-img1 = cv2.imread("Sequences/eye.png")
+img = cv2.imread("Sequences/eye.png")
 # img = np.ones()
-img1 = cv2.cvtColor(img1, cv2.COLOR_RGB2GRAY)
-list = GetPupil(img1, 108)
-for i in range(len(list)):
-    contImg = cv2.drawContours(img1, list, i,[255,0,0] )
+img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+
 # print "y: " + y
-cv2.namedWindow("contour")
-cv2.imshow("contour", img1)
-cv2.waitKey(0)
+#cv2.namedWindow("contour")
+#cv2.imshow("contour", img)
+#cv2.waitKey(0)
 

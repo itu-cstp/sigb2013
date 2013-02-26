@@ -159,9 +159,9 @@ class RegionProps:
             elif (prop=="moments"):
                 contourProps.update({'Moments':m});    
             elif (prop=="perimiter"):
-                contourProps.update({'Perimiter':self.__calcPermiter(contour)}); 
+                contourProps.update({'Perimiter':self.__calcPerimiter(contour)});
             elif (prop=="equivdiameter"):
-                contourProps.update({'EquivDiameter':self.__calcEquiDiameter(m,contour)}); 
+                contourProps.update({'EquivDiameter':self.__calcEquivDiameter(m,contour)});
             elif (prop=="extend"):
                 contourProps.update({'Extend':self.__calcExtend(m,contour)});
             elif (prop=="convexhull"): #Returns the dictionary
