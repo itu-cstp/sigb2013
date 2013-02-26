@@ -23,7 +23,8 @@ rightTemplate = []
 frameNr =0
 
 props = RegionProps()
-def GetPupil(gray,thr):
+def GetPupil(gray,thr,minArea=4200,maxArea=6000):
+    print str(minArea) + " , " + str(maxArea)+""
     """
     Doesn't work when eye is looking down. Be more loose with circularity
     """
@@ -35,23 +36,32 @@ def GetPupil(gray,thr):
     # cv2.imshow("Threshold",binI)
     #Calculate blobs
     contours, hierarchy = cv2.findContours(binI, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
-    match = None
-    matchA = 0.0
+    match = []
     for con in contours:
         a = cv2.contourArea(con)
+        extend = props.CalcContourProperties(con,properties=["extend"]) # We don't use this because it's not needed
 
-        if(a==0):
+        if(a==0 or a<minArea or a>maxArea):
             continue; # A can apparently be zero. wtf
         p = cv2.arcLength(con, True)
         m = p/(2.0*math.sqrt(math.pi * a))
         if (m<1.9):
-            if (a>matchA):
-                matchA = a
-                match = con
+            match.append(con)
 
-    match = [cv2.fitEllipse(match)]
+    xs = sorted(match,key=lambda x: cv2.contourArea(x),reverse=True)
 
-    return match
+    xs2 = []
+    for x in xs:
+        if(len(x)>=5):
+            xs2.append(cv2.fitEllipse(x))
+
+    """
+    if(len(match) > 0):
+        for m in match:
+            #if(len(m)>=5):
+            match = [cv2.fitEllipse(m)]
+"""
+    return xs2
 
 
 
@@ -122,15 +132,13 @@ def update(I):
     sliderVals = getSliderVals()
     gray = cv2.cvtColor(img,cv2.COLOR_RGB2GRAY)
     # Do the magic
-    pupils = GetPupil(gray,sliderVals['pupilThr'])
+    pupils = GetPupil(gray,sliderVals['pupilThr'],sliderVals['minSize'],sliderVals['maxSize'])
     glints = GetGlints(gray,sliderVals['glintThr'])
     FilterPupilGlint(pupils,glints)
 
-    pupils = GetPupil(gray, 108)
-
     for pupil in pupils:
         cv2.ellipse(img, pupil,(0,255,0),2)
-        cv2.circle(img,(int(pupil[0][0]),int(pupil[0][1])),5,(0,255,0)) # Since we have an allipse 
+        cv2.circle(img,(int(pupil[0][0]),int(pupil[0][1])),5,(0,255,0)) # Since we have an allipse we use it to find the center
 
 
     #Do template matching
@@ -150,12 +158,14 @@ def update(I):
     #    cv2.putText(img, "glintThr :"+str(sliderVals['glintThr']), (x, y+2*step), cv2.FONT_HERSHEY_PLAIN, 1.0, (255, 255, 255), lineType=cv2.CV_AA)
     cv2.imshow('Result',img)
 
+    cv2.imshow('Temp',I)
+
 		#Uncomment these lines as your methods start to work to display the result in the
 		#original image
-		# for pupil in pupils:
-		#         cv2.ellipse(img,pupil,(0,255,0),1)
-		#         C = int(pupil[0][0]),int(pupil[0][1])
-		#         cv2.circle(img,C, 2, (0,0,255),4)
+		 #for pupil in pupils:
+		 #        cv2.ellipse(img,pupil,(0,255,0),1)
+		 #        C = int(pupil[0][0]),int(pupil[0][1])
+		 #        cv2.circle(img,C, 2, (0,0,255),4)
 		#     for glint in glints:
 		#         C = int(glint[0]),int(glint[1])
 		#         cv2.circle(img,C, 2,(255,0,255),5)
@@ -181,7 +191,7 @@ def run(fileName,resultFile='eyeTrackingResults.avi'):
 	''' MAIN Method to load the image sequence and handle user inputs'''
 	global imgOrig, frameNr,drawImg
 	setupWindowSliders()
-	props = RegionProps();
+	props = RegionProps()
 	cap,imgOrig,sequenceOK = getImageSequence(fileName)
 	videoWriter = 0
 
@@ -239,7 +249,7 @@ def run(fileName,resultFile='eyeTrackingResults.avi'):
 			if(saveFrames):
 				videoWriter.write(drawImg)
 
-	videoWriter.release
+	# videoWriter.release
 
 
 
@@ -256,7 +266,7 @@ def setupWindowSliders():
 	''' Define windows for displaying the results and create trackbars'''
 	cv2.namedWindow("Result")
 	cv2.namedWindow('Threshold')
-	cv2.namedWindow("TempResults")
+	cv2.namedWindow("Temp")
 	#Threshold value for the pupil intensity
 	cv2.createTrackbar('pupilThr','Threshold', 90, 255, onSlidersChange)
 	#Threshold value for the glint intensities
@@ -290,9 +300,9 @@ def onSlidersChange(dummy=None):
 #--------------------------
 run(inputFile)
 
-img = cv2.imread("Sequences/eye.png")
+#img = cv2.imread("Sequences/eye.png")
 # img = np.ones()
-img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+#img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
 
 # print "y: " + y
 #cv2.namedWindow("contour")

@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="4aa75d65-d60d-4581-a6e3-b91dc2d68e52" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assignment1.py" afterPath="$PROJECT_DIR$/Assignment1.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SIGBTools.py" afterPath="$PROJECT_DIR$/SIGBTools.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/notes.txt" afterPath="$PROJECT_DIR$/notes.txt" />
     </list>
     <ignored path="1.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,7 +25,7 @@
       <file leaf-file-name="Assignment1.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Assignment1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="132" column="99" selection-start="4162" selection-end="4162" vertical-scroll-proportion="0.5954357">
+            <state line="41" column="32" selection-start="1242" selection-end="1242" vertical-scroll-proportion="0.49170125">
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -38,7 +36,7 @@
       <file leaf-file-name="SIGBTools.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SIGBTools.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="143" column="29" selection-start="4939" selection-end="4960" vertical-scroll-proportion="0.0">
+            <state line="165" column="42" selection-start="6080" selection-end="6080" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -186,7 +184,7 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3298153" sideWeight="0.48387095" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3298153" sideWeight="0.31225806" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -251,14 +249,14 @@
   <component name="editorHistoryManager">
     <entry file="file://$USER_HOME$/.PyCharm20/system/python_stubs/-1247972723/cv2/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1082" column="4" selection-start="25760" selection-end="25760" vertical-scroll-proportion="0.3326226">
+        <state line="1017" column="4" selection-start="23197" selection-end="23197" vertical-scroll-proportion="0.3326226">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SIGBTools.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="143" column="29" selection-start="4939" selection-end="4960" vertical-scroll-proportion="0.0">
+        <state line="165" column="42" selection-start="6080" selection-end="6080" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
@@ -267,7 +265,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Assignment1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="132" column="99" selection-start="4162" selection-end="4162" vertical-scroll-proportion="0.5954357">
+        <state line="41" column="32" selection-start="1242" selection-end="1242" vertical-scroll-proportion="0.49170125">
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
