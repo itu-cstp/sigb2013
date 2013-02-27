@@ -24,16 +24,18 @@ frameNr =0
 
 props = RegionProps()
 def GetPupil(gray,thr,minArea=4200,maxArea=6000):
-    print str(minArea) + " , " + str(maxArea)+""
     """
     Doesn't work when eye is looking down. Be more loose with circularity
     """
-    tempResultImg = cv2.cvtColor(gray,cv2.COLOR_GRAY2BGR)
-    cv2.circle(tempResultImg,(100,200), 2, (0,0,255),4)
-    # cv2.imshow("TempResults",tempResultImg)
     props = RegionProps()
-    val,binI =cv2.threshold(gray, thr, 255, cv2.THRESH_BINARY_INV)
-    # cv2.imshow("Threshold",binI)
+
+    val,binI =cv2.threshold(gray, thr, 200, cv2.THRESH_BINARY_INV)
+    
+    binI = cv2.morphologyEx(binI,cv2.MORPH_OPEN,cv2.getStructuringElement(cv2.MORPH_RECT,(20,20)))
+
+    binI = cv2.morphologyEx(binI,cv2.MORPH_CLOSE,cv2.getStructuringElement(cv2.MORPH_CROSS,(4,4)))
+
+
     #Calculate blobs
     contours, hierarchy = cv2.findContours(binI, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
     match = []
@@ -42,10 +44,11 @@ def GetPupil(gray,thr,minArea=4200,maxArea=6000):
         extend = props.CalcContourProperties(con,properties=["extend"]) # We don't use this because it's not needed
 
         if(a==0 or a<minArea or a>maxArea):
-            continue; # A can apparently be zero. wtf
+            continue
         p = cv2.arcLength(con, True)
         m = p/(2.0*math.sqrt(math.pi * a))
         if (m<1.9):
+            cv2.drawContours(binI,[con],0,(255,0,0),1)
             match.append(con)
 
     xs = sorted(match,key=lambda x: cv2.contourArea(x),reverse=True)
@@ -53,24 +56,48 @@ def GetPupil(gray,thr,minArea=4200,maxArea=6000):
     xs2 = []
     for x in xs:
         if(len(x)>=5):
+            cv2.drawContours(gray,[x],0,(255,0,0),1)
             xs2.append(cv2.fitEllipse(x))
 
-    """
-    if(len(match) > 0):
-        for m in match:
-            #if(len(m)>=5):
-            match = [cv2.fitEllipse(m)]
-"""
     return xs2
 
+def GetGlints(gray,thr,size):
+        ''' Given a gray level image, gray and threshold
+        value return a list of glint locations'''
+        # YOUR IMPLEMENTATION HERE !!!!
+
+        props = RegionProps()
+
+        gray = gray.copy()
+        M,N = gray.shape
+        gray2 = np.zeros(gray.shape)
+
+        val, binI = cv2.threshold(gray, thr, 255, cv2.THRESH_BINARY_INV)
+        contours, hierarchy = cv2.findContours(binI, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 
 
+        match = []
+        for con in contours:
+            a = cv2.contourArea(con)
 
-def GetGlints(gray,thr):
-	''' Given a gray level image, gray and threshold
-	value return a list of glint locations'''
-	# YOUR IMPLEMENTATION HERE !!!!
-	pass
+            if(a<150 and a>70):
+                cv2.drawContours(gray2,[con],0,(255,0,0),1)
+                print props.CalcContourProperties(con,properties=["centroid"])
+                match.append(con)
+
+        r = []
+        for m in match:
+            if(len(m)>=5):
+                e = cv2.fitEllipse(m)
+                r.append(e)
+
+        cv2.imshow("Aux",gray2)
+
+        return r
+
+## Threshold
+## Blob of proper size
+## Blob of Shape
 
 def GetIrisUsingThreshold(gray,pupil):
 	''' Given a gray level image, gray and threshold
@@ -124,6 +151,7 @@ def FilterPupilGlint(pupils,glints):
 	''' Given a list of pupil candidates and glint candidates returns a list of pupil and glints'''
 	pass
 
+# vwriter = cv2.VideoWriter("test.avi",('F','F','V','1'));
 def update(I):
     '''Calculate the image features and display the result based on the slider values'''
     #global drawImg
@@ -131,15 +159,24 @@ def update(I):
     img = I.copy()
     sliderVals = getSliderVals()
     gray = cv2.cvtColor(img,cv2.COLOR_RGB2GRAY)
-    # Do the magic
-    pupils = GetPupil(gray,sliderVals['pupilThr'],sliderVals['minSize'],sliderVals['maxSize'])
-    glints = GetGlints(gray,sliderVals['glintThr'])
-    FilterPupilGlint(pupils,glints)
 
-    for pupil in pupils:
-        cv2.ellipse(img, pupil,(0,255,0),2)
-        cv2.circle(img,(int(pupil[0][0]),int(pupil[0][1])),5,(0,255,0)) # Since we have an allipse we use it to find the center
+# Do the magic
+#    pupils = GetPupil(gray,sliderVals['pupilThr'],sliderVals['minSize'],sliderVals['maxSize'])
+    glints = GetGlints(gray,sliderVals['glintThr'],100)
+#    FilterPupilGlint(pupils,glints)
 
+
+    # for pupil in pupils:
+   #     cv2.ellipse(img, pupil,(0,255,0),2)
+   #     cv2.circle(img,(int(pupil[0][0]),int(pupil[0][1])),5,(0,255,0)) # Since we have an allipse we use it to find the center
+#    for pupil in pupils:
+#        cv2.ellipse(img,pupil,(0,255,0),2)
+#        C = int(pupil[0][0]),int(pupil[0][1])
+#        cv2.circle(img,C, 2, (0,0,255),4)
+
+    for glint in glints:
+        C = int(glint[0][0]),int(glint[0][1])
+        cv2.circle(img,C, 3,(255,0,255),-1)
 
     #Do template matching
     global leftTemplate
@@ -156,19 +193,11 @@ def update(I):
         step=18
     #    cv2.putText(img, "pupilThr :"+str(sliderVals['pupilThr']), (x, y+step), cv2.FONT_HERSHEY_PLAIN, 1.0, (255, 255, 255), lineType=cv2.CV_AA)
     #    cv2.putText(img, "glintThr :"+str(sliderVals['glintThr']), (x, y+2*step), cv2.FONT_HERSHEY_PLAIN, 1.0, (255, 255, 255), lineType=cv2.CV_AA)
-    cv2.imshow('Result',img)
 
-    cv2.imshow('Temp',I)
 
 		#Uncomment these lines as your methods start to work to display the result in the
 		#original image
-		 #for pupil in pupils:
-		 #        cv2.ellipse(img,pupil,(0,255,0),1)
-		 #        C = int(pupil[0][0]),int(pupil[0][1])
-		 #        cv2.circle(img,C, 2, (0,0,255),4)
-		#     for glint in glints:
-		#         C = int(glint[0]),int(glint[1])
-		#         cv2.circle(img,C, 2,(255,0,255),5)
+
 		#     cv2.imshow("Result", img)
 
 		#For Iris detection - Week 2
@@ -176,6 +205,10 @@ def update(I):
 
     #copy the image so that the result image (img) can be saved in the movie
     drawImg = img.copy()
+
+    cv2.imshow('Result',img)
+
+    # cv2.imshow('Temp',I)
 
 
 def printUsage():
@@ -189,11 +222,12 @@ def printUsage():
 def run(fileName,resultFile='eyeTrackingResults.avi'):
 
 	''' MAIN Method to load the image sequence and handle user inputs'''
-	global imgOrig, frameNr,drawImg
+        
+	global imgOrig, frameNr,drawImg;
 	setupWindowSliders()
 	props = RegionProps()
 	cap,imgOrig,sequenceOK = getImageSequence(fileName)
-	videoWriter = 0
+	videoWriter = 0;
 
 	frameNr =0
 	if(sequenceOK):
@@ -201,7 +235,6 @@ def run(fileName,resultFile='eyeTrackingResults.avi'):
 	printUsage()
 	frameNr=0;
 	saveFrames = False
-
 	while(sequenceOK):
 		sliderVals = getSliderVals();
 		frameNr=frameNr+1
@@ -249,6 +282,7 @@ def run(fileName,resultFile='eyeTrackingResults.avi'):
 			if(saveFrames):
 				videoWriter.write(drawImg)
 
+
 	# videoWriter.release
 
 
@@ -266,14 +300,15 @@ def setupWindowSliders():
 	''' Define windows for displaying the results and create trackbars'''
 	cv2.namedWindow("Result")
 	cv2.namedWindow('Threshold')
-	cv2.namedWindow("Temp")
+	#cv2.namedWindow("Temp")
+        cv2.namedWindow("Aux")
 	#Threshold value for the pupil intensity
-	cv2.createTrackbar('pupilThr','Threshold', 90, 255, onSlidersChange)
+	cv2.createTrackbar('pupilThr','Threshold', 108, 255, onSlidersChange)
 	#Threshold value for the glint intensities
 	cv2.createTrackbar('glintThr','Threshold', 240, 255,onSlidersChange)
 	#define the minimum and maximum areas of the pupil
-	cv2.createTrackbar('minSize','Threshold', 20, 200, onSlidersChange)
-	cv2.createTrackbar('maxSize','Threshold', 200,200, onSlidersChange)
+	cv2.createTrackbar('minSize','Threshold', 40, 200, onSlidersChange)
+	cv2.createTrackbar('maxSize','Threshold', 120,200, onSlidersChange)
 	#Value to indicate whether to run or pause the video
 	cv2.createTrackbar('Stop/Start','Threshold', 0,1, onSlidersChange)
 
