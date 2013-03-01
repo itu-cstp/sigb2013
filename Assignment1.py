@@ -31,9 +31,9 @@ def GetPupil(gray,thr,minArea=4200,maxArea=6000):
 
     val,binI =cv2.threshold(gray, thr, 200, cv2.THRESH_BINARY_INV)
     
-    binI = cv2.morphologyEx(binI,cv2.MORPH_OPEN,cv2.getStructuringElement(cv2.MORPH_RECT,(20,20)))
+    binI = cv2.morphologyEx(binI,cv2.MORPH_OPEN,cv2.getStructuringElement(cv2.MORPH_CROSS, (4,4)))
 
-    binI = cv2.morphologyEx(binI,cv2.MORPH_CLOSE,cv2.getStructuringElement(cv2.MORPH_CROSS,(4,4)))
+    # binI = cv2.morphologyEx(binI,cv2.MORPH_CLOSE,cv2.getStructuringElement(cv2.MORPH_CROSS,(4,4)))
 
 
     #Calculate blobs
@@ -41,25 +41,25 @@ def GetPupil(gray,thr,minArea=4200,maxArea=6000):
     match = []
     for con in contours:
         a = cv2.contourArea(con)
-        extend = props.CalcContourProperties(con,properties=["extend"]) # We don't use this because it's not needed
+        # extend = props.CalcContourProperties(con,properties=["extend"]) # We don't use this because it's not needed
 
         if(a==0 or a<minArea or a>maxArea):
             continue
         p = cv2.arcLength(con, True)
         m = p/(2.0*math.sqrt(math.pi * a))
-        if (m<1.9):
-            cv2.drawContours(binI,[con],0,(255,0,0),1)
-            match.append(con)
-
-    xs = sorted(match,key=lambda x: cv2.contourArea(x),reverse=True)
-
-    xs2 = []
-    for x in xs:
-        if(len(x)>=5):
-            cv2.drawContours(gray,[x],0,(255,0,0),1)
-            xs2.append(cv2.fitEllipse(x))
-
-    return xs2
+        if (m<2.9):
+            ellips = cv2.fitEllipse(con)
+            match.append(ellips)
+    return match
+    # xs = sorted(match, key=lambda x: cv2.contourArea(x),reverse=True)
+    #
+    # xs2 = []
+    # for x in xs:
+    #     if(len(x)>=5):
+    #         cv2.drawContours(gray,[x],0,(255,0,0),1)
+    #         xs2.append(cv2.fitEllipse(x))
+    #
+    # return xs2
 
 def GetGlints(gray,thr,size):
         ''' Given a gray level image, gray and threshold
@@ -73,6 +73,8 @@ def GetGlints(gray,thr,size):
         gray2 = np.zeros(gray.shape)
 
         val, binI = cv2.threshold(gray, thr, 255, cv2.THRESH_BINARY_INV)
+        # Opening
+        binI = cv2.morphologyEx(binI,cv2.MORPH_OPEN,cv2.getStructuringElement(cv2.MORPH_CROSS,(20,20)))
         contours, hierarchy = cv2.findContours(binI, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 
 
@@ -80,9 +82,8 @@ def GetGlints(gray,thr,size):
         for con in contours:
             a = cv2.contourArea(con)
 
-            if(a<150 and a>70):
-                cv2.drawContours(gray2,[con],0,(255,0,0),1)
-                print props.CalcContourProperties(con,properties=["centroid"])
+            if(a<240 and a>70):
+                # cv2.drawContours(gray2,[con],0,(255,0,0),1)
                 match.append(con)
 
         r = []
@@ -91,13 +92,23 @@ def GetGlints(gray,thr,size):
                 e = cv2.fitEllipse(m)
                 r.append(e)
 
-        cv2.imshow("Aux",gray2)
 
+        # returning a list of candidate ellipsis
         return r
 
 ## Threshold
 ## Blob of proper size
 ## Blob of Shape
+
+def Distance(a, b):
+    """
+    Calculates distance between two 2d points.
+
+    """
+    x1,y1 = a
+    x2,y2 = b
+    return math.sqrt(math.pow((x2-x1),2)+math.pow((y2-y1),2))
+
 
 def GetIrisUsingThreshold(gray,pupil):
 	''' Given a gray level image, gray and threshold
@@ -147,36 +158,53 @@ def GetIrisUsingSimplifyedHough(gray,pupil):
 def GetEyeCorners(leftTemplate, rightTemplate,pupilPosition=None):
 	pass
 
-def FilterPupilGlint(pupils,glints):
-	''' Given a list of pupil candidates and glint candidates returns a list of pupil and glints'''
-	pass
+def FilterPupilGlint(glints, pupils):
+    glintList = [] #should be a set instead
+    centerPoint = (0,0)
+    for candA in glints:
+        for candB in glints:
+            #only accepting points with a certain distance to each other.
+            if (Distance(candA[0],candB[0])> 45 and Distance(candA[0],candB[0]) < 55):
+                glintList.append(candA)
+                glintList.append(candB)
+                centerPoint = (candA[0][0]+candB[0][0]/2, candA[0][1]+candB[0][1]/2)
+    pupilList = []
+    #sort out the pupils too far away from the center point between the latest found glints.
+    for pupil in pupils:
+        if (Distance(pupil[0], centerPoint) < 300):
+            pupilList.append(pupil)
+    return (glintList,pupilList)
+
+
 
 # vwriter = cv2.VideoWriter("test.avi",('F','F','V','1'));
 def update(I):
-    '''Calculate the image features and display the result based on the slider values'''
+    '''Calculate the image features and display the result based on the slider values
+    :param I:
+    '''
     #global drawImg
     global frameNr,drawImg
     img = I.copy()
     sliderVals = getSliderVals()
     gray = cv2.cvtColor(img,cv2.COLOR_RGB2GRAY)
 
-# Do the magic
-#    pupils = GetPupil(gray,sliderVals['pupilThr'],sliderVals['minSize'],sliderVals['maxSize'])
+# Do the magic  pupils = contour, glints = ellipse
+    pupils = GetPupil(gray,sliderVals['pupilThr'],sliderVals['minSize'],sliderVals['maxSize'])
     glints = GetGlints(gray,sliderVals['glintThr'],100)
-#    FilterPupilGlint(pupils,glints)
+    glints, pupils = FilterPupilGlint(glints,pupils)
 
 
+    for pupil in pupils:
+        cv2.ellipse(img, pupil, (255,0,0),2)
+    #    cv2.circle(img,(int(pupil[0][0]),int(pupil[0][1])),5,(0,255,0)) # Since we have an allipse we use it to find the center
     # for pupil in pupils:
-   #     cv2.ellipse(img, pupil,(0,255,0),2)
-   #     cv2.circle(img,(int(pupil[0][0]),int(pupil[0][1])),5,(0,255,0)) # Since we have an allipse we use it to find the center
-#    for pupil in pupils:
-#        cv2.ellipse(img,pupil,(0,255,0),2)
-#        C = int(pupil[0][0]),int(pupil[0][1])
-#        cv2.circle(img,C, 2, (0,0,255),4)
+    #    # cv2.ellipse(img,pupil,(0,255,0),2)
+    #    C = int(pupil[0][0]),int(pupil[0][1])
+    #    cv2.circle(img,C, 2, (0,0,255),4)
 
     for glint in glints:
-        C = int(glint[0][0]),int(glint[0][1])
-        cv2.circle(img,C, 3,(255,0,255),-1)
+        cv2.ellipse(img, glint,(0,255,0),2)
+
 
     #Do template matching
     global leftTemplate
