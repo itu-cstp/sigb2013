@@ -8,6 +8,17 @@ Ellipse is a weird format in cv2
 
 We do not use dans "extend" property (area / area of bounding box) because 
 we use circularity, which gives "the same" but better.
+We cheat when finding center of pupil and glints, we use the "elliptic center", because we
+already have the ellipse and is 'practically' the same
 
 Since we have an ellipse we use it's center for pointing out the center and not
 blob analysis on the the contour
+
+Morphological opening is used to remove the glints (holes) in the pupil.
+closing is used to, but it makes no difference (see question 18)
+we use morphology before thresholding, rather than after. This gives a better
+result, probably because of the "increased power" of the black/white difference
+
+
+QUESTION FOR MR.TEACHER AND HIS APPRENTICE:
+How to save video? CV_FOURCC 404

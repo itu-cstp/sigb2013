@@ -1,4 +1,6 @@
 import cv2
+cv2.namedWindow("Bah")   #workaround for arch linux
+cv2.destroyAllWindows() #workaround for arch linux
 import cv
 import pylab
 from SIGBTools import RegionProps
@@ -208,8 +210,8 @@ def update(I):
     '''
     #global drawImg
     global frameNr,drawImg
-    img = I.copy()
     sliderVals = getSliderVals()
+    img = I.copy()
     gray = cv2.cvtColor(img,cv2.COLOR_RGB2GRAY)
 
 # Do the magic  pupils = contour, glints = ellipse
@@ -252,7 +254,6 @@ def update(I):
     global frameNr,drawImg
     x,y = 10,10
     #setText(img,(x,y),"Frame:%d" %frameNr)
-    sliderVals = getSliderVals()
 
     # for non-windows machines we print the values of the threshold in the original image
     if sys.platform != 'win32':
@@ -296,7 +297,6 @@ def run(fileName,resultFile='eyeTrackingResults.avi'):
     if(sequenceOK):
         update(imgOrig)
     printUsage()
-    frameNr=0;
     saveFrames = False
     while(sequenceOK):
         sliderVals = getSliderVals();
@@ -369,15 +369,15 @@ def setupWindowSliders():
     cv2.namedWindow("Result")
     cv2.namedWindow('Threshold')
     #cv2.namedWindow("Temp")
-    cv2.namedWindow("Aux")
+    #cv2.namedWindow("Aux")
     #Threshold value for the pupil intensity
-    cv2.createTrackbar('pupilThr','Threshold', 80, 255, onSlidersChange)
+    cv2.createTrackbar('pupilThr','Threshold', 108, 255, onSlidersChange)
     #Threashold value for template matching
     cv2.createTrackbar('templateThr','Threshold', 85, 100, onSlidersChange)
     #Threshold value for the glint intensities
     cv2.createTrackbar('glintThr','Threshold', 240, 255,onSlidersChange)
     #define the minimum and maximum areas of the pupil
-    cv2.createTrackbar('pupMinSize','Threshold', 0, 200, onSlidersChange)
+    cv2.createTrackbar('pupMinSize','Threshold', 60, 200, onSlidersChange)
     cv2.createTrackbar('pupMaxSize','Threshold', 200,200, onSlidersChange)
     cv2.createTrackbar('glintMinSize','Threshold', 0, 200, onSlidersChange)
     cv2.createTrackbar('glintMaxSize','Threshold', 200, 200, onSlidersChange)
