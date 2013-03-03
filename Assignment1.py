@@ -371,14 +371,14 @@ def setupWindowSliders():
     #cv2.namedWindow("Temp")
     #cv2.namedWindow("Aux")
     #Threshold value for the pupil intensity
-    cv2.createTrackbar('pupilThr','Threshold', 108, 255, onSlidersChange)
+    cv2.createTrackbar('pupilThr','Threshold', 129, 255, onSlidersChange)
     #Threashold value for template matching
     cv2.createTrackbar('templateThr','Threshold', 85, 100, onSlidersChange)
     #Threshold value for the glint intensities
     cv2.createTrackbar('glintThr','Threshold', 240, 255,onSlidersChange)
     #define the minimum and maximum areas of the pupil
-    cv2.createTrackbar('pupMinSize','Threshold', 60, 200, onSlidersChange)
-    cv2.createTrackbar('pupMaxSize','Threshold', 200,200, onSlidersChange)
+    cv2.createTrackbar('pupMinSize','Threshold', 70, 200, onSlidersChange)
+    cv2.createTrackbar('pupMaxSize','Threshold', 120,200, onSlidersChange)
     cv2.createTrackbar('glintMinSize','Threshold', 0, 200, onSlidersChange)
     cv2.createTrackbar('glintMaxSize','Threshold', 200, 200, onSlidersChange)
     cv2.createTrackbar('glintMinDist','Threshold', 0, 100, onSlidersChange)
