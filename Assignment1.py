@@ -15,11 +15,12 @@ outputFile = "eyeTrackerResult.mp4"
 #--------------------------
 #         Global variable
 #--------------------------
-global imgOrig,leftTemplate,rightTemplate,frameNr
+global imgOrig,leftTemplate,rightTemplate,frameNr,tempSet,pupilPos
 imgOrig = [];
 #These are used for template matching
 leftTemplate = []
 rightTemplate = []
+tempSet = False
 frameNr =0
 
 props = RegionProps()
@@ -29,13 +30,13 @@ def GetPupil(gray,thr,minArea=4200,maxArea=6000):
     """
     props = RegionProps()
 
-    val,binI =cv2.threshold(gray, thr, 200, cv2.THRESH_BINARY_INV)
-    
+    val,binI =cv2.threshold(gray, thr, 255, cv2.THRESH_BINARY_INV)
+
     binI = cv2.morphologyEx(binI,cv2.MORPH_OPEN,cv2.getStructuringElement(cv2.MORPH_CROSS, (4,4)))
 
     # binI = cv2.morphologyEx(binI,cv2.MORPH_CLOSE,cv2.getStructuringElement(cv2.MORPH_CROSS,(4,4)))
 
-
+    global pupilPos
     #Calculate blobs
     contours, hierarchy = cv2.findContours(binI, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
     match = []
@@ -47,9 +48,12 @@ def GetPupil(gray,thr,minArea=4200,maxArea=6000):
             continue
         p = cv2.arcLength(con, True)
         m = p/(2.0*math.sqrt(math.pi * a))
-        if (m<2.9):
-            ellips = cv2.fitEllipse(con)
-            match.append(ellips)
+        if (m<1.7):
+            if(len(con)>=5):
+                ellips = cv2.fitEllipse(con)
+                #Using last found pupil to set centerpoint, not best solution!
+                pupilPos = ellips[0]
+                match.append(ellips)
     return match
     # xs = sorted(match, key=lambda x: cv2.contourArea(x),reverse=True)
     #
@@ -61,7 +65,7 @@ def GetPupil(gray,thr,minArea=4200,maxArea=6000):
     #
     # return xs2
 
-def GetGlints(gray,thr,size):
+def GetGlints(gray,thr,minSize, maxSize):
         ''' Given a gray level image, gray and threshold
         value return a list of glint locations'''
         # YOUR IMPLEMENTATION HERE !!!!
@@ -82,7 +86,7 @@ def GetGlints(gray,thr,size):
         for con in contours:
             a = cv2.contourArea(con)
 
-            if(a<240 and a>70):
+            if(a<maxSize and a>minSize):
                 # cv2.drawContours(gray2,[con],0,(255,0,0),1)
                 match.append(con)
 
@@ -155,25 +159,45 @@ def GetIrisUsingSimplifyedHough(gray,pupil):
 	# YOUR IMPLEMENTATION HERE !!!!
 	pass
 
-def GetEyeCorners(leftTemplate, rightTemplate,pupilPosition=None):
-	pass
+def GetEyeCorners(img, leftTemplate, rightTemplate,pupilPosition=None):
+    sliderVals = getSliderVals()
+    leftImage = img
+    rightImage =img
+    #If the pupil center has been set, use it to split the main image in halves and search accordingly.
+    if(pupilPosition != None):
+        x,y = pupilPosition
+        leftImage = img[:,:x]
+        rightImage =img[:,x:]
+    matchLeft = cv2.matchTemplate(leftImage,leftTemplate,cv2.TM_CCOEFF_NORMED)
+    matchRight = cv2.matchTemplate(rightImage,rightTemplate,cv2.TM_CCOEFF_NORMED)
+    matchListRight = np.nonzero(matchRight > (sliderVals['templateThr']*0.01))
+    matchListLeft =  np.nonzero(matchLeft > (sliderVals['templateThr']*0.01))
+    matchList = (matchListLeft,matchListRight)
+    return matchList
+
 
 def FilterPupilGlint(glints, pupils):
-    glintList = [] #should be a set instead
-    centerPoint = (0,0)
+    glintList = []
+    glintList1 = [] #these three should be sets instead to avoid duplicates
+    pupilList = []
+    sliderVals = getSliderVals()
     for candA in glints:
         for candB in glints:
-            #only accepting points with a certain distance to each other.
-            if (Distance(candA[0],candB[0])> 45 and Distance(candA[0],candB[0]) < 55):
+        #only accepting points with a certain distance to each other.
+            if (Distance(candA[0],candB[0])> sliderVals['glintMinDist'] and Distance(candA[0],candB[0]) < sliderVals['glintMaxDist']):
                 glintList.append(candA)
-                glintList.append(candB)
-                centerPoint = (candA[0][0]+candB[0][0]/2, candA[0][1]+candB[0][1]/2)
-    pupilList = []
+    #run through the remaining glints, keeping those that are close to the pupil candidates.
+    for glintCand in glintList:
+            for pupCand in pupils:
+                if(Distance(glintCand[0],pupCand[0])>sliderVals['glint&pubMINDist'] and Distance(glintCand[0],pupCand[0])<sliderVals['glint&pubMAXDist']):
+                    glintList1.append(glintCand)
+    #run through the pupil candidates keeping those that are close to the fina glints list
+    for candP in pupils:
+        for glintCand in glintList1:
+            if(Distance(candP[0],glintCand[0])>sliderVals['glint&pubMINDist'] and Distance(candP[0],glintCand[0])<sliderVals['glint&pubMAXDist']):
+                pupilList.append(candP)
     #sort out the pupils too far away from the center point between the latest found glints.
-    for pupil in pupils:
-        if (Distance(pupil[0], centerPoint) < 300):
-            pupilList.append(pupil)
-    return (glintList,pupilList)
+    return (set(glintList1),set(pupilList))
 
 
 
@@ -189,13 +213,13 @@ def update(I):
     gray = cv2.cvtColor(img,cv2.COLOR_RGB2GRAY)
 
 # Do the magic  pupils = contour, glints = ellipse
-    pupils = GetPupil(gray,sliderVals['pupilThr'],sliderVals['minSize'],sliderVals['maxSize'])
-    glints = GetGlints(gray,sliderVals['glintThr'],100)
+    pupils = GetPupil(gray,sliderVals['pupilThr'],sliderVals['pupMinSize'],sliderVals['pupMaxSize'])
+    glints = GetGlints(gray,sliderVals['glintThr'],sliderVals['glintMinSize'],sliderVals['glintMaxSize'])
     glints, pupils = FilterPupilGlint(glints,pupils)
 
 
     for pupil in pupils:
-        cv2.ellipse(img, pupil, (255,0,0),2)
+            cv2.ellipse(img, pupil, (255,0,0),2)
     #    cv2.circle(img,(int(pupil[0][0]),int(pupil[0][1])),5,(0,255,0)) # Since we have an allipse we use it to find the center
     # for pupil in pupils:
     #    # cv2.ellipse(img,pupil,(0,255,0),2)
@@ -209,7 +233,21 @@ def update(I):
     #Do template matching
     global leftTemplate
     global rightTemplate
-    GetEyeCorners(leftTemplate, rightTemplate)
+    global pupilPos
+    if(tempSet):
+        if(pupilPos!=None): #if the pupil position variable is set.
+            leftCords,rightCords = GetEyeCorners(imgOrig, leftTemplate, rightTemplate, pupilPos)
+        else:
+            leftCords,rightCords = GetEyeCorners(imgOrig, leftTemplate, rightTemplate)
+        for i in range(len(leftCords[1])):
+            x = leftCords[1][i]
+            y = leftCords[0][i]
+            cv2.rectangle(img,(x,y),((x+len(leftTemplate[0])),(y+len(leftTemplate[1]))),(0,0,255))
+        for i in range(len(rightCords[1])):
+            pupx,pupy = pupilPos
+            x = rightCords[1][i] + int(pupx)
+            y = rightCords[0][i]
+            cv2.rectangle(img,(x,y),((x+len(rightTemplate[0])),(y+len(rightTemplate[1]))),(0,0,255))
     #Display results
     global frameNr,drawImg
     x,y = 10,10
@@ -240,78 +278,81 @@ def update(I):
 
 
 def printUsage():
-	print "Q or ESC: Stop"
-	print "SPACE: Pause"
-	print "r: reload video"
-	print 'm: Mark region when the video has paused'
-	print 's: toggle video  writing'
-	print 'c: close video sequence'
+    print "Q or ESC: Stop"
+    print "SPACE: Pause"
+    print "r: reload video"
+    print 'm: Mark region when the video has paused'
+    print 's: toggle video  writing'
+    print 'c: close video sequence'
 
 def run(fileName,resultFile='eyeTrackingResults.avi'):
+    global imgOrig, frameNr,drawImg,leftTemplate,rightTemplate,tempSet;
+    setupWindowSliders()
+    props = RegionProps()
+    cap,imgOrig,sequenceOK = getImageSequence(fileName)
+    videoWriter = 0;
 
-	''' MAIN Method to load the image sequence and handle user inputs'''
-        
-	global imgOrig, frameNr,drawImg;
-	setupWindowSliders()
-	props = RegionProps()
-	cap,imgOrig,sequenceOK = getImageSequence(fileName)
-	videoWriter = 0;
+    frameNr =0
+    if(sequenceOK):
+        update(imgOrig)
+    printUsage()
+    frameNr=0;
+    saveFrames = False
+    while(sequenceOK):
+        sliderVals = getSliderVals();
+        frameNr=frameNr+1
+        ch = cv2.waitKey(1)
+        #Select regions
+        if(ch==ord('m')):
+            if(not sliderVals['Running']):
+                roiSelect=ROISelector(imgOrig)
+                pts,regionSelected= roiSelect.SelectArea('Select left eye corner',(400,200))
+                if(regionSelected):
+                    leftTemplate = imgOrig[pts[0][1]:pts[1][1],pts[0][0]:pts[1][0]]
+                    tempSet = True
 
-	frameNr =0
-	if(sequenceOK):
-		update(imgOrig)
-	printUsage()
-	frameNr=0;
-	saveFrames = False
-	while(sequenceOK):
-		sliderVals = getSliderVals();
-		frameNr=frameNr+1
-		ch = cv2.waitKey(1)
-		#Select regions
-		if(ch==ord('m')):
-			if(not sliderVals['Running']):
-				roiSelect=ROISelector(imgOrig)
-				pts,regionSelected= roiSelect.SelectArea('Select left eye corner',(400,200))
-				if(regionSelected):
-					leftTemplate = imgOrig[pts[0][1]:pts[1][1],pts[0][0]:pts[1][0]]
-
-		if ch == 27:
-			break
-		if (ch==ord('s')):
-			if((saveFrames)):
-				videoWriter.release()
-				saveFrames=False
-				print "End recording"
-			else:
-				imSize = np.shape(imgOrig)
-				videoWriter = cv2.VideoWriter(resultFile, cv.CV_FOURCC('D','I','V','3'), 15.0,(imSize[1],imSize[0]),True) #Make a video writer
-				saveFrames = True
-				print "Recording..."
-
-
-
-		if(ch==ord('q')):
-			break
-		if(ch==32): #Spacebar
-			sliderVals = getSliderVals()
-			cv2.setTrackbarPos('Stop/Start','Threshold',not sliderVals['Running'])
-		if(ch==ord('r')):
-			frameNr =0
-			sequenceOK=False
-			cap,imgOrig,sequenceOK = getImageSequence(fileName)
-			update(imgOrig)
-			sequenceOK=True
-
-		sliderVals=getSliderVals()
-		if(sliderVals['Running']):
-			sequenceOK, imgOrig = cap.read()
-			if(sequenceOK): #if there is an image
-				update(imgOrig)
-			if(saveFrames):
-				videoWriter.write(drawImg)
+                roiSelect=ROISelector(imgOrig)
+                pts,regionSelected= roiSelect.SelectArea('Select right eye corner',(400,200))
+                if(regionSelected):
+                    rightTemplate = imgOrig[pts[0][1]:pts[1][1],pts[0][0]:pts[1][0]]
+                update(imgOrig)
+        if ch == 27:
+            break
+        if (ch==ord('s')):
+            if((saveFrames)):
+                videoWriter.release()
+                saveFrames=False
+                print "End recording"
+            else:
+                imSize = np.shape(imgOrig)
+                videoWriter = cv2.VideoWriter(resultFile, cv.CV_FOURCC('D','I','V','3'), 15.0,(imSize[1],imSize[0]),True) #Make a video writer
+                saveFrames = True
+                print "Recording..."
 
 
-	# videoWriter.release
+
+        if(ch==ord('q')):
+            break
+        if(ch==32): #Spacebar
+            sliderVals = getSliderVals()
+            cv2.setTrackbarPos('Stop/Start','Threshold',not sliderVals['Running'])
+        if(ch==ord('r')):
+            frameNr =0
+            sequenceOK=False
+            cap,imgOrig,sequenceOK = getImageSequence(fileName)
+            update(imgOrig)
+            sequenceOK=True
+
+        sliderVals=getSliderVals()
+        if(sliderVals['Running']):
+            sequenceOK, imgOrig = cap.read()
+            if(sequenceOK): #if there is an image
+                update(imgOrig)
+            if(saveFrames):
+                videoWriter.write(drawImg)
+
+
+        # videoWriter.release
 
 
 
@@ -325,30 +366,43 @@ def setText(dst, (x, y), s):
 
 
 def setupWindowSliders():
-	''' Define windows for displaying the results and create trackbars'''
-	cv2.namedWindow("Result")
-	cv2.namedWindow('Threshold')
-	#cv2.namedWindow("Temp")
-        cv2.namedWindow("Aux")
-	#Threshold value for the pupil intensity
-	cv2.createTrackbar('pupilThr','Threshold', 108, 255, onSlidersChange)
-	#Threshold value for the glint intensities
-	cv2.createTrackbar('glintThr','Threshold', 240, 255,onSlidersChange)
-	#define the minimum and maximum areas of the pupil
-	cv2.createTrackbar('minSize','Threshold', 40, 200, onSlidersChange)
-	cv2.createTrackbar('maxSize','Threshold', 120,200, onSlidersChange)
-	#Value to indicate whether to run or pause the video
-	cv2.createTrackbar('Stop/Start','Threshold', 0,1, onSlidersChange)
+    cv2.namedWindow("Result")
+    cv2.namedWindow('Threshold')
+    #cv2.namedWindow("Temp")
+    cv2.namedWindow("Aux")
+    #Threshold value for the pupil intensity
+    cv2.createTrackbar('pupilThr','Threshold', 80, 255, onSlidersChange)
+    #Threashold value for template matching
+    cv2.createTrackbar('templateThr','Threshold', 85, 100, onSlidersChange)
+    #Threshold value for the glint intensities
+    cv2.createTrackbar('glintThr','Threshold', 240, 255,onSlidersChange)
+    #define the minimum and maximum areas of the pupil
+    cv2.createTrackbar('pupMinSize','Threshold', 0, 200, onSlidersChange)
+    cv2.createTrackbar('pupMaxSize','Threshold', 200,200, onSlidersChange)
+    cv2.createTrackbar('glintMinSize','Threshold', 0, 200, onSlidersChange)
+    cv2.createTrackbar('glintMaxSize','Threshold', 200, 200, onSlidersChange)
+    cv2.createTrackbar('glintMinDist','Threshold', 0, 100, onSlidersChange)
+    cv2.createTrackbar('glintMaxDist','Threshold', 100, 100, onSlidersChange)
+    cv2.createTrackbar('glint&pubMINDist','Threshold', 0, 500, onSlidersChange)
+    cv2.createTrackbar('glint&pubMAXDist','Threshold', 500, 500, onSlidersChange)
+    #Value to indicate whether to run or pause the video
+    cv2.createTrackbar('Stop/Start','Threshold', 0,1, onSlidersChange)
 
 def getSliderVals():
-	'''Extract the values of the sliders and return these in a dictionary'''
-	sliderVals={}
-	sliderVals['pupilThr'] = cv2.getTrackbarPos('pupilThr', 'Threshold')
-	sliderVals['glintThr'] = cv2.getTrackbarPos('glintThr', 'Threshold')
-	sliderVals['minSize'] = 50*cv2.getTrackbarPos('minSize', 'Threshold')
-	sliderVals['maxSize'] = 50*cv2.getTrackbarPos('maxSize', 'Threshold')
-	sliderVals['Running'] = 1==cv2.getTrackbarPos('Stop/Start', 'Threshold')
-	return sliderVals
+    sliderVals={}
+    sliderVals['pupilThr'] = cv2.getTrackbarPos('pupilThr', 'Threshold')
+    sliderVals['templateThr'] = cv2.getTrackbarPos('templateThr', 'Threshold')
+    sliderVals['glintThr'] = cv2.getTrackbarPos('glintThr', 'Threshold')
+    sliderVals['pupMinSize'] = 50*cv2.getTrackbarPos('pupMinSize', 'Threshold')
+    sliderVals['pupMaxSize'] = 50*cv2.getTrackbarPos('pupMaxSize', 'Threshold')
+    sliderVals['glintMinSize'] = cv2.getTrackbarPos('glintMinSize', 'Threshold')
+    sliderVals['glintMaxSize'] = cv2.getTrackbarPos('glintMaxSize', 'Threshold')
+    sliderVals['glintMinDist'] = cv2.getTrackbarPos('glintMinDist', 'Threshold')
+    sliderVals['glintMaxDist'] = cv2.getTrackbarPos('glintMaxDist', 'Threshold')
+    sliderVals['glint&pubMINDist'] = cv2.getTrackbarPos('glint&pubMINDist', 'Threshold')
+    sliderVals['glint&pubMAXDist'] = cv2.getTrackbarPos('glint&pubMAXDist', 'Threshold')
+    sliderVals['Running'] = 1==cv2.getTrackbarPos('Stop/Start', 'Threshold')
+    return sliderVals
 
 def onSlidersChange(dummy=None):
 	''' Handle updates when slides have changed.
