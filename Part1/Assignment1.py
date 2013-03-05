@@ -14,7 +14,7 @@ from scipy.cluster.vq import *
 from scipy.misc import *
 from matplotlib.pyplot import *
 
-inputFile = "Sequences/eye1.avi"
+inputFile = "Sequences/eye2.avi"
 outputFile = "eyeTrackerResult.mp4"
 
 #--------------------------
@@ -30,7 +30,7 @@ frameNr =0
 props = RegionProps()
 
 
-def detectPupilKMeans(gray,K=2,distanceWeight=500,reSize=(40,40)):
+def detectPupilKMeans(gray,K=4,distanceWeight=1,reSize=(30,30)):
     smallI = cv2.resize(gray, reSize)
     M,N = smallI.shape
     X,Y = np.meshgrid(range(M),range(N))
@@ -51,10 +51,14 @@ def detectPupilKMeans(gray,K=2,distanceWeight=500,reSize=(40,40)):
     label,distance = vq(features,centroids)
 
     labelIm = np.array(np.reshape(label,(M,N)))
-    f = figure(1)
-    imshow(labelIm)
-    f.canvas.draw()
-    f.show()
+    # gray = cv2.cvtColor(labelIm,cv2.COLOR_2GRAY)
+    contours, hierarchy = cv2.findContours(labelIm, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+    # for cont in contours:
+    #     cv2.drawContours(smallI,[cont],0,(0,255,0))
+    # f = figure(1)
+    # imshow(labelIm)
+    # f.canvas.draw()
+    # f.show()
 
 
 
@@ -66,10 +70,10 @@ def GetPupil(gray,thr,minArea=4200,maxArea=6000):
     props = RegionProps()
 
     val,binI =cv2.threshold(gray, thr, 255, cv2.THRESH_BINARY_INV)
+    binI = cv2.morphologyEx(binI,cv2.MORPH_CLOSE,cv2.getStructuringElement(cv2.MORPH_RECT, (10,10)))
 
-    binI = cv2.morphologyEx(binI,cv2.MORPH_OPEN,cv2.getStructuringElement(cv2.MORPH_CROSS, (4,4)))
-
-    binI = cv2.morphologyEx(binI,cv2.MORPH_CLOSE,cv2.getStructuringElement(cv2.MORPH_CROSS,(4,4)))
+    binI = cv2.morphologyEx(binI,cv2.MORPH_OPEN,cv2.getStructuringElement(cv2.MORPH_CROSS,(10,10)))
+    cv2.imshow("Aux", binI)
 
     global pupilPos
     #Calculate blobs
@@ -124,6 +128,10 @@ def GetGlints(gray,thr,minSize, maxSize):
 
         # returning a list of candidate ellipsis
         return r
+
+def getGradientImageInfo(I):
+    return ""
+
 
 ## Threshold
 ## Blob of proper size
@@ -229,7 +237,7 @@ def update(I):
     sliderVals = getSliderVals()
     img = I.copy()
     gray = cv2.cvtColor(img,cv2.COLOR_RGB2GRAY)
-    detectPupilKMeans(gray)
+    # detectPupilKMeans(gray)
 # Do the magic  pupils = ellipsis, glints = ellipsis
     pupils = GetPupil(gray,sliderVals['pupilThr'],sliderVals['pupMinSize'],sliderVals['pupMaxSize'])
     glints = GetGlints(gray,sliderVals['glintThr'],sliderVals['glintMinSize'],sliderVals['glintMaxSize'])
@@ -381,7 +389,7 @@ def setupWindowSliders():
     cv2.namedWindow("Result")
     cv2.namedWindow('Threshold')
     #cv2.namedWindow("Temp")
-    #cv2.namedWindow("Aux")
+    cv2.namedWindow("Aux")
     #Threshold value for the pupil intensity
     cv2.createTrackbar('pupilThr','Threshold', 129, 255, onSlidersChange)
     #Threashold value for template matching
@@ -390,7 +398,7 @@ def setupWindowSliders():
     cv2.createTrackbar('glintThr','Threshold', 240, 255,onSlidersChange)
     #define the minimum and maximum areas of the pupil
     cv2.createTrackbar('pupMinSize','Threshold', 70, 200, onSlidersChange)
-    cv2.createTrackbar('pupMaxSize','Threshold', 120,200, onSlidersChange)
+    cv2.createTrackbar('pupMaxSize','Threshold', 120,600, onSlidersChange)
     cv2.createTrackbar('glintMinSize','Threshold', 0, 200, onSlidersChange)
     cv2.createTrackbar('glintMaxSize','Threshold', 200, 200, onSlidersChange)
     cv2.createTrackbar('glintMinDist','Threshold', 0, 100, onSlidersChange)
