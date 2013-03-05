@@ -3,12 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="4aa75d65-d60d-4581-a6e3-b91dc2d68e52" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Part1/Assignment1.py" afterPath="$PROJECT_DIR$/Part1/Assignment1.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="1.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="4aa75d65-d60d-4581-a6e3-b91dc2d68e52" time="1362486370668" ignored="false" />
-    <file path="/Assignment1.py" changelist="4aa75d65-d60d-4581-a6e3-b91dc2d68e52" time="1362489139108" ignored="false" />
+    <file path="/Assignment1.py" changelist="4aa75d65-d60d-4581-a6e3-b91dc2d68e52" time="1362494200079" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +27,7 @@
       <file leaf-file-name="Assignment1.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Part1/Assignment1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="247" column="23" selection-start="8013" selection-end="8013" vertical-scroll-proportion="6.783217">
+            <state line="52" column="22" selection-start="1305" selection-end="1305" vertical-scroll-proportion="1.0397022">
               <folding />
             </state>
           </provider>
@@ -198,17 +197,17 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1440" height="790" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32886904" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15423243" sideWeight="0.68005955" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15423243" sideWeight="0.68005955" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31994048" sideWeight="0.31225806" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31994048" sideWeight="0.31225806" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -289,7 +288,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Part1/Assignment1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="247" column="23" selection-start="8013" selection-end="8013" vertical-scroll-proportion="6.783217">
+        <state line="52" column="22" selection-start="1305" selection-end="1305" vertical-scroll-proportion="1.0397022">
           <folding />
         </state>
       </provider>
