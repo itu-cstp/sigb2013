@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4aa75d65-d60d-4581-a6e3-b91dc2d68e52" name="Default" comment="" />
+    <list default="true" id="4aa75d65-d60d-4581-a6e3-b91dc2d68e52" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Part1/Assignment1.py" afterPath="$PROJECT_DIR$/Part1/Assignment1.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="1.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="4aa75d65-d60d-4581-a6e3-b91dc2d68e52" time="1362301927778" ignored="false" />
-    <file path="/Assignment1.py" changelist="4aa75d65-d60d-4581-a6e3-b91dc2d68e52" time="1362303246418" ignored="false" />
+    <file path="/Dummy.txt" changelist="4aa75d65-d60d-4581-a6e3-b91dc2d68e52" time="1362486370668" ignored="false" />
+    <file path="/Assignment1.py" changelist="4aa75d65-d60d-4581-a6e3-b91dc2d68e52" time="1362489139108" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,7 +24,17 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="Assignment1.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Part1/Assignment1.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="247" column="23" selection-start="8013" selection-end="8013" vertical-scroll-proportion="6.783217">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -41,6 +54,7 @@
       <list>
         <option value="$PROJECT_DIR$/SIGBTools.py" />
         <option value="$PROJECT_DIR$/Assignment1.py" />
+        <option value="$PROJECT_DIR$/Part1/Assignment1.py" />
       </list>
     </option>
   </component>
@@ -103,7 +117,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Sequences" />
+              <option name="myItemId" value="Part1" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -115,12 +129,13 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="options.lastSelected" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="recentsLimit" value="5" />
+    <property name="options.lastSelected" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="restartRequiresConfirmation" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../exc/1" />
     <property name="FullScreen" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -138,11 +153,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Part1" />
       <option name="IS_MODULE_SDK" value="true" />
       <module name="1" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Assignment1.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Part1/Assignment1.py" />
       <option name="PARAMETERS" value="" />
       <RunnerSettings RunnerId="PythonRunner" />
       <ConfigurationWrapper RunnerId="PythonRunner" />
@@ -183,17 +198,17 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1440" height="790" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.15423243" sideWeight="0.68005955" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15423243" sideWeight="0.68005955" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31994048" sideWeight="0.31225806" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31994048" sideWeight="0.31225806" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -262,60 +277,9 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Assignment1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="244" column="53" selection-start="8726" selection-end="8727" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assignment1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="84" column="78" selection-start="2502" selection-end="2502" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SIGBTools.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="149" column="23" selection-start="5168" selection-end="5168" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Library/Caches/PyCharm20/python_stubs/596071422/cv2/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="2030" column="4" selection-start="59183" selection-end="59183" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assignment1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="54" selection-start="1509" selection-end="1509" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SIGBTools.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="81" column="6" selection-start="2233" selection-end="2233" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assignment1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="24" selection-start="1139" selection-end="1139" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SIGBTools.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="165" column="42" selection-start="6080" selection-end="6080" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/Library/Caches/PyCharm20/python_stubs/596071422/cv2/__init__.py">
@@ -323,17 +287,10 @@
         <state line="2030" column="4" selection-start="59183" selection-end="59183" vertical-scroll-proportion="0.02293578" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SIGBTools.py">
+    <entry file="file://$PROJECT_DIR$/Part1/Assignment1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="119" column="8" selection-start="4063" selection-end="4063" vertical-scroll-proportion="0.34541062" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assignment1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="166" column="30" selection-start="5255" selection-end="5255" vertical-scroll-proportion="0.55583125">
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
+        <state line="247" column="23" selection-start="8013" selection-end="8013" vertical-scroll-proportion="6.783217">
+          <folding />
         </state>
       </provider>
     </entry>
