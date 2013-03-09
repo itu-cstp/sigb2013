@@ -38,4 +38,6 @@ gradient magnitude is the amount of change.
 gradient direction:
 the direction at which the greatest change from dark to light occurs. (dont go into the light ;-)
 
-
+opg 2.2.10
+When the normals run though glints, they will often have a higher gradient that
+the pupil/iris border
