@@ -16,7 +16,7 @@ from scipy.misc import imresize
 
 from matplotlib.pyplot import *
 
-inputFile = "Sequences/eye2.avi"
+inputFile = "Sequences/eye1.avi"
 outputFile = "eyeTrackerResult.mp4"
 
 #--------------------------
@@ -62,6 +62,8 @@ def detectPupilKMeans(gray,K=4,distanceWeight=1,reSize=(30,30)):
         if(centroids[i][0] < thr):
             thr = centroids[i][0]
 
+    val, binI = cv2.threshold(gray, thr, 255, cv2.THRESH_BINARY_INV)
+    cv2.imshow("Aux",binI)
     return thr
     """
     f = figure(1)
@@ -403,7 +405,7 @@ def setupWindowSliders():
     cv2.namedWindow("Result")
     cv2.namedWindow('Threshold')
     #cv2.namedWindow("Temp")
- #   cv2.namedWindow("Aux")
+    cv2.namedWindow("Aux")
     #Threshold value for the pupil intensity
     cv2.createTrackbar('pupilThr','Threshold', 129, 255, onSlidersChange)
     #Threashold value for template matching
