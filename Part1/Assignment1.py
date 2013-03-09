@@ -11,12 +11,13 @@ import numpy as np
 import math
 import sys
 from scipy.cluster.vq import *
-import Part2.SIGBTools as sbt2
+import SIGBTools2 as sbt2
 
 from scipy.misc import *
 
 from matplotlib.pyplot import *
 
+dilKern=cv2.getStructuringElement(cv2.MORPH_CROSS,(10,10))
 inputFile = "Sequences/eye1.avi"
 outputFile = "eyeTrackerResult.mp4"
 
@@ -140,7 +141,7 @@ def GetGlints(gray,thr,minSize, maxSize):
         return r
 
 def getGradientImageInfo(I):
-    I2 = I.copy()
+    I2 = cv2.bilateralFilter(I.copy(), 10, 4, 4)
     # Using the derivitive kernel from -1 to 1.
     # Dx
     gradientX = cv2.Sobel(I2, cv2.CV_32F, 1, 0)
@@ -159,17 +160,19 @@ def getGradientImageInfo(I):
             ypow2 = math.pow(int(gradientY[i][j]),2)
             length = int(np.sqrt(xpow2+ypow2))
             magnitudeImg[i][j] = a*length+b
-    #orientation
-    orientImg = np.zeros((m,n))
-    for i in range(m):
-        for j in range(n):
-            orientImg[i][j] = (math.atan2(gradientX[i][j],gradientY[i][j])*180)/math.pi
+   # #orientation
+   # orientImg = np.zeros((m,n))
+   # for i in range(m):
+   #     for j in range(n):
+   #         orientImg[i][j] = (math.atan2(gradientX[i][j],gradientY[i][j])*180)/math.pi
     # Descriptions
     # return {"magnitude" : magnitudeImg,
 #            "dx":gradientX,
  #           "dy":gradientY,
   #          "direction":orientImg
   #           }
+    #magnitudeImg = cv2.dilate(magnitudeImg, dilKern)
+    cv2.imshow("gradient", magnitudeImg)
     return magnitudeImg
     # gImY = cv2.So
 
@@ -212,10 +215,11 @@ def findMaxGradientValueOnNormal(gradientMagnitude,p1,p2):
     maxG = 0
     pointG = None
     for p in pts:
-        gMag = gradientMagnitude[p[0]][p[1]]
+        gMag = gradientMagnitude[p[1]][p[0]]
         if(gMag > maxG):
             maxG = gMag
             pointG = (p[0],p[1])
+    print maxG
     cv2.circle(gradientMagnitude,pointG,1,(255,255,255))
     cv2.imshow("Aux",gradientMagnitude)
 
