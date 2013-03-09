@@ -16,7 +16,7 @@ from scipy.misc import imresize
 
 from matplotlib.pyplot import *
 
-inputFile = "Sequences/eye1.avi"
+inputFile = "Sequences/eye3.avi"
 outputFile = "eyeTrackerResult.mp4"
 
 #--------------------------
@@ -248,11 +248,10 @@ def update(I):
     img = I.copy()
     gray = cv2.cvtColor(img,cv2.COLOR_RGB2GRAY)
 
-
-
+    cv2.setTrackbarPos('pupilThr','Threshold',detectPupilKMeans(gray,8,15))
 # Do the magic  pupils = contour, glints = ellipse
     #pupils = GetPupil(gray,sliderVals['pupilThr'],sliderVals['pupMinSize'],sliderVals['pupMaxSize'])
-    pupils = GetPupil(gray, detectPupilKMeans(gray,8,15), sliderVals['pupMinSize'],sliderVals['pupMaxSize'])
+    pupils = GetPupil(gray, sliderVals['pupilThr'], sliderVals['pupMinSize'],sliderVals['pupMaxSize'])
 
     # detectPupilKMeans(gray)
 # Do the magic  pupils = ellipsis, glints = ellipsis
@@ -413,7 +412,7 @@ def setupWindowSliders():
     #Threshold value for the glint intensities
     cv2.createTrackbar('glintThr','Threshold', 240, 255,onSlidersChange)
     #define the minimum and maximum areas of the pupil
-    cv2.createTrackbar('pupMinSize','Threshold', 70, 200, onSlidersChange)
+    cv2.createTrackbar('pupMinSize','Threshold', 30, 200, onSlidersChange)
     cv2.createTrackbar('pupMaxSize','Threshold', 120,600, onSlidersChange)
     cv2.createTrackbar('glintMinSize','Threshold', 0, 200, onSlidersChange)
     cv2.createTrackbar('glintMaxSize','Threshold', 200, 200, onSlidersChange)
