@@ -143,36 +143,34 @@ def getGradientImageInfo(I):
     I2 = I.copy()
     # Using the derivitive kernel from -1 to 1.
     # Dx
-    gradientX = cv2.Sobel(I2, -1, 1, 0)
+    gradientX = cv2.Sobel(I2, cv2.CV_32F, 1, 0)
     # Dy
-    gradientY = cv2.Sobel(I2, -1, 0, 1)
+    gradientY = cv2.Sobel(I2, cv2.CV_32F, 0, 1)
 
 
     m,n = I2.shape
     # magnitudes fra 0 to 360
-    magnitudeImg = np.zeros((m,n))
-
+    magnitudeImg = np.zeros((m,n), dtype="uint8")
+    a = 255.0/(361.0)
+    b = (-a)*361.0
     for i in range(m):
         for j in range(n):
             xpow2 = math.pow(int(gradientX[i][j]),2)
             ypow2 = math.pow(int(gradientY[i][j]),2)
             length = int(np.sqrt(xpow2+ypow2))
-            magnitudeImg[i][j] = length
-
+            magnitudeImg[i][j] = a*length+b
     #orientation
-    cv2.imshow("Aux", magnitudeImg)
-    print magnitudeImg
     orientImg = np.zeros((m,n))
     for i in range(m):
         for j in range(n):
             orientImg[i][j] = (math.atan2(gradientX[i][j],gradientY[i][j])*180)/math.pi
     # Descriptions
-    return {"magnitude":magnitudeImg,
-            "dx":gradientX,
-            "dy":gradientY,
-            "direction":orientImg
-            }
-
+    # return {"magnitude" : magnitudeImg,
+#            "dx":gradientX,
+ #           "dy":gradientY,
+  #          "direction":orientImg
+  #           }
+    return magnitudeImg
     # gImY = cv2.So
 
 def circleTest(I, C):
@@ -197,19 +195,19 @@ def circleTest(I, C):
         cv2.circle(I2,(int(newX),int(newY)),1,(255,0,0))
 
         grad = findMaxGradientValueOnNormal(
-            gradientInfo["magnitude"],
-            (newX,newY),
-            c2)
+            gradientInfo,
+            c2,(newX,newY))
 
         cv2.circle(I2,grad,1,(0,255,0))
 
-    # cv2.imshow("Aux",I2)
+    cv2.imshow("Aux2",I2)
 
 def findEllipseContour(img, gradientMagnitude, estimatedCenter, estimatedRadius,nPts=30):
     pass;
 
 def findMaxGradientValueOnNormal(gradientMagnitude,p1,p2):
     pts = sbt2.getLineCoordinates(p1,p2)
+
     #normalVals = gradientMagnitude[pts[:,1],pts[:,0]]
     maxG = 0
     pointG = None
@@ -218,6 +216,10 @@ def findMaxGradientValueOnNormal(gradientMagnitude,p1,p2):
         if(gMag > maxG):
             maxG = gMag
             pointG = (p[0],p[1])
+    cv2.circle(gradientMagnitude,pointG,1,(255,255,255))
+    cv2.imshow("Aux",gradientMagnitude)
+
+
     return pointG
 
 ## Threshold
