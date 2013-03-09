@@ -10,6 +10,9 @@ from SIGBTools import getImageSequence
 import numpy as np
 import math
 import sys
+from scipy.cluster.vq import *
+from scipy.misc import imresize
+from matplotlib.pyplot import *
 
 inputFile = "Sequences/eye1.avi"
 outputFile = "eyeTrackerResult.mp4"
@@ -26,6 +29,53 @@ tempSet = False
 frameNr =0
 
 props = RegionProps()
+
+def detectPupilKMeans(gray,K=2,distanceWeight=2,reSize=(40,40)):
+    ''' Detects the pupil in the image, gray, using k-means gray
+    : grays scale image K
+    : Number of clusters distanceWeight
+    : Defines the weight of the position parameters reSize
+    : the size of the image to do k-means on
+    '''
+    #Resize for faster performance
+    smallI = cv2.resize(gray, reSize)
+    M,N = smallI.shape
+    #Generate coordinates in a matrix
+    X,Y = np.meshgrid(range(M),range(N))
+
+    #Make coordinates and intensity into one vectors
+    z = smallI.flatten()
+    x = X.flatten()
+    y = Y.flatten()
+    O = len(x)
+    #make a feature vectors containing (x,y,intensity)
+    features = np.zeros((O,3))
+    features[:,0] = z;
+    features[:,1] = y/distanceWeight; #Divide so that the distance of position weighs less
+
+    features[:,2] = x/distanceWeight;
+    features = np.array(features,'f')
+    # cluster data
+    centroids,variance = kmeans(features,K)
+    #use the found clusters to map
+    label,distance = vq(features,centroids)
+    # re-create image from
+    labelIm = np.array(np.reshape(label,(M,N)))
+
+    thr = 255
+    for i in range(K):
+        print centroids[i][0]
+        if(centroids[i][0] < thr):
+            thr = centroids[i][0]
+
+    return thr
+    """
+    f = figure(1)
+    imshow(labelIm)
+    f.canvas.draw()
+    f.show()
+    """
+
 def GetPupil(gray,thr,minArea=4200,maxArea=6000):
     """
     Doesn't work when eye is looking down. Be more loose with circularity
@@ -214,8 +264,11 @@ def update(I):
     img = I.copy()
     gray = cv2.cvtColor(img,cv2.COLOR_RGB2GRAY)
 
+
 # Do the magic  pupils = contour, glints = ellipse
-    pupils = GetPupil(gray,sliderVals['pupilThr'],sliderVals['pupMinSize'],sliderVals['pupMaxSize'])
+    #pupils = GetPupil(gray,sliderVals['pupilThr'],sliderVals['pupMinSize'],sliderVals['pupMaxSize'])
+    pupils = GetPupil(gray, detectPupilKMeans(gray,8,15), sliderVals['pupMinSize'],sliderVals['pupMaxSize'])
+
     glints = GetGlints(gray,sliderVals['glintThr'],sliderVals['glintMinSize'],sliderVals['glintMaxSize'])
     glints, pupils = FilterPupilGlint(glints,pupils)
 
@@ -275,8 +328,8 @@ def update(I):
 
     cv2.imshow('Result',img)
 
-    # cv2.imshow('Temp',I)
-
+    cv2.imshow('Temp',I)
+    sliderVals['pupilThr']
 
 def printUsage():
     print "Q or ESC: Stop"
@@ -366,8 +419,8 @@ def setText(dst, (x, y), s):
 
 
 def setupWindowSliders():
-    cv2.namedWindow("Result")
-    cv2.namedWindow('Threshold')
+ #   cv2.namedWindow("Result")
+ #   cv2.namedWindow('Threshold')
     #cv2.namedWindow("Temp")
     #cv2.namedWindow("Aux")
     #Threshold value for the pupil intensity
@@ -411,6 +464,8 @@ def onSlidersChange(dummy=None):
 	sv=getSliderVals()
 	if(not sv['Running']): # if pause
 		update(imgOrig)
+
+
 
 #--------------------------
 #         main
