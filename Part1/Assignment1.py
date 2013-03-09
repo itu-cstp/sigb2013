@@ -11,7 +11,7 @@ import numpy as np
 import math
 import sys
 from scipy.cluster.vq import *
-import SIGBTools2 as sbt2
+import Part2.SIGBTools as sbt2
 
 from scipy.misc import *
 
@@ -187,12 +187,12 @@ def circleTest(I, C):
     t=0;
     gradientInfo = getGradientImageInfo(I);
     for (x,y,dx,dy) in P:
+        factor = 3
+        vdx = (x-c2[0])*factor
+        vdy = (y-c2[1])*factor
 
-        vdx = (x-c2[0])*2
-        vdy = (y-c2[1])*2
-
-        newX = max(0,min(x+vdx,M-1))
-        newY = max(0,min(y+vdy,N-1))
+        newX = max(0,min(x+vdx,N-1))
+        newY = max(0,min(y+vdy,M-1))
 
         cv2.line(I2, c2, (int(newX),int(newY)),(124,144,0))
         cv2.circle(I2,(int(newX),int(newY)),1,(255,0,0))
@@ -212,19 +212,19 @@ def findMaxGradientValueOnNormal(gradientMagnitude,p1,p2):
     pts = sbt2.getLineCoordinates(p1,p2)
 
     #normalVals = gradientMagnitude[pts[:,1],pts[:,0]]
-    maxG = 0
-    pointG = None
+    grads = {}
     for p in pts:
-        gMag = gradientMagnitude[p[1]][p[0]]
-        if(gMag > maxG):
-            maxG = gMag
-            pointG = (p[0],p[1])
-    print maxG
-    cv2.circle(gradientMagnitude,pointG,1,(255,255,255))
+        grads[gradientMagnitude[p[1]][p[0]]] = (p[0],p[1])
+
+    sGrads = sorted(grads,reverse=True)
+    print sGrads
+    cv2.circle(gradientMagnitude,grads[sGrads[0]],5,(255,0,0))
+    cv2.circle(gradientMagnitude,grads[sGrads[1]],10,(255,255,255))
+
     cv2.imshow("Aux",gradientMagnitude)
 
 
-    return pointG
+    return grads[sGrads[0]]
 
 ## Threshold
 ## Blob of proper size
