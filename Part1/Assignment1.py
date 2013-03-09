@@ -11,12 +11,13 @@ import numpy as np
 import math
 import sys
 from scipy.cluster.vq import *
+import Part2.SIGBTools as sbt2
 
 from scipy.misc import *
 
 from matplotlib.pyplot import *
 
-inputFile = "Sequences/eye3.avi"
+inputFile = "Sequences/eye1.avi"
 outputFile = "eyeTrackerResult.mp4"
 
 #--------------------------
@@ -139,43 +140,86 @@ def GetGlints(gray,thr,minSize, maxSize):
         return r
 
 def getGradientImageInfo(I):
-    I2 = np.array(I)
+    I2 = I.copy()
     # Using the derivitive kernel from -1 to 1.
     # Dx
     gradientX = cv2.Sobel(I2, -1, 1, 0)
     # Dy
     gradientY = cv2.Sobel(I2, -1, 0, 1)
+
+
     m,n = I2.shape
     # magnitudes fra 0 to 360
     magnitudeImg = np.zeros((m,n))
+
     for i in range(m):
         for j in range(n):
-            xpow2 = math.pow(gradientX[i][j],2)
-            ypow2 = math.pow(gradientY[i][j],2)
-            length = math.sqrt(xpow2+ypow2)
+            xpow2 = math.pow(int(gradientX[i][j]),2)
+            ypow2 = math.pow(int(gradientY[i][j]),2)
+            length = int(np.sqrt(xpow2+ypow2))
             magnitudeImg[i][j] = length
+
     #orientation
+    cv2.imshow("Aux", magnitudeImg)
+    print magnitudeImg
     orientImg = np.zeros((m,n))
     for i in range(m):
         for j in range(n):
             orientImg[i][j] = (math.atan2(gradientX[i][j],gradientY[i][j])*180)/math.pi
     # Descriptions
-
+    return {"magnitude":magnitudeImg,
+            "dx":gradientX,
+            "dy":gradientY,
+            "direction":orientImg
+            }
 
     # gImY = cv2.So
 
 def circleTest(I, C):
     I2 = I.copy()
-    print(I2.shape)
+    M,N = I2.shape
     nPts = 20
-  #  C = (100,100)
+
     circleRadius = 40;
     P= getCircleSamples(center=C, radius=circleRadius, nPoints=nPts)
+    c2 = (int(C[0]),int(C[1]))
     t=0;
+    gradientInfo = getGradientImageInfo(I);
     for (x,y,dx,dy) in P:
-        cv2.circle(I2,(int(x),int(y)),1,(255,0,0))
 
-    cv2.imshow("Aux",I2)
+        vdx = (x-c2[0])*2
+        vdy = (y-c2[1])*2
+
+        newX = max(0,min(x+vdx,M-1))
+        newY = max(0,min(y+vdy,N-1))
+
+        cv2.line(I2, c2, (int(newX),int(newY)),(124,144,0))
+        cv2.circle(I2,(int(newX),int(newY)),1,(255,0,0))
+
+        grad = findMaxGradientValueOnNormal(
+            gradientInfo["magnitude"],
+            (newX,newY),
+            c2)
+
+        cv2.circle(I2,grad,1,(0,255,0))
+
+    # cv2.imshow("Aux",I2)
+
+def findEllipseContour(img, gradientMagnitude, estimatedCenter, estimatedRadius,nPts=30):
+    pass;
+
+def findMaxGradientValueOnNormal(gradientMagnitude,p1,p2):
+    pts = sbt2.getLineCoordinates(p1,p2)
+    #normalVals = gradientMagnitude[pts[:,1],pts[:,0]]
+    maxG = 0
+    pointG = None
+    for p in pts:
+        gMag = gradientMagnitude[p[0]][p[1]]
+        if(gMag > maxG):
+            maxG = gMag
+            pointG = (p[0],p[1])
+    return pointG
+
 ## Threshold
 ## Blob of proper size
 ## Blob of Shape
@@ -286,8 +330,8 @@ def update(I):
 # Do the magic  pupils = contour, glints = ellipse
     #pupils = GetPupil(gray,sliderVals['pupilThr'],sliderVals['pupMinSize'],sliderVals['pupMaxSize'])
     pupils = GetPupil(gray, sliderVals['pupilThr'], sliderVals['pupMinSize'],sliderVals['pupMaxSize'])
-    if(len(pupils)> 0):
-        circleTest(gray,pupils[0][0])
+
+
 
     # detectPupilKMeans(gray)
 # Do the magic  pupils = ellipsis, glints = ellipsis
@@ -296,7 +340,9 @@ def update(I):
     glints, pupils = FilterPupilGlint(glints,pupils)
 
     for pupil in pupils:
-            cv2.ellipse(img, pupil, (255,0,0),2)
+        circleTest(gray,pupil[0])
+    for pupil in pupils:
+        cv2.ellipse(img, pupil, (255,0,0),2)
 
 
     for glint in glints:
@@ -455,7 +501,7 @@ def setupWindowSliders():
     cv2.createTrackbar('glintMinDist','Threshold', 0, 100, onSlidersChange)
     cv2.createTrackbar('glintMaxDist','Threshold', 100, 100, onSlidersChange)
     cv2.createTrackbar('glint&pubMINDist','Threshold', 0, 500, onSlidersChange)
-    cv2.createTrackbar('glint&pubMAXDist','Threshold', 500, 500, onSlidersChange)
+    cv2.createTrackbar('glint&pubMAXDist','Threshold', 79, 500, onSlidersChange)
     #Value to indicate whether to run or pause the video
     cv2.createTrackbar('Stop/Start','Threshold', 0,1, onSlidersChange)
 
