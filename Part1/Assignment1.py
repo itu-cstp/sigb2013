@@ -11,10 +11,12 @@ import numpy as np
 import math
 import sys
 from scipy.cluster.vq import *
+
 from scipy.misc import imresize
+
 from matplotlib.pyplot import *
 
-inputFile = "Sequences/eye1.avi"
+inputFile = "Sequences/eye2.avi"
 outputFile = "eyeTrackerResult.mp4"
 
 #--------------------------
@@ -27,27 +29,19 @@ leftTemplate = []
 rightTemplate = []
 tempSet = False
 frameNr =0
-
 props = RegionProps()
 
-def detectPupilKMeans(gray,K=2,distanceWeight=2,reSize=(40,40)):
-    ''' Detects the pupil in the image, gray, using k-means gray
-    : grays scale image K
-    : Number of clusters distanceWeight
-    : Defines the weight of the position parameters reSize
-    : the size of the image to do k-means on
-    '''
-    #Resize for faster performance
+
+def detectPupilKMeans(gray,K=4,distanceWeight=1,reSize=(30,30)):
     smallI = cv2.resize(gray, reSize)
     M,N = smallI.shape
-    #Generate coordinates in a matrix
     X,Y = np.meshgrid(range(M),range(N))
 
-    #Make coordinates and intensity into one vectors
     z = smallI.flatten()
     x = X.flatten()
     y = Y.flatten()
     O = len(x)
+
     #make a feature vectors containing (x,y,intensity)
     features = np.zeros((O,3))
     features[:,0] = z;
@@ -76,6 +70,7 @@ def detectPupilKMeans(gray,K=2,distanceWeight=2,reSize=(40,40)):
     f.show()
     """
 
+
 def GetPupil(gray,thr,minArea=4200,maxArea=6000):
     """
     Doesn't work when eye is looking down. Be more loose with circularity
@@ -83,10 +78,10 @@ def GetPupil(gray,thr,minArea=4200,maxArea=6000):
     props = RegionProps()
 
     val,binI =cv2.threshold(gray, thr, 255, cv2.THRESH_BINARY_INV)
+    binI = cv2.morphologyEx(binI,cv2.MORPH_CLOSE,cv2.getStructuringElement(cv2.MORPH_RECT, (10,10)))
 
-    binI = cv2.morphologyEx(binI,cv2.MORPH_OPEN,cv2.getStructuringElement(cv2.MORPH_CROSS, (4,4)))
-
-    # binI = cv2.morphologyEx(binI,cv2.MORPH_CLOSE,cv2.getStructuringElement(cv2.MORPH_CROSS,(4,4)))
+    binI = cv2.morphologyEx(binI,cv2.MORPH_OPEN,cv2.getStructuringElement(cv2.MORPH_CROSS,(10,10)))
+    #cv2.imshow("Aux", binI)
 
     global pupilPos
     #Calculate blobs
@@ -103,19 +98,9 @@ def GetPupil(gray,thr,minArea=4200,maxArea=6000):
         if (m<1.7):
             if(len(con)>=5):
                 ellips = cv2.fitEllipse(con)
-                #Using last found pupil to set centerpoint, not best solution!
-                pupilPos = ellips[0]
                 match.append(ellips)
     return match
-    # xs = sorted(match, key=lambda x: cv2.contourArea(x),reverse=True)
-    #
-    # xs2 = []
-    # for x in xs:
-    #     if(len(x)>=5):
-    #         cv2.drawContours(gray,[x],0,(255,0,0),1)
-    #         xs2.append(cv2.fitEllipse(x))
-    #
-    # return xs2
+
 
 def GetGlints(gray,thr,minSize, maxSize):
         ''' Given a gray level image, gray and threshold
@@ -151,6 +136,10 @@ def GetGlints(gray,thr,minSize, maxSize):
 
         # returning a list of candidate ellipsis
         return r
+
+def getGradientImageInfo(I):
+    return ""
+
 
 ## Threshold
 ## Blob of proper size
@@ -213,15 +202,8 @@ def GetIrisUsingSimplifyedHough(gray,pupil):
 
 def GetEyeCorners(img, leftTemplate, rightTemplate,pupilPosition=None):
     sliderVals = getSliderVals()
-    leftImage = img
-    rightImage =img
-    #If the pupil center has been set, use it to split the main image in halves and search accordingly.
-    if(pupilPosition != None):
-        x,y = pupilPosition
-        leftImage = img[:,:x]
-        rightImage =img[:,x:]
-    matchLeft = cv2.matchTemplate(leftImage,leftTemplate,cv2.TM_CCOEFF_NORMED)
-    matchRight = cv2.matchTemplate(rightImage,rightTemplate,cv2.TM_CCOEFF_NORMED)
+    matchLeft = cv2.matchTemplate(img,leftTemplate,cv2.TM_CCOEFF_NORMED)
+    matchRight = cv2.matchTemplate(img,rightTemplate,cv2.TM_CCOEFF_NORMED)
     matchListRight = np.nonzero(matchRight > (sliderVals['templateThr']*0.01))
     matchListLeft =  np.nonzero(matchLeft > (sliderVals['templateThr']*0.01))
     matchList = (matchListLeft,matchListRight)
@@ -230,7 +212,7 @@ def GetEyeCorners(img, leftTemplate, rightTemplate,pupilPosition=None):
 
 def FilterPupilGlint(glints, pupils):
     glintList = []
-    glintList1 = [] #these three should be sets instead to avoid duplicates
+    glintList1 = []
     pupilList = []
     sliderVals = getSliderVals()
     for candA in glints:
@@ -248,7 +230,7 @@ def FilterPupilGlint(glints, pupils):
         for glintCand in glintList1:
             if(Distance(candP[0],glintCand[0])>sliderVals['glint&pubMINDist'] and Distance(candP[0],glintCand[0])<sliderVals['glint&pubMAXDist']):
                 pupilList.append(candP)
-    #sort out the pupils too far away from the center point between the latest found glints.
+    #sort out the pupils too far away from the found glints.
     return (set(glintList1),set(pupilList))
 
 
@@ -265,21 +247,20 @@ def update(I):
     gray = cv2.cvtColor(img,cv2.COLOR_RGB2GRAY)
 
 
+
 # Do the magic  pupils = contour, glints = ellipse
     #pupils = GetPupil(gray,sliderVals['pupilThr'],sliderVals['pupMinSize'],sliderVals['pupMaxSize'])
     pupils = GetPupil(gray, detectPupilKMeans(gray,8,15), sliderVals['pupMinSize'],sliderVals['pupMaxSize'])
 
+    # detectPupilKMeans(gray)
+# Do the magic  pupils = ellipsis, glints = ellipsis
+    #pupils = GetPupil(gray,sliderVals['pupilThr'],sliderVals['pupMinSize'],sliderVals['pupMaxSize'])
     glints = GetGlints(gray,sliderVals['glintThr'],sliderVals['glintMinSize'],sliderVals['glintMaxSize'])
     glints, pupils = FilterPupilGlint(glints,pupils)
 
-
     for pupil in pupils:
             cv2.ellipse(img, pupil, (255,0,0),2)
-    #    cv2.circle(img,(int(pupil[0][0]),int(pupil[0][1])),5,(0,255,0)) # Since we have an allipse we use it to find the center
-    # for pupil in pupils:
-    #    # cv2.ellipse(img,pupil,(0,255,0),2)
-    #    C = int(pupil[0][0]),int(pupil[0][1])
-    #    cv2.circle(img,C, 2, (0,0,255),4)
+
 
     for glint in glints:
         cv2.ellipse(img, glint,(0,255,0),2)
@@ -300,7 +281,7 @@ def update(I):
             cv2.rectangle(img,(x,y),((x+len(leftTemplate[0])),(y+len(leftTemplate[1]))),(0,0,255))
         for i in range(len(rightCords[1])):
             pupx,pupy = pupilPos
-            x = rightCords[1][i] + int(pupx)
+            x = rightCords[1][i]
             y = rightCords[0][i]
             cv2.rectangle(img,(x,y),((x+len(rightTemplate[0])),(y+len(rightTemplate[1]))),(0,0,255))
     #Display results
@@ -328,7 +309,7 @@ def update(I):
 
     cv2.imshow('Result',img)
 
-    cv2.imshow('Temp',I)
+    #cv2.imshow('Temp',I)
     sliderVals['pupilThr']
 
 def printUsage():
@@ -419,10 +400,10 @@ def setText(dst, (x, y), s):
 
 
 def setupWindowSliders():
- #   cv2.namedWindow("Result")
- #   cv2.namedWindow('Threshold')
+    cv2.namedWindow("Result")
+    cv2.namedWindow('Threshold')
     #cv2.namedWindow("Temp")
-    #cv2.namedWindow("Aux")
+ #   cv2.namedWindow("Aux")
     #Threshold value for the pupil intensity
     cv2.createTrackbar('pupilThr','Threshold', 129, 255, onSlidersChange)
     #Threashold value for template matching
@@ -431,7 +412,7 @@ def setupWindowSliders():
     cv2.createTrackbar('glintThr','Threshold', 240, 255,onSlidersChange)
     #define the minimum and maximum areas of the pupil
     cv2.createTrackbar('pupMinSize','Threshold', 70, 200, onSlidersChange)
-    cv2.createTrackbar('pupMaxSize','Threshold', 120,200, onSlidersChange)
+    cv2.createTrackbar('pupMaxSize','Threshold', 120,600, onSlidersChange)
     cv2.createTrackbar('glintMinSize','Threshold', 0, 200, onSlidersChange)
     cv2.createTrackbar('glintMaxSize','Threshold', 200, 200, onSlidersChange)
     cv2.createTrackbar('glintMinDist','Threshold', 0, 100, onSlidersChange)
