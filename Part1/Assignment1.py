@@ -3,7 +3,7 @@ cv2.namedWindow("Bah")   #workaround for arch linux
 cv2.destroyAllWindows() #workaround for arch linux
 import cv
 import pylab
-from SIGBTools import RegionProps
+from SIGBTools import *
 from SIGBTools import getLineCoordinates
 from SIGBTools import ROISelector
 from SIGBTools import getImageSequence
@@ -12,7 +12,7 @@ import math
 import sys
 from scipy.cluster.vq import *
 
-from scipy.misc import imresize
+from scipy.misc import *
 
 from matplotlib.pyplot import *
 
@@ -58,12 +58,8 @@ def detectPupilKMeans(gray,K=4,distanceWeight=1,reSize=(30,30)):
 
     thr = 255
     for i in range(K):
-        print centroids[i][0]
         if(centroids[i][0] < thr):
             thr = centroids[i][0]
-
-    val, binI = cv2.threshold(gray, thr, 255, cv2.THRESH_BINARY_INV)
-    cv2.imshow("Aux",binI)
     return thr
     """
     f = figure(1)
@@ -85,7 +81,6 @@ def GetPupil(gray,thr,minArea=4200,maxArea=6000):
     binI = cv2.morphologyEx(binI,cv2.MORPH_OPEN,cv2.getStructuringElement(cv2.MORPH_CROSS,(10,10)))
     #cv2.imshow("Aux", binI)
 
-    global pupilPos
     #Calculate blobs
     contours, hierarchy = cv2.findContours(binI, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
     match = []
@@ -103,6 +98,10 @@ def GetPupil(gray,thr,minArea=4200,maxArea=6000):
                 match.append(ellips)
     return match
 
+def bestPupil(pupilList):
+    pass
+    for p in pupilList:
+        pass;
 
 def GetGlints(gray,thr,minSize, maxSize):
         ''' Given a gray level image, gray and threshold
@@ -140,9 +139,43 @@ def GetGlints(gray,thr,minSize, maxSize):
         return r
 
 def getGradientImageInfo(I):
-    return ""
+    I2 = np.array(I)
+    # Using the derivitive kernel from -1 to 1.
+    # Dx
+    gradientX = cv2.Sobel(I2, -1, 1, 0)
+    # Dy
+    gradientY = cv2.Sobel(I2, -1, 0, 1)
+    m,n = I2.shape
+    # magnitudes fra 0 to 360
+    magnitudeImg = np.zeros((m,n))
+    for i in range(m):
+        for j in range(n):
+            xpow2 = math.pow(gradientX[i][j],2)
+            ypow2 = math.pow(gradientY[i][j],2)
+            length = math.sqrt(xpow2+ypow2)
+            magnitudeImg[i][j] = length
+    #orientation
+    orientImg = np.zeros((m,n))
+    for i in range(m):
+        for j in range(n):
+            orientImg[i][j] = (math.atan2(gradientX[i][j],gradientY[i][j])*180)/math.pi
+    # Descriptions
 
 
+    # gImY = cv2.So
+
+def circleTest(I, C):
+    I2 = I.copy()
+    print(I2.shape)
+    nPts = 20
+  #  C = (100,100)
+    circleRadius = 40;
+    P= getCircleSamples(center=C, radius=circleRadius, nPoints=nPts)
+    t=0;
+    for (x,y,dx,dy) in P:
+        cv2.circle(I2,(int(x),int(y)),1,(255,0,0))
+
+    cv2.imshow("Aux",I2)
 ## Threshold
 ## Blob of proper size
 ## Blob of Shape
@@ -247,11 +280,14 @@ def update(I):
     sliderVals = getSliderVals()
     img = I.copy()
     gray = cv2.cvtColor(img,cv2.COLOR_RGB2GRAY)
+    getGradientImageInfo(gray)
 
     cv2.setTrackbarPos('pupilThr','Threshold',detectPupilKMeans(gray,8,15))
 # Do the magic  pupils = contour, glints = ellipse
     #pupils = GetPupil(gray,sliderVals['pupilThr'],sliderVals['pupMinSize'],sliderVals['pupMaxSize'])
     pupils = GetPupil(gray, sliderVals['pupilThr'], sliderVals['pupMinSize'],sliderVals['pupMaxSize'])
+    if(len(pupils)> 0):
+        circleTest(gray,pupils[0][0])
 
     # detectPupilKMeans(gray)
 # Do the magic  pupils = ellipsis, glints = ellipsis

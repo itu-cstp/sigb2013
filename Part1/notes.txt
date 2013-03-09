@@ -22,3 +22,20 @@ result, probably because of the "increased power" of the black/white difference
 
 QUESTION FOR MR.TEACHER AND HIS APPRENTICE:
 How to save video? CV_FOURCC 404
+
+
+--------------------------------------
+2.2
+opg 2.
+describe properties:
+
+gradients:
+gradients are the change in the pixel intensity at a single point compared to its surrounding pixels.
+
+magnitude:
+gradient magnitude is the amount of change.
+
+gradient direction:
+the direction at which the greatest change from dark to light occurs. (dont go into the light ;-)
+
+
