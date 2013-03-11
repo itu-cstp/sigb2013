@@ -19,11 +19,6 @@ closing is used to, but it makes no difference (see question 18)
 we use morphology before thresholding, rather than after. This gives a better
 result, probably because of the "increased power" of the black/white difference
 
-
-QUESTION FOR MR.TEACHER AND HIS APPRENTICE:
-How to save video? CV_FOURCC 404
-
-
 --------------------------------------
 2.2
 opg 2.

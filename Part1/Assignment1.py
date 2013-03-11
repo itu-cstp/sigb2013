@@ -181,7 +181,7 @@ def circleTest(I, C):
     M,N = I2.shape
     nPts = 20
 
-    circleRadius = 40;
+    circleRadius = 40
     P= getCircleSamples(center=C, radius=circleRadius, nPoints=nPts)
     c2 = (int(C[0]),int(C[1]))
     t=0;
@@ -199,7 +199,7 @@ def circleTest(I, C):
 
         grad = findMaxGradientValueOnNormal(
             gradientInfo,
-            c2,(newX,newY))
+            c2,(newX,newY))[0]
 
         cv2.circle(I2,grad,1,(0,255,0))
 
@@ -217,14 +217,7 @@ def findMaxGradientValueOnNormal(gradientMagnitude,p1,p2):
         grads[gradientMagnitude[p[1]][p[0]]] = (p[0],p[1])
 
     sGrads = sorted(grads,reverse=True)
-    print sGrads
-    cv2.circle(gradientMagnitude,grads[sGrads[0]],5,(255,0,0))
-    cv2.circle(gradientMagnitude,grads[sGrads[1]],10,(255,255,255))
-
-    cv2.imshow("Aux",gradientMagnitude)
-
-
-    return grads[sGrads[0]]
+    return [grads[sGrads[0]], grads[sGrads[1]]]
 
 ## Threshold
 ## Blob of proper size
@@ -276,8 +269,7 @@ def circularHough(gray):
 def GetIrisUsingNormals(gray,pupil,normalLength):
 	''' Given a gray level image, gray and the length of the normals, normalLength
 	 return a list of iris locations'''
-	# YOUR IMPLEMENTATION HERE !!!!
-	pass
+
 
 def GetIrisUsingSimplifyedHough(gray,pupil):
 	''' Given a gray level image, gray

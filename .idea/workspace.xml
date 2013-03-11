@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4aa75d65-d60d-4581-a6e3-b91dc2d68e52" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/1.iml" afterPath="$PROJECT_DIR$/.idea/1.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Part1/Assignment1.py" afterPath="$PROJECT_DIR$/Part1/Assignment1.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Part1/notes.txt" afterPath="$PROJECT_DIR$/Part1/notes.txt" />
     </list>
     <ignored path="1.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,13 +24,18 @@
   <component name="DaemonCodeAnalyzer">
     <disable_hints />
   </component>
+  <component name="DatabaseView">
+    <flatten value="false" />
+    <groupTables value="false" />
+    <sortChildren value="false" />
+  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
       <file leaf-file-name="Assignment1.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Part1/Assignment1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="221" column="28" selection-start="6321" selection-end="6321" vertical-scroll-proportion="0.66071427">
+            <state line="183" column="21" selection-start="5199" selection-end="5199" vertical-scroll-proportion="0.5182292">
               <folding />
             </state>
           </provider>
@@ -49,7 +53,7 @@
       <file leaf-file-name="week2.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/Downloads/week2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="0" selection-start="609" selection-end="657" vertical-scroll-proportion="0.0">
+            <state line="128" column="0" selection-start="4779" selection-end="4779" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -58,7 +62,7 @@
       <file leaf-file-name="notes.txt" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Part1/notes.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="40" column="0" selection-start="1428" selection-end="1428" vertical-scroll-proportion="0.0">
+            <state line="20" column="0" selection-start="986" selection-end="986" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -79,16 +83,16 @@
       <list>
         <option value="$PROJECT_DIR$/SIGBTools.py" />
         <option value="$PROJECT_DIR$/Assignment1.py" />
-        <option value="$PROJECT_DIR$/Part1/notes.txt" />
         <option value="$PROJECT_DIR$/Part2/__init__.py" />
+        <option value="$PROJECT_DIR$/Part1/notes.txt" />
         <option value="$PROJECT_DIR$/Part1/Assignment1.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="18" />
-    <option name="width" value="1600" />
-    <option name="height" value="863" />
+    <option name="width" value="1024" />
+    <option name="height" value="731" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -268,18 +272,18 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="18" width="1600" height="863" extended-state="0" />
+    <frame x="0" y="18" width="1024" height="731" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32886904" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16193548" sideWeight="0.36400542" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16193548" sideWeight="0.37753722" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32967743" sideWeight="0.7510149" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2577002" sideWeight="0.3360791" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2577002" sideWeight="0.34925866" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39880952" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24898511" sideWeight="0.48387095" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30313015" sideWeight="0.48387095" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -408,16 +412,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Downloads/week2.py">
+    <entry file="file://$PROJECT_DIR$/Part1/notes.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="0" selection-start="609" selection-end="657" vertical-scroll-proportion="0.0">
+        <state line="20" column="0" selection-start="986" selection-end="986" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Part1/notes.txt">
+    <entry file="file://$USER_HOME$/Downloads/week2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="0" selection-start="1428" selection-end="1428" vertical-scroll-proportion="0.0">
+        <state line="128" column="0" selection-start="4779" selection-end="4779" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -431,7 +435,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Part1/Assignment1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="221" column="28" selection-start="6321" selection-end="6321" vertical-scroll-proportion="0.66071427">
+        <state line="183" column="21" selection-start="5199" selection-end="5199" vertical-scroll-proportion="0.5182292">
           <folding />
         </state>
       </provider>
