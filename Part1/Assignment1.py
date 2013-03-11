@@ -13,11 +13,6 @@ import sys
 from scipy.cluster.vq import *
 import Part2.SIGBTools as sbt2
 
-from scipy.misc import *
-
-from matplotlib.pyplot import *
-
-dilKern=cv2.getStructuringElement(cv2.MORPH_CROSS,(10,10))
 inputFile = "Sequences/eye1.avi"
 outputFile = "eyeTrackerResult.mp4"
 
@@ -148,8 +143,9 @@ def getGradientImageInfo(I):
     # Dy
     gradientY = cv2.Sobel(I2, cv2.CV_32F, 0, 1)
 
-
     m,n = I2.shape
+
+    orientImg = np.zeros((m,n))
     # magnitudes fra 0 to 360
     magnitudeImg = np.zeros((m,n), dtype="uint8")
     a = 255.0/(361.0)
@@ -160,47 +156,55 @@ def getGradientImageInfo(I):
             ypow2 = math.pow(int(gradientY[i][j]),2)
             length = int(np.sqrt(xpow2+ypow2))
             magnitudeImg[i][j] = a*length+b
-   # #orientation
-   # orientImg = np.zeros((m,n))
-   # for i in range(m):
-   #     for j in range(n):
-   #         orientImg[i][j] = (math.atan2(gradientX[i][j],gradientY[i][j])*180)/math.pi
-    # Descriptions
-    # return {"magnitude" : magnitudeImg,
-#            "dx":gradientX,
- #           "dy":gradientY,
-  #          "direction":orientImg
-  #           }
-    #magnitudeImg = cv2.dilate(magnitudeImg, dilKern)
-    cv2.imshow("gradient", magnitudeImg)
-    return magnitudeImg
-    # gImY = cv2.So
 
-def circleTest(I, C):
+            #orientation
+            orientImg[i][j] =   math.atan2(
+                                    gradientX[i][j],gradientY[i][j]
+                                )*180/ math.pi
+
+    return {"magnitude" : magnitudeImg,
+            "dx":gradientX,
+            "dy":gradientY,
+            "direction":orientImg,
+         }
+
+def circleTest(I, pupil):
     I2 = I.copy()
     M,N = I2.shape
     nPts = 20
+    C = pupil[0]
+    circleRadius = pupil[1][0] / 2
 
-    circleRadius = 40
     P= getCircleSamples(center=C, radius=circleRadius, nPoints=nPts)
     c2 = (int(C[0]),int(C[1]))
-    t=0;
-    gradientInfo = getGradientImageInfo(I);
-    for (x,y,dx,dy) in P:
-        factor = 3
-        vdx = (x-c2[0])*factor
-        vdy = (y-c2[1])*factor
 
-        newX = max(0,min(x+vdx,N-1))
-        newY = max(0,min(y+vdy,M-1))
+    cv2.circle(I2,c2,int(circleRadius),(255,0,0))
+
+    gradientInfo = getGradientImageInfo(I)
+    gradientImg = gradientInfo["magnitude"]
+
+    for (x,y,dx,dy) in P:
+        factor = 3.5
+
+        deltaX = (x-c2[0])
+        deltaY = (y-c2[1])
+
+        vdx = deltaX*factor
+        vdy = deltaY*factor
+
+        newX = max(0,min(vdx+x,N-1))
+        newY = max(0,min(vdy+y,M-1))
 
         cv2.line(I2, c2, (int(newX),int(newY)),(124,144,0))
         cv2.circle(I2,(int(newX),int(newY)),1,(255,0,0))
 
-        grad = findMaxGradientValueOnNormal(
-            gradientInfo,
-            c2,(newX,newY))[0]
+        irisNorm = GetIrisUsingNormals(gradientInfo,c2,circleRadius,(newX, newY),(deltaX,deltaY))
 
+        grad = findMaxGradientValueOnNormal(
+            gradientImg,
+            c2,(newX,newY),irisNorm)[0]
+
+        #cv2.circle(I2,irisNorm,1,(255,0,0))
         cv2.circle(I2,grad,1,(0,255,0))
 
     cv2.imshow("Aux2",I2)
@@ -208,15 +212,17 @@ def circleTest(I, C):
 def findEllipseContour(img, gradientMagnitude, estimatedCenter, estimatedRadius,nPts=30):
     pass;
 
-def findMaxGradientValueOnNormal(gradientMagnitude,p1,p2):
+def findMaxGradientValueOnNormal(gradientMagnitude,p1,p2,irisNorm):
     pts = sbt2.getLineCoordinates(p1,p2)
 
     #normalVals = gradientMagnitude[pts[:,1],pts[:,0]]
     grads = {}
     for p in pts:
-        grads[gradientMagnitude[p[1]][p[0]]] = (p[0],p[1])
+        if any(p for i in irisNorm):
+            grads[gradientMagnitude[p[1]][p[0]]] = (p[0],p[1])
 
     sGrads = sorted(grads,reverse=True)
+
     return [grads[sGrads[0]], grads[sGrads[1]]]
 
 ## Threshold
@@ -266,9 +272,33 @@ def circularHough(gray):
 	 cv2.circle(gColor, (int(c[0]),int(c[1])),c[2], (0,0,255),5)
 	 cv2.imshow("hough",gColor)
 
-def GetIrisUsingNormals(gray,pupil,normalLength):
-	''' Given a gray level image, gray and the length of the normals, normalLength
+def GetIrisUsingNormals(gradientInfo,pupil,pupilRadius,point,normals):
+    ''' Given a gray level image, gray and the length of the normals, normalLength
 	 return a list of iris locations'''
+
+    orientation = gradientInfo["direction"]
+
+    normalAngle = math.atan2(
+        normals[0],normals[1]
+    )*180/ math.pi
+    pts = sbt2.getLineCoordinates(pupil,point)
+
+    coords = []
+    threshold = 0.1
+    for p in pts:
+        x = p[0]
+        y = p[1]
+        diff = math.fabs(absolute(orientation[y][x] - normalAngle))
+        if(diff < threshold):
+            coords.append((x,y))
+
+    return coords
+
+
+
+
+
+
 
 
 def GetIrisUsingSimplifyedHough(gray,pupil):
@@ -338,10 +368,8 @@ def update(I):
     glints, pupils = FilterPupilGlint(glints,pupils)
 
     for pupil in pupils:
-        circleTest(gray,pupil[0])
-    for pupil in pupils:
+        circleTest(gray,pupil)
         cv2.ellipse(img, pupil, (255,0,0),2)
-
 
     for glint in glints:
         cv2.ellipse(img, glint,(0,255,0),2)
