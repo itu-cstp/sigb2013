@@ -36,3 +36,7 @@ the direction at which the greatest change from dark to light occurs. (dont go i
 opg 2.2.10
 When the normals run though glints, they will often have a higher gradient that
 the pupil/iris border
+
+When scaling the norms (pupil/iris detection) something is illogical.
+Scaling by factor 1 doubles the length because we scale the length, and add it
+to the original length, but using the new length instead gives strange results
