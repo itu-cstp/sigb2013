@@ -1,22 +1,20 @@
-import cv2;
 import cv2
 import numpy as np
-import pylab
 from pylab import *
-import matplotlib as mpl 
 import math
 ''' This module contains sets of functions useful for basic image analysis and should be useful in the SIGB course.
 Written and Assembled  (2012,2013) by  Dan Witzner Hansen, IT University.
 '''
 
 def getCircleSamples(center=(0,0),radius=1,nPoints=30):
-    ''' Samples a circle with center center = (x,y) , radius =1 and in nPoints on the cirlce
-    '''
+    ''' Samples a circle with center center = (x,y) , radius =1 and in nPoints on the circle.
+    Returns an array of a tuple containing the points (x,y) on the circle and the curve gradient in the point (dx,dy)
+    Notice the gradient (dx,dy) has unit length'''
+
+
     s = np.linspace(0, 2*math.pi, nPoints)
-    #p = (radius*np.cos(t)+center[0],radius*np.sin(t)+center[1])
-    
     #points
-    P = [(radius*np.cos(t)+center[0], radius*np.sin(t)+center[1],np.cos(t),np.sin(t) ) for t in s ]
+    P = [(radius*np.cos(t)+center[0], np.sin(t)+center[1],np.cos(t),np.sin(t) ) for t in s ]
     return P
 
 
@@ -159,9 +157,9 @@ class RegionProps:
             elif (prop=="moments"):
                 contourProps.update({'Moments':m});    
             elif (prop=="perimiter"):
-                contourProps.update({'Perimiter':self.__calcPerimiter(contour)});
+                contourProps.update({'Perimiter':self.__calcPermiter(contour)}); 
             elif (prop=="equivdiameter"):
-                contourProps.update({'EquivDiameter':self.__calcEquivDiameter(m,contour)});
+                contourProps.update({'EquivDiameter':self.__calcEquiDiameter(m,contour)}); 
             elif (prop=="extend"):
                 contourProps.update({'Extend':self.__calcExtend(m,contour)});
             elif (prop=="convexhull"): #Returns the dictionary

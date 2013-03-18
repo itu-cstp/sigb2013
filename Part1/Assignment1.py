@@ -11,7 +11,7 @@ import numpy as np
 import math
 import sys
 from scipy.cluster.vq import *
-import Part2.SIGBTools as sbt2
+import SIGBTools as sbt2
 
 inputFile = "Sequences/eye1.avi"
 outputFile = "eyeTrackerResult.mp4"
@@ -245,18 +245,44 @@ def GetIrisUsingThreshold(gray,pupil):
 	# YOUR IMPLEMENTATION HERE !!!!
 	pass
 
-def circularHough(gray):
+def detectIrisHough(gray):
+    blur = cv2.GaussianBlur(gray, (11,11),11)
+    ##Pupil parameters
+    dp = 6; minDist = 10
+    highThr = 30 #High threshold for canny
+    accThr = 300; #accumulator threshold for the circle centers at the detection stage. The smaller it is, the more false circles may be detected
+    minRadius = 140;
+    maxRadius = 155;
+    #See help for http://opencv.itseez.com/modules/imgproc/doc/feature_detection.html? highlight=houghcircle#cv2.HoughCirclesIn thus
+    circles = cv2.HoughCircles(blur,cv2.cv.CV_HOUGH_GRADIENT, dp,minDist, None, highThr,accThr ,minRadius, maxRadius)
+    #Print the circles
+    gColor = cv2.cvtColor(gray, cv2.COLOR_GRAY2BGR)
+    if (circles !=None):
+        #print circles
+        all_circles = circles[0]
+        M,N = all_circles.shape
+        k=1
+        for c in all_circles:
+            cv2.circle(gColor, (int(c[0]),int(c[1])),c[2], (int(k*255/M),k*128,0))
+            K=k+1
+        #Circle with max votes
+        c=all_circles[0,:]
+        cv2.circle(gColor, (int(c[0]),int(c[1])),c[2], (0,0,255),5)
+        cv2.imshow("houghIris",gColor)
+
+
+def detectPupilHough(gray):
 	''' Performs a circular hough transform of the image, gray and shows the  detected circles
 	The circe with most votes is shown in red and the rest in green colors '''
- #See help for http://opencv.itseez.com/modules/imgproc/doc/feature_detection.html?highlight=houghcircle#cv2.HoughCircles
-	blur = cv2.GaussianBlur(gray, (31,31), 11)
+#See help for http://opencv.itseez.com/modules/imgproc/doc/feature_detection.html?highlight=houghcircle#cv2.HoughCircles
+	blur = cv2.GaussianBlur(gray, (81,81), 11)
 
 	dp = 6; minDist = 30
 	highThr = 20 #High threshold for canny
-	accThr = 850; #accumulator threshold for the circle centers at the detection stage. The smaller it is, the more false circles may be detected
-	maxRadius = 50;
-	minRadius = 155;
-	circles = cv2.HoughCircles(blur,cv2.cv.CV_HOUGH_GRADIENT, dp,minDist, None, highThr,accThr,maxRadius, minRadius)
+	accThr = 150; #accumulator threshold for the circle centers at the detection stage. The smaller it is, the more false circles may be detected
+	minRadius = 30;
+	maxRadius = 45;
+	circles = cv2.HoughCircles(blur,cv2.cv.CV_HOUGH_GRADIENT, dp,minDist, None, highThr,accThr,minRadius, maxRadius)
 
 	#Make a color image from gray for display purposes
 	gColor = cv2.cvtColor(gray, cv2.COLOR_GRAY2BGR)
@@ -270,7 +296,7 @@ def circularHough(gray):
 			K=k+1
 	 c=all_circles[0,:]
 	 cv2.circle(gColor, (int(c[0]),int(c[1])),c[2], (0,0,255),5)
-	 cv2.imshow("hough",gColor)
+	 cv2.imshow("houghPupil",gColor)
 
 def GetIrisUsingNormals(gradientInfo,pupil,pupilRadius,point,normals):
     ''' Given a gray level image, gray and the length of the normals, normalLength
@@ -352,27 +378,27 @@ def update(I):
     sliderVals = getSliderVals()
     img = I.copy()
     gray = cv2.cvtColor(img,cv2.COLOR_RGB2GRAY)
-    getGradientImageInfo(gray)
+    # getGradientImageInfo(gray)
 
-    cv2.setTrackbarPos('pupilThr','Threshold',detectPupilKMeans(gray,8,15))
+    # cv2.setTrackbarPos('pupilThr','Threshold',detectPupilKMeans(gray,8,15))
 # Do the magic  pupils = contour, glints = ellipse
     #pupils = GetPupil(gray,sliderVals['pupilThr'],sliderVals['pupMinSize'],sliderVals['pupMaxSize'])
-    pupils = GetPupil(gray, sliderVals['pupilThr'], sliderVals['pupMinSize'],sliderVals['pupMaxSize'])
+    # pupils = GetPupil(gray, sliderVals['pupilThr'], sliderVals['pupMinSize'],sliderVals['pupMaxSize'])
 
-
-
+    detectPupilHough(gray)
+    detectIrisHough(gray)
     # detectPupilKMeans(gray)
 # Do the magic  pupils = ellipsis, glints = ellipsis
     #pupils = GetPupil(gray,sliderVals['pupilThr'],sliderVals['pupMinSize'],sliderVals['pupMaxSize'])
-    glints = GetGlints(gray,sliderVals['glintThr'],sliderVals['glintMinSize'],sliderVals['glintMaxSize'])
-    glints, pupils = FilterPupilGlint(glints,pupils)
-
-    for pupil in pupils:
-        circleTest(gray,pupil)
-        cv2.ellipse(img, pupil, (255,0,0),2)
-
-    for glint in glints:
-        cv2.ellipse(img, glint,(0,255,0),2)
+    # glints = GetGlints(gray,sliderVals['glintThr'],sliderVals['glintMinSize'],sliderVals['glintMaxSize'])
+    # glints, pupils = FilterPupilGlint(glints,pupils)
+    #
+    # for pupil in pupils:
+    #     circleTest(gray,pupil)
+    #     cv2.ellipse(img, pupil, (255,0,0),2)
+    #
+    # for glint in glints:
+    #     cv2.ellipse(img, glint,(0,255,0),2)
 
 
     #Do template matching
@@ -414,12 +440,12 @@ def update(I):
 		#circularHough(gray)
 
     #copy the image so that the result image (img) can be saved in the movie
-    drawImg = img.copy()
-
-    cv2.imshow('Result',img)
-
-    #cv2.imshow('Temp',I)
-    sliderVals['pupilThr']
+    # drawImg = img.copy()
+    #
+    # cv2.imshow('Result',img)
+    #
+    # #cv2.imshow('Temp',I)
+    # sliderVals['pupilThr']
 
 def printUsage():
     print "Q or ESC: Stop"
