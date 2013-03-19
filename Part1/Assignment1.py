@@ -10,6 +10,10 @@ import math
 import sys
 from scipy.cluster.vq import *
 from datetime import datetime
+import unittest
+
+
+
 
 inputFile = "Sequences/eye1.avi"
 outputFile = "eyeTrackerResult.mp4"
@@ -122,6 +126,11 @@ def zeit(fun,desc=""):
     print datetime.now() - timestart
     return res
 
+def sigurt(v1,v2):
+    v1mark = v1 - v1
+    v2mark = v2 - v1
+    return math.fabs(v2mark)
+
 def angle(v1, v2):
     return np.arccos(np.dot(v1,v2)/(length(v1)*length(v2)))
 
@@ -147,9 +156,6 @@ def getGradientImageInfo(I,C,radius):
     # magnitudes fra 0 to 360
     magnitudeImg = np.zeros((m,n), dtype="uint8")
 
-    a = 255.0/(361.0)
-    b = (-a)*361.0
-
     def orient(gradX,gradY):
         l=((gradX**2)+(gradY**2))**0.5
         return math.atan2(gradX/l,gradY/l)
@@ -163,10 +169,12 @@ def getGradientImageInfo(I,C,radius):
             xpow2 = math.pow(int(gradientX[i][j]),2)
             ypow2 = math.pow(int(gradientY[i][j]),2)
             length = int(np.sqrt(xpow2+ypow2))
-            magnitudeImg[i][j] = a*length+b
+            magnitudeImg[i][j] = length
 
             orientImg[i][j] = orient(gradientX[i][j],gradientY[i][j])
-
+    
+    #cv2.imshow("aux2",magnitudeImg)
+    
     return {"magnitude" : magnitudeImg,
                 "dx":gradientX,
                 "dy":gradientY,
@@ -181,7 +189,7 @@ def circleTest(I, pupil):
 
     gradientInfo = getGradientImageInfo(I,C,circleRadius)
     findEllipseContour(I2,gradientInfo,C,circleRadius,nPts) 
-    
+
 def findEllipseContour(img, gradientInfo, C, circleRadius,nPts=30):
     M,N = img.shape
     P= getCircleSamples(center=C, radius=circleRadius, nPoints=nPts)
@@ -203,7 +211,7 @@ def findEllipseContour(img, gradientInfo, C, circleRadius,nPts=30):
         newX = max(0,min(vdx+x,N-1))
         newY = max(0,min(vdy+y,M-1))
         pp = (int(newX), int(newY))
-        unitPP = np.divide(pp,np.sqrt(np.array(pp).dot(pp))) 
+        unitPP = np.divide(pp,length(pp))#np.sqrt(np.array(pp).dot(pp))) 
 
         cv2.line(img, c2, pp,(124,144,0))
         cv2.circle(img,pp,1,(255,0,0))
@@ -218,7 +226,7 @@ def findEllipseContour(img, gradientInfo, C, circleRadius,nPts=30):
             cv2.circle(img,grads[0],1,(0,255,0))
             cv2.circle(img,grads[1],1,(0,255,0))
 
-        cv2.imshow("Aux",img);
+        cv2.imshow("Aux",img)
 
 def findMaxGradientValueOnNormal(gradientMagnitude,p1,p2,irisNorm):
     pts = sbt2.getLineCoordinates(p1,p2)
@@ -265,15 +273,15 @@ def GetIrisUsingNormals(gradientInfo,pupil,pupilRadius,point, uv, normals,img=No
 
     orientation = gradientInfo["direction"]
 
-    normalAngle = angle(uv[0],uv[1])
+    normalAngle = math.atan2(uv[0],uv[1])#angle(uv[0],uv[1])
     pts = getLineCoordinates(pupil,point)
 
     coords = []
-    threshold = 0.001
+    threshold = 0.7
     for p in pts:
         x = p[0]
         y = p[1]
-        diff = math.fabs(orientation[y][x] - normalAngle)
+        diff = sigurt(orientation[y][x],normalAngle)
         if(diff < threshold):
             cv2.circle(img,(x,y),3,(255,255,0))
             coords.append((x,y))
