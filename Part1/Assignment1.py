@@ -10,7 +10,7 @@ import sys
 from scipy.cluster.vq import *
 import SIGBTools as sbt2
 
-inputFile = "Sequences/eye3.avi"
+inputFile = "Sequences/eye1.avi"
 outputFile = "eyeTrackerResult.mp4"
 
 #--------------------------
@@ -92,13 +92,8 @@ def GetPupil(gray,thr,minArea=4200,maxArea=6000):
 def GetGlints(gray,thr,minSize, maxSize):
         ''' Given a gray level image, gray and threshold
         value return a list of glint locations'''
-        # YOUR IMPLEMENTATION HERE !!!!
-
-        props = RegionProps()
 
         gray = gray.copy()
-        M,N = gray.shape
-        gray2 = np.zeros(gray.shape)
 
         val, binI = cv2.threshold(gray, thr, 255, cv2.THRESH_BINARY_INV)
         # Opening
@@ -106,23 +101,18 @@ def GetGlints(gray,thr,minSize, maxSize):
         contours, hierarchy = cv2.findContours(binI, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 
 
-        match = []
+        matches = []
         for con in contours:
             a = cv2.contourArea(con)
 
             if(a<maxSize and a>minSize):
                 # cv2.drawContours(gray2,[con],0,(255,0,0),1)
-                match.append(con)
-
-        r = []
-        for m in match:
-            if(len(m)>=5):
-                e = cv2.fitEllipse(m)
-                r.append(e)
+                if(len(con) >=5):
+                    matches.append(cv2.fitEllipse(con))
 
 
         # returning a list of candidate ellipsis
-        return r
+        return matches
 
 def getGradientImageInfo(I):
     I2 = cv2.bilateralFilter(I.copy(), 10, 4, 4)
@@ -330,11 +320,13 @@ def FilterPupilGlint(glints, pupils):
         #only accepting points with a certain distance to each other.
             if (Distance(candA[0],candB[0])> sliderVals['glintMinDist'] and Distance(candA[0],candB[0]) < sliderVals['glintMaxDist']):
                 glintList.append(candA)
+
     #run through the remaining glints, keeping those that are close to the pupil candidates.
     for glintCand in glintList:
             for pupCand in pupils:
                 if(Distance(glintCand[0],pupCand[0])>sliderVals['glint&pubMINDist'] and Distance(glintCand[0],pupCand[0])<sliderVals['glint&pubMAXDist']):
                     glintList1.append(glintCand)
+
     #run through the pupil candidates keeping those that are close to the fina glints list
     for candP in pupils:
         for glintCand in glintList1:
@@ -357,22 +349,22 @@ def update(I):
     gray = cv2.cvtColor(img,cv2.COLOR_RGB2GRAY)
     # getGradientImageInfo(gray)
 
-    cv2.setTrackbarPos('pupilThr','Threshold',detectPupilKMeans(gray,8,15))
+    cv2.setTrackbarPos('pupilThr','Threshold',98)#detectPupilKMeans(gray,8,15))
 
     #detectPupilHough(gray)
     #detectIrisHough(gray)
 
 # Do the magic  pupils = ellipsis, glints = ellipsis
     pupils = GetPupil(gray,sliderVals['pupilThr'],sliderVals['pupMinSize'],sliderVals['pupMaxSize'])
-    #glints = GetGlints(gray,sliderVals['glintThr'],sliderVals['glintMinSize'],sliderVals['glintMaxSize'])
+    glints = GetGlints(gray,sliderVals['glintThr'],sliderVals['glintMinSize'],sliderVals['glintMaxSize'])
     #glints, pupils = FilterPupilGlint(glints,pupils)
 
     for pupil in pupils:
         #circleTest(gray,pupil)
         cv2.ellipse(img, pupil, (255,0,0),2)
 
-    #for glint in glints:
-    #    cv2.ellipse(img, glint,(0,255,0),2)
+    for glint in glints:
+        cv2.ellipse(img, glint,(0,255,0),2)
 
 
     #Do template matching
