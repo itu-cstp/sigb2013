@@ -127,7 +127,6 @@ def zeit(fun,desc=""):
     return res
 
 def sigurt(v1,v2):
-    v1mark = v1 - v1
     v2mark = v2 - v1
     return math.fabs(v2mark)
 
