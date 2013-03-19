@@ -163,8 +163,8 @@ def getGradientImageInfo(I,C,radius):
 
 
 
-    #cv2.imshow("Aux",magnitudeImg)
-    cv2.imshow("Aux2",magnitudeImg)
+    cv2.imshow("Aux",magnitudeImg)
+    #cv2.imshow("Aux2",magnitudeImg)
 
 
     return {"magnitude" : magnitudeImg,
@@ -179,7 +179,7 @@ def circleTest(I, pupil):
     C = pupil[0]
     circleRadius = pupil[1][0] / 2
 
-    gradientInfo = zeit(lambda: getGradientImageInfo(I,C,circleRadius))
+    gradientInfo = getGradientImageInfo(I,C,circleRadius)
 
     findEllipseContour(I2,gradientInfo,C,circleRadius,nPts)
 
@@ -209,11 +209,11 @@ def findEllipseContour(img, gradientInfo, C, circleRadius,nPts=30):
 
         irisNorm = GetIrisUsingNormals(gradientInfo,c2,circleRadius,(newX, newY),(deltaX,deltaY))
 
-        #grad = findMaxGradientValueOnNormal(
-        #    gradientImg,
-        #    c2,(newX,newY),irisNorm)[0]
+        grad = findMaxGradientValueOnNormal(
+            gradientImg,
+            c2,(newX,newY),irisNorm)[0]
 
-        #cv2.circle(img,grad,1,(0,255,0))
+        cv2.circle(img,grad,1,(0,255,0))
 
 def findMaxGradientValueOnNormal(gradientMagnitude,p1,p2,irisNorm):
     pts = getLineCoordinates(p1,p2)
@@ -365,6 +365,9 @@ def FilterPupilGlint(glints, pupils):
 
 # vwriter = cv2.VideoWriter("test.avi",('F','F','V','1'));
 def update(I):
+    zeit(lambda: update2(I))
+
+def update2(I):
     '''Calculate the image features and display the result based on the slider values
     :param I:
     '''
@@ -373,7 +376,6 @@ def update(I):
     sliderVals = getSliderVals()
     img = I#.copy()
     gray = cv2.cvtColor(img,cv2.COLOR_RGB2GRAY)
-    # getGradientImageInfo(gray)
 
     cv2.setTrackbarPos('pupilThr','Threshold',98)#detectPupilKMeans(gray,8,15))
 
@@ -386,7 +388,7 @@ def update(I):
     glints, pupils = FilterPupilGlint(glints,pupils)
 
     for pupil in pupils:
-        circleTest(gray,pupil)
+        #circleTest(gray,pupil)
         cv2.ellipse(img, pupil, (255,0,0),2)
 
     for glint in glints:
@@ -538,7 +540,7 @@ def setupWindowSliders():
     #define the minimum and maximum areas of the pupil
     cv2.createTrackbar('pupMinSize','Threshold', 30, 200, onSlidersChange)
     cv2.createTrackbar('pupMaxSize','Threshold', 120,600, onSlidersChange)
-    cv2.createTrackbar('glintMinSize','Threshold', 50, 200, onSlidersChange)
+    cv2.createTrackbar('glintMinSize','Threshold', 15, 200, onSlidersChange)
     cv2.createTrackbar('glintMaxSize','Threshold', 200, 200, onSlidersChange)
     cv2.createTrackbar('glintMinDist','Threshold', 0, 100, onSlidersChange)
     cv2.createTrackbar('glintMaxDist','Threshold', 100, 100, onSlidersChange)
