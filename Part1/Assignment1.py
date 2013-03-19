@@ -122,6 +122,12 @@ def zeit(fun,desc=""):
     print datetime.now() - timestart
     return res
 
+def angle(v1, v2):
+    return np.arccos(np.dot(v1,v2)/(length(v1)*length(v2)))
+
+def length(v):
+    return np.sqrt(np.dot(v,v))
+
 def getGradientImageInfo(I,C,radius):
 
     cx,cy = C
@@ -145,7 +151,7 @@ def getGradientImageInfo(I,C,radius):
     b = (-a)*361.0
 
     def orient(gradX,gradY):
-        l= (gradX**2+gradY**2)**0.5
+        l=((gradX**2)+(gradY**2))**0.5
         return math.atan2(gradX/l,gradY/l)
 
     # Limit the area we work in. For SPEEEEED
@@ -222,14 +228,14 @@ def findMaxGradientValueOnNormal(gradientMagnitude,p1,p2,irisNorm):
     for p in pts:
         p =(p[0],p[1])
         if p in irisNorm:
-            grads[gradientMagnitude[p[1]][p[0]]] = (p[0],p[1])
+            grads[gradientMagnitude[p[1]][p[0]]] = p
 
     sGrads = sorted(grads,reverse=True)
     if(len(sGrads) < 2): 
         return
     
     r = []
-    for i in range(2):
+    for i in range(len(sGrads)):
         r.append(grads[sGrads[i]]) 
     return r
 
@@ -259,19 +265,17 @@ def GetIrisUsingNormals(gradientInfo,pupil,pupilRadius,point, uv, normals,img=No
 
     orientation = gradientInfo["direction"]
 
-    normalAngle = math.atan2(
-        uv[0],uv[1]
-    )
+    normalAngle = angle(uv[0],uv[1])
     pts = getLineCoordinates(pupil,point)
 
     coords = []
-    threshold = 0.5
+    threshold = 0.001
     for p in pts:
         x = p[0]
         y = p[1]
         diff = math.fabs(orientation[y][x] - normalAngle)
         if(diff < threshold):
-            cv2.circle(img,(int(x),int(y)),5,(255,0,255))
+            cv2.circle(img,(x,y),3,(255,255,0))
             coords.append((x,y))
     return coords
 
