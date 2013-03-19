@@ -8,7 +8,6 @@ import numpy as np
 import math
 import sys
 from scipy.cluster.vq import *
-import SIGBTools as sbt2
 from datetime import datetime
 
 inputFile = "Sequences/eye1.avi"
@@ -217,7 +216,7 @@ def findEllipseContour(img, gradientInfo, C, circleRadius,nPts=30):
         #cv2.circle(img,grad,1,(0,255,0))
 
 def findMaxGradientValueOnNormal(gradientMagnitude,p1,p2,irisNorm):
-    pts = sbt2.getLineCoordinates(p1,p2)
+    pts = getLineCoordinates(p1,p2)
 
     #normalVals = gradientMagnitude[pts[:,1],pts[:,0]]
     grads = {}
@@ -311,7 +310,7 @@ def GetIrisUsingNormals(gradientInfo,pupil,pupilRadius,point,normals):
     normalAngle = math.atan2(
         normals[0],normals[1]
     )*180/ math.pi
-    pts = sbt2.getLineCoordinates(pupil,point)
+    pts = getLineCoordinates(pupil,point)
 
     coords = []
     threshold = 0.1
