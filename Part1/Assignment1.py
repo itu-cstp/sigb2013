@@ -147,7 +147,7 @@ def getGradientImageInfo(I,C,radius):
     def orient(gradX,gradY):
         return math.atan2(
             gradX,gradY
-        )*180/ math.pi
+        )
 
     # Limit the area we work in. For SPEEEEED
     nRange = range(max(int(cx-radius*1.5),0),min(int(cx+radius*1.5),n))
@@ -175,7 +175,6 @@ def circleTest(I, pupil):
     circleRadius = pupil[1][0] / 2
 
     gradientInfo = getGradientImageInfo(I,C,circleRadius)
-
     findEllipseContour(I2,gradientInfo,C,circleRadius,nPts)
 
 def findEllipseContour(img, gradientInfo, C, circleRadius,nPts=30):
@@ -188,7 +187,6 @@ def findEllipseContour(img, gradientInfo, C, circleRadius,nPts=30):
     gradientImg = gradientInfo["magnitude"]
 
     for (x,y,dx,dy) in P:
-        cv2.circle(img,(int(x),int(y)),5,(255,0,255))
         factor = 3.5
 
         deltaX = (x-c2[0])
@@ -203,13 +201,14 @@ def findEllipseContour(img, gradientInfo, C, circleRadius,nPts=30):
         cv2.line(img, c2, (int(newX),int(newY)),(124,144,0))
         cv2.circle(img,(int(newX),int(newY)),1,(255,0,0))
 
-        irisNorm = GetIrisUsingNormals(gradientInfo,c2,circleRadius,(newX, newY),(deltaX,deltaY))
+        irisNorm = GetIrisUsingNormals(gradientInfo,c2,circleRadius,(newX, newY),(deltaX,deltaY),img)
 
         grads = findMaxGradientValueOnNormal(
             gradientImg,
             c2,(newX,newY),irisNorm)
         if(grads != None):
             cv2.circle(img,grads[0],1,(0,255,0))
+            cv2.circle(img,grads[1],1,(0,255,0))
 
         cv2.imshow("Aux",img);
 
@@ -244,7 +243,6 @@ def Distance(a, b):
 def GetIrisUsingThreshold(gray,pupil):
 	''' Given a gray level image, gray and threshold
 	value return a list of iris locations'''
-	# YOUR IMPLEMENTATION HERE !!!!
 	pass
 
 def detectIrisHough(gray):
@@ -300,7 +298,7 @@ def detectPupilHough(gray):
         cv2.circle(gColor, (int(c[0]),int(c[1])),c[2], (0,0,255),5)
     cv2.imshow("houghPupil",gColor)
 
-def GetIrisUsingNormals(gradientInfo,pupil,pupilRadius,point,normals):
+def GetIrisUsingNormals(gradientInfo,pupil,pupilRadius,point,normals,img=None):
     ''' Given a gray level image, gray and the length of the normals, normalLength
 	 return a list of iris locations'''
 
@@ -308,7 +306,7 @@ def GetIrisUsingNormals(gradientInfo,pupil,pupilRadius,point,normals):
 
     normalAngle = math.atan2(
         normals[0],normals[1]
-    )*180/ math.pi
+    )
     pts = getLineCoordinates(pupil,point)
 
     coords = []
@@ -318,8 +316,8 @@ def GetIrisUsingNormals(gradientInfo,pupil,pupilRadius,point,normals):
         y = p[1]
         diff = math.fabs(orientation[y][x] - normalAngle)
         if(diff < threshold):
+            cv2.circle(img,(int(x),int(y)),5,(255,0,255))
             coords.append((x,y))
-
     return coords
 
 def GetEyeCorners(img, leftTemplate, rightTemplate,pupilPosition=None):
