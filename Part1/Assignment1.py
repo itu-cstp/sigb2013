@@ -9,6 +9,7 @@ import math
 import sys
 from scipy.cluster.vq import *
 import SIGBTools as sbt2
+from datetime import datetime
 
 inputFile = "Sequences/eye1.avi"
 outputFile = "eyeTrackerResult.mp4"
@@ -114,8 +115,20 @@ def GetGlints(gray,thr,minSize, maxSize):
         # returning a list of candidate ellipsis
         return matches
 
-def getGradientImageInfo(I):
+def zeit(fun,desc=""):
+    print desc
+    timestart = datetime.now()
+    res = fun()
+    print datetime.now() - timestart
+    return res
+
+def getGradientImageInfo(I,C,radius):
+
+    cx,cy = C
+
+    # Preserves edges
     I2 = cv2.bilateralFilter(I.copy(), 10, 4, 4)
+
     # Using the derivitive kernel from -1 to 1.
     # Dx
     gradientX = cv2.Sobel(I2, cv2.CV_32F, 1, 0)
@@ -127,25 +140,39 @@ def getGradientImageInfo(I):
     orientImg = np.zeros((m,n))
     # magnitudes fra 0 to 360
     magnitudeImg = np.zeros((m,n), dtype="uint8")
+
     a = 255.0/(361.0)
     b = (-a)*361.0
-    for i in range(m):
-        for j in range(n):
+
+    def orient(gradX,gradY):
+        return math.atan2(
+            gradX,gradY
+        )*180/ math.pi
+
+    # Limit the area we work in. For SPEEEEED
+    nRange = range(max(int(cx-radius*1.5),0),min(int(cx+radius*1.5),n))
+    mRange = range(max(int(cy-radius*1.5),0),min(int(cy+radius*1.5),m))
+
+    for i in mRange:
+        for j in nRange:
             xpow2 = math.pow(int(gradientX[i][j]),2)
             ypow2 = math.pow(int(gradientY[i][j]),2)
             length = int(np.sqrt(xpow2+ypow2))
             magnitudeImg[i][j] = a*length+b
 
-            #orientation
-            orientImg[i][j] =   math.atan2(
-                                    gradientX[i][j],gradientY[i][j]
-                                )*180/ math.pi
+            orientImg[i][j] = orient(gradientX[i][j],gradientY[i][j])
+
+
+
+    #cv2.imshow("Aux",magnitudeImg)
+    cv2.imshow("Aux2",magnitudeImg)
+
 
     return {"magnitude" : magnitudeImg,
-            "dx":gradientX,
-            "dy":gradientY,
-            "direction":orientImg,
-         }
+                "dx":gradientX,
+                "dy":gradientY,
+                "direction":orientImg,
+             }
 
 def circleTest(I, pupil):
     I2 = I.copy()
@@ -153,7 +180,7 @@ def circleTest(I, pupil):
     C = pupil[0]
     circleRadius = pupil[1][0] / 2
 
-    gradientInfo = getGradientImageInfo(I)
+    gradientInfo = zeit(lambda: getGradientImageInfo(I,C,circleRadius))
 
     findEllipseContour(I2,gradientInfo,C,circleRadius,nPts)
 
@@ -183,11 +210,11 @@ def findEllipseContour(img, gradientInfo, C, circleRadius,nPts=30):
 
         irisNorm = GetIrisUsingNormals(gradientInfo,c2,circleRadius,(newX, newY),(deltaX,deltaY))
 
-        grad = findMaxGradientValueOnNormal(
-            gradientImg,
-            c2,(newX,newY),irisNorm)[0]
+        #grad = findMaxGradientValueOnNormal(
+        #    gradientImg,
+        #    c2,(newX,newY),irisNorm)[0]
 
-        cv2.circle(img,grad,1,(0,255,0))
+        #cv2.circle(img,grad,1,(0,255,0))
 
 def findMaxGradientValueOnNormal(gradientMagnitude,p1,p2,irisNorm):
     pts = sbt2.getLineCoordinates(p1,p2)
@@ -351,8 +378,8 @@ def update(I):
 
     cv2.setTrackbarPos('pupilThr','Threshold',98)#detectPupilKMeans(gray,8,15))
 
-    detectPupilHough(gray)
-    detectIrisHough(gray)
+    #detectPupilHough(gray)
+    #detectIrisHough(gray)
 
 # Do the magic  pupils = ellipsis, glints = ellipsis
     pupils = GetPupil(gray,sliderVals['pupilThr'],sliderVals['pupMinSize'],sliderVals['pupMaxSize'])
@@ -360,7 +387,7 @@ def update(I):
     glints, pupils = FilterPupilGlint(glints,pupils)
 
     for pupil in pupils:
-        #circleTest(gray,pupil)
+        circleTest(gray,pupil)
         cv2.ellipse(img, pupil, (255,0,0),2)
 
     for glint in glints:
