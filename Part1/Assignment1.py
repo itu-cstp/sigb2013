@@ -149,17 +149,21 @@ def getGradientImageInfo(I):
 
 def circleTest(I, pupil):
     I2 = I.copy()
-    M,N = I2.shape
     nPts = 20
     C = pupil[0]
     circleRadius = pupil[1][0] / 2
 
+    gradientInfo = getGradientImageInfo(I)
+
+    findEllipseContour(I2,gradientInfo,C,circleRadius,nPts)
+
+def findEllipseContour(img, gradientInfo, C, circleRadius,nPts=30):
+    M,N = img.shape
     P= getCircleSamples(center=C, radius=circleRadius, nPoints=nPts)
     c2 = (int(C[0]),int(C[1]))
 
-    cv2.circle(I2,c2,int(circleRadius),(255,0,0))
+    cv2.circle(img,c2,int(circleRadius),(255,0,0))
 
-    gradientInfo = getGradientImageInfo(I)
     gradientImg = gradientInfo["magnitude"]
 
     for (x,y,dx,dy) in P:
@@ -174,8 +178,8 @@ def circleTest(I, pupil):
         newX = max(0,min(vdx+x,N-1))
         newY = max(0,min(vdy+y,M-1))
 
-        cv2.line(I2, c2, (int(newX),int(newY)),(124,144,0))
-        cv2.circle(I2,(int(newX),int(newY)),1,(255,0,0))
+        cv2.line(img, c2, (int(newX),int(newY)),(124,144,0))
+        cv2.circle(img,(int(newX),int(newY)),1,(255,0,0))
 
         irisNorm = GetIrisUsingNormals(gradientInfo,c2,circleRadius,(newX, newY),(deltaX,deltaY))
 
@@ -183,13 +187,7 @@ def circleTest(I, pupil):
             gradientImg,
             c2,(newX,newY),irisNorm)[0]
 
-        #cv2.circle(I2,irisNorm,1,(255,0,0))
-        cv2.circle(I2,grad,1,(0,255,0))
-
-    #cv2.imshow("Aux2",I2)
-
-def findEllipseContour(img, gradientMagnitude, estimatedCenter, estimatedRadius,nPts=30):
-    pass;
+        cv2.circle(img,grad,1,(0,255,0))
 
 def findMaxGradientValueOnNormal(gradientMagnitude,p1,p2,irisNorm):
     pts = sbt2.getLineCoordinates(p1,p2)
@@ -315,6 +313,8 @@ def FilterPupilGlint(glints, pupils):
     glintList1 = []
     pupilList = []
     sliderVals = getSliderVals()
+    result = []
+
     for candA in glints:
         for candB in glints:
         #only accepting points with a certain distance to each other.
@@ -351,13 +351,13 @@ def update(I):
 
     cv2.setTrackbarPos('pupilThr','Threshold',98)#detectPupilKMeans(gray,8,15))
 
-    #detectPupilHough(gray)
-    #detectIrisHough(gray)
+    detectPupilHough(gray)
+    detectIrisHough(gray)
 
 # Do the magic  pupils = ellipsis, glints = ellipsis
     pupils = GetPupil(gray,sliderVals['pupilThr'],sliderVals['pupMinSize'],sliderVals['pupMaxSize'])
     glints = GetGlints(gray,sliderVals['glintThr'],sliderVals['glintMinSize'],sliderVals['glintMaxSize'])
-    #glints, pupils = FilterPupilGlint(glints,pupils)
+    glints, pupils = FilterPupilGlint(glints,pupils)
 
     for pupil in pupils:
         #circleTest(gray,pupil)
@@ -512,7 +512,7 @@ def setupWindowSliders():
     #define the minimum and maximum areas of the pupil
     cv2.createTrackbar('pupMinSize','Threshold', 30, 200, onSlidersChange)
     cv2.createTrackbar('pupMaxSize','Threshold', 120,600, onSlidersChange)
-    cv2.createTrackbar('glintMinSize','Threshold', 0, 200, onSlidersChange)
+    cv2.createTrackbar('glintMinSize','Threshold', 50, 200, onSlidersChange)
     cv2.createTrackbar('glintMaxSize','Threshold', 200, 200, onSlidersChange)
     cv2.createTrackbar('glintMinDist','Threshold', 0, 100, onSlidersChange)
     cv2.createTrackbar('glintMaxDist','Threshold', 100, 100, onSlidersChange)
