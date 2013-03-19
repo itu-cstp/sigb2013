@@ -365,7 +365,7 @@ def FilterPupilGlint(glints, pupils):
 
 # vwriter = cv2.VideoWriter("test.avi",('F','F','V','1'));
 def update(I):
-    zeit(lambda: update2(I))
+        update2(I)
 
 def update2(I):
     '''Calculate the image features and display the result based on the slider values
