@@ -2,14 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4aa75d65-d60d-4581-a6e3-b91dc2d68e52" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Part1/Assignment1.py" afterPath="$PROJECT_DIR$/Part1/Assignment1.py" />
     </list>
     <ignored path="1.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="4aa75d65-d60d-4581-a6e3-b91dc2d68e52" time="1362824255510" ignored="false" />
-    <file path="/Assignment1.py" changelist="4aa75d65-d60d-4581-a6e3-b91dc2d68e52" time="1362848506229" ignored="false" />
     <file path="/notes.txt" changelist="4aa75d65-d60d-4581-a6e3-b91dc2d68e52" time="1362829336679" ignored="false" />
+    <file path="/Assignment1.py" changelist="4aa75d65-d60d-4581-a6e3-b91dc2d68e52" time="1362848506229" ignored="false" />
+    <file path="/Dummy.txt" changelist="4aa75d65-d60d-4581-a6e3-b91dc2d68e52" time="1362824255510" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,12 +33,8 @@
       <file leaf-file-name="Assignment1.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Part1/Assignment1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="176" column="24" selection-start="4836" selection-end="4836" vertical-scroll-proportion="-0.018367346">
-              <folding>
-                <element signature="e#6613#6742#0" expanded="false" />
-                <element signature="e#9338#9859#0" expanded="false" />
-                <element signature="e#9938#10339#0" expanded="false" />
-              </folding>
+            <state line="173" column="18" selection-start="4804" selection-end="4804" vertical-scroll-proportion="-0.15">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -93,8 +88,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
+    <option name="x" value="800" />
     <option name="y" value="18" />
-    <option name="width" value="1600" />
+    <option name="width" value="800" />
     <option name="height" value="863" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -149,13 +145,13 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="options.lastSelected" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="recentsLimit" value="5" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../exc/1" />
+    <property name="options.lastSelected" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="restartRequiresConfirmation" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../exc/1" />
     <property name="FullScreen" value="true" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -275,23 +271,23 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="18" width="1600" height="863" extended-state="0" />
+    <frame x="800" y="18" width="800" height="863" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32886904" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32882273" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32967743" sideWeight="0.7510149" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25733334" sideWeight="0.64546686" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25743854" sideWeight="0.34506088" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39868203" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30175912" sideWeight="0.31225806" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30104712" sideWeight="0.31225806" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32882273" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -376,33 +372,21 @@
     <entry file="file://$PROJECT_DIR$/Part1/Assignment1.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="427" column="5" selection-start="14811" selection-end="14811" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#6613#6742#0" expanded="false" />
-            <element signature="e#9338#9859#0" expanded="false" />
-            <element signature="e#9938#10339#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Part1/Assignment1.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="17" column="0" selection-start="424" selection-end="424" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#6613#6742#0" expanded="false" />
-            <element signature="e#9338#9859#0" expanded="false" />
-            <element signature="e#9938#10339#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Part1/Assignment1.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="52" column="22" selection-start="1457" selection-end="1457" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#6613#6742#0" expanded="false" />
-            <element signature="e#9338#9859#0" expanded="false" />
-            <element signature="e#9938#10339#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -434,47 +418,33 @@
     </entry>
     <entry file="file://$USER_HOME$/.PyCharm20/system/python_stubs/-1247972723/math.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="164" column="4" selection-start="2967" selection-end="2967" vertical-scroll-proportion="0.33333334">
-          <folding />
-        </state>
+        <state line="164" column="4" selection-start="2967" selection-end="2967" vertical-scroll-proportion="0.33333334" />
       </provider>
     </entry>
     <entry file="file:///usr/lib/python2.7/dist-packages/numpy/core/function_base.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="33" selection-start="347" selection-end="347" vertical-scroll-proportion="-1.4760638">
-          <folding />
-        </state>
+        <state line="12" column="33" selection-start="347" selection-end="347" vertical-scroll-proportion="-1.4760638" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Part1/SIGBTools.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="13" selection-start="478" selection-end="478" vertical-scroll-proportion="0.17708333">
-          <folding />
-        </state>
+        <state line="14" column="13" selection-start="478" selection-end="478" vertical-scroll-proportion="0.17708333" />
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/.PyCharm20/system/python_stubs/-1247972723/cv2/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1193" column="15" selection-start="30240" selection-end="30240" vertical-scroll-proportion="0.36477986">
-          <folding />
-        </state>
+        <state line="1193" column="15" selection-start="30240" selection-end="30240" vertical-scroll-proportion="0.36477986" />
       </provider>
     </entry>
     <entry file="file:///usr/lib/python2.7/sets.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="409" column="8" selection-start="14270" selection-end="14270" vertical-scroll-proportion="0.8836735">
-          <folding />
-        </state>
+        <state line="409" column="8" selection-start="14270" selection-end="14270" vertical-scroll-proportion="0.8836735" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Part1/Assignment1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="176" column="24" selection-start="4836" selection-end="4836" vertical-scroll-proportion="-0.018367346">
-          <folding>
-            <element signature="e#6613#6742#0" expanded="false" />
-            <element signature="e#9338#9859#0" expanded="false" />
-            <element signature="e#9938#10339#0" expanded="false" />
-          </folding>
+        <state line="173" column="18" selection-start="4804" selection-end="4804" vertical-scroll-proportion="-0.15">
+          <folding />
         </state>
       </provider>
     </entry>

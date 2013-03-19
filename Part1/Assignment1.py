@@ -4,6 +4,7 @@ cv2.destroyAllWindows() #workaround for arch linux
 import cv
 import pylab
 from SIGBTools import *
+import SIGBTools2 as sbt2
 import numpy as np
 import math
 import sys
@@ -187,6 +188,7 @@ def findEllipseContour(img, gradientInfo, C, circleRadius,nPts=30):
     gradientImg = gradientInfo["magnitude"]
 
     for (x,y,dx,dy) in P:
+        cv2.circle(img,(int(x),int(y)),5,(255,0,255))
         factor = 3.5
 
         deltaX = (x-c2[0])
@@ -212,7 +214,7 @@ def findEllipseContour(img, gradientInfo, C, circleRadius,nPts=30):
         cv2.imshow("Aux",img);
 
 def findMaxGradientValueOnNormal(gradientMagnitude,p1,p2,irisNorm):
-    pts = getLineCoordinates(p1,p2)
+    pts = sbt2.getLineCoordinates(p1,p2)
 
     #normalVals = gradientMagnitude[pts[:,1],pts[:,0]]
     grads = {}
@@ -314,12 +316,11 @@ def GetIrisUsingNormals(gradientInfo,pupil,pupilRadius,point,normals):
     for p in pts:
         x = p[0]
         y = p[1]
-        diff = math.fabs(abs(orientation[y][x] - normalAngle))
+        diff = math.fabs(orientation[y][x] - normalAngle)
         if(diff < threshold):
             coords.append((x,y))
 
     return coords
-
 
 def GetEyeCorners(img, leftTemplate, rightTemplate,pupilPosition=None):
     sliderVals = getSliderVals()
@@ -373,6 +374,8 @@ def update2(I):
     sliderVals = getSliderVals()
     img = I#.copy()
     gray = cv2.cvtColor(img,cv2.COLOR_RGB2GRAY)
+    
+    #getGradientImageInfo(gray)
 
     cv2.setTrackbarPos('pupilThr','Threshold',98)#detectPupilKMeans(gray,8,15))
 
@@ -422,19 +425,19 @@ def update2(I):
     #    cv2.putText(img, "glintThr :"+str(sliderVals['glintThr']), (x, y+2*step), cv2.FONT_HERSHEY_PLAIN, 1.0, (255, 255, 255), lineType=cv2.CV_AA)
 
 
-		#Uncomment these lines as your methods start to work to display the result in the
-		#original image
+#Uncomment these lines as your methods start to work to display the result in the
+#original image
 
-		#     cv2.imshow("Result", img)
+#     cv2.imshow("Result", img)
 
-		#For Iris detection - Week 2
-		#circularHough(gray)
+#For Iris detection - Week 2
+#circularHough(gray)
 
     #copy the image so that the result image (img) can be saved in the movie
-    # drawImg = img.copy()
+    drawImg = img.copy()
     #
     #
-    cv2.imshow('Result',img)
+    cv2.imshow('Result',drawImg)
 
 def printUsage():
     print "Q or ESC: Stop"
