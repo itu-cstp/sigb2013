@@ -161,12 +161,6 @@ def getGradientImageInfo(I,C,radius):
 
             orientImg[i][j] = orient(gradientX[i][j],gradientY[i][j])
 
-
-
-    cv2.imshow("Aux",magnitudeImg)
-    #cv2.imshow("Aux2",magnitudeImg)
-
-
     return {"magnitude" : magnitudeImg,
                 "dx":gradientX,
                 "dy":gradientY,
@@ -209,11 +203,13 @@ def findEllipseContour(img, gradientInfo, C, circleRadius,nPts=30):
 
         irisNorm = GetIrisUsingNormals(gradientInfo,c2,circleRadius,(newX, newY),(deltaX,deltaY))
 
-        grad = findMaxGradientValueOnNormal(
+        grads = findMaxGradientValueOnNormal(
             gradientImg,
-            c2,(newX,newY),irisNorm)[0]
+            c2,(newX,newY),irisNorm)
+        if(grads != None):
+            cv2.circle(img,grads[0],1,(0,255,0))
 
-        cv2.circle(img,grad,1,(0,255,0))
+        cv2.imshow("Aux",img);
 
 def findMaxGradientValueOnNormal(gradientMagnitude,p1,p2,irisNorm):
     pts = getLineCoordinates(p1,p2)
@@ -225,7 +221,8 @@ def findMaxGradientValueOnNormal(gradientMagnitude,p1,p2,irisNorm):
             grads[gradientMagnitude[p[1]][p[0]]] = (p[0],p[1])
 
     sGrads = sorted(grads,reverse=True)
-
+    if(len(sGrads) < 2): 
+        return
     return [grads[sGrads[0]], grads[sGrads[1]]]
 
 ## Threshold
@@ -388,7 +385,7 @@ def update2(I):
     glints, pupils = FilterPupilGlint(glints,pupils)
 
     for pupil in pupils:
-        #circleTest(gray,pupil)
+        circleTest(gray,pupil)
         cv2.ellipse(img, pupil, (255,0,0),2)
 
     for glint in glints:
