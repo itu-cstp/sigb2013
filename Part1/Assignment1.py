@@ -145,9 +145,8 @@ def getGradientImageInfo(I,C,radius):
     b = (-a)*361.0
 
     def orient(gradX,gradY):
-        return math.atan2(
-            gradX,gradY
-        )
+        l= (gradX**2+gradY**2)**0.5
+        return math.atan2(gradX/l,gradY/l)
 
     # Limit the area we work in. For SPEEEEED
     nRange = range(max(int(cx-radius*1.5),0),min(int(cx+radius*1.5),n))
@@ -175,8 +174,8 @@ def circleTest(I, pupil):
     circleRadius = pupil[1][0] / 2
 
     gradientInfo = getGradientImageInfo(I,C,circleRadius)
-    findEllipseContour(I2,gradientInfo,C,circleRadius,nPts)
-
+    findEllipseContour(I2,gradientInfo,C,circleRadius,nPts) 
+    
 def findEllipseContour(img, gradientInfo, C, circleRadius,nPts=30):
     M,N = img.shape
     P= getCircleSamples(center=C, radius=circleRadius, nPoints=nPts)
@@ -197,15 +196,18 @@ def findEllipseContour(img, gradientInfo, C, circleRadius,nPts=30):
 
         newX = max(0,min(vdx+x,N-1))
         newY = max(0,min(vdy+y,M-1))
+        pp = (int(newX), int(newY))
+        unitPP = np.divide(pp,np.sqrt(np.array(pp).dot(pp))) 
 
-        cv2.line(img, c2, (int(newX),int(newY)),(124,144,0))
-        cv2.circle(img,(int(newX),int(newY)),1,(255,0,0))
+        cv2.line(img, c2, pp,(124,144,0))
+        cv2.circle(img,pp,1,(255,0,0))
 
-        irisNorm = GetIrisUsingNormals(gradientInfo,c2,circleRadius,(newX, newY),(deltaX,deltaY),img)
+        irisNorm = GetIrisUsingNormals(gradientInfo,c2,circleRadius, pp, unitPP,(deltaX,deltaY),img)
 
         grads = findMaxGradientValueOnNormal(
             gradientImg,
             c2,(newX,newY),irisNorm)
+
         if(grads != None):
             cv2.circle(img,grads[0],1,(0,255,0))
             cv2.circle(img,grads[1],1,(0,255,0))
@@ -218,13 +220,18 @@ def findMaxGradientValueOnNormal(gradientMagnitude,p1,p2,irisNorm):
     #normalVals = gradientMagnitude[pts[:,1],pts[:,0]]
     grads = {}
     for p in pts:
-        if any(p for i in irisNorm):
+        p =(p[0],p[1])
+        if p in irisNorm:
             grads[gradientMagnitude[p[1]][p[0]]] = (p[0],p[1])
 
     sGrads = sorted(grads,reverse=True)
     if(len(sGrads) < 2): 
         return
-    return [grads[sGrads[0]], grads[sGrads[1]]]
+    
+    r = []
+    for i in range(2):
+        r.append(grads[sGrads[i]]) 
+    return r
 
 ## Threshold
 ## Blob of proper size
@@ -244,6 +251,67 @@ def GetIrisUsingThreshold(gray,pupil):
 	''' Given a gray level image, gray and threshold
 	value return a list of iris locations'''
 	pass
+
+
+def GetIrisUsingNormals(gradientInfo,pupil,pupilRadius,point, uv, normals,img=None):
+    ''' Given a gray level image, gray and the length of the normals, normalLength
+	 return a list of iris locations'''
+
+    orientation = gradientInfo["direction"]
+
+    normalAngle = math.atan2(
+        uv[0],uv[1]
+    )
+    pts = getLineCoordinates(pupil,point)
+
+    coords = []
+    threshold = 0.5
+    for p in pts:
+        x = p[0]
+        y = p[1]
+        diff = math.fabs(orientation[y][x] - normalAngle)
+        if(diff < threshold):
+            cv2.circle(img,(int(x),int(y)),5,(255,0,255))
+            coords.append((x,y))
+    return coords
+
+def GetEyeCorners(img, leftTemplate, rightTemplate,pupilPosition=None):
+    sliderVals = getSliderVals()
+    matchLeft = cv2.matchTemplate(img,leftTemplate,cv2.TM_CCOEFF_NORMED)
+    matchRight = cv2.matchTemplate(img,rightTemplate,cv2.TM_CCOEFF_NORMED)
+    matchListRight = np.nonzero(matchRight > (sliderVals['templateThr']*0.01))
+    matchListLeft =  np.nonzero(matchLeft > (sliderVals['templateThr']*0.01))
+    matchList = (matchListLeft,matchListRight)
+    return matchList
+
+
+def FilterPupilGlint(glints, pupils):
+    glintList = []
+    glintList1 = []
+    pupilList = []
+    sliderVals = getSliderVals()
+    result = []
+
+    for candA in glints:
+        for candB in glints:
+        #only accepting points with a certain distance to each other.
+            if (Distance(candA[0],candB[0])> sliderVals['glintMinDist'] and Distance(candA[0],candB[0]) < sliderVals['glintMaxDist']):
+                glintList.append(candA)
+
+    #run through the remaining glints, keeping those that are close to the pupil candidates.
+    for glintCand in glintList:
+            for pupCand in pupils:
+                if(Distance(glintCand[0],pupCand[0])>sliderVals['glint&pubMINDist'] and Distance(glintCand[0],pupCand[0])<sliderVals['glint&pubMAXDist']):
+                    glintList1.append(glintCand)
+
+    #run through the pupil candidates keeping those that are close to the fina glints list
+    for candP in pupils:
+        for glintCand in glintList1:
+            if(Distance(candP[0],glintCand[0])>sliderVals['glint&pubMINDist'] and Distance(candP[0],glintCand[0])<sliderVals['glint&pubMAXDist']):
+                pupilList.append(candP)
+    #sort out the pupils too far away from the found glints.
+    return (set(glintList1),set(pupilList))
+
 
 def detectIrisHough(gray):
     blur = cv2.GaussianBlur(gray, (11,11),11)
@@ -297,67 +365,6 @@ def detectPupilHough(gray):
         c=all_circles[0,:]
         cv2.circle(gColor, (int(c[0]),int(c[1])),c[2], (0,0,255),5)
     cv2.imshow("houghPupil",gColor)
-
-def GetIrisUsingNormals(gradientInfo,pupil,pupilRadius,point,normals,img=None):
-    ''' Given a gray level image, gray and the length of the normals, normalLength
-	 return a list of iris locations'''
-
-    orientation = gradientInfo["direction"]
-
-    normalAngle = math.atan2(
-        normals[0],normals[1]
-    )
-    pts = getLineCoordinates(pupil,point)
-
-    coords = []
-    threshold = 0.1
-    for p in pts:
-        x = p[0]
-        y = p[1]
-        diff = math.fabs(orientation[y][x] - normalAngle)
-        if(diff < threshold):
-            cv2.circle(img,(int(x),int(y)),5,(255,0,255))
-            coords.append((x,y))
-    return coords
-
-def GetEyeCorners(img, leftTemplate, rightTemplate,pupilPosition=None):
-    sliderVals = getSliderVals()
-    matchLeft = cv2.matchTemplate(img,leftTemplate,cv2.TM_CCOEFF_NORMED)
-    matchRight = cv2.matchTemplate(img,rightTemplate,cv2.TM_CCOEFF_NORMED)
-    matchListRight = np.nonzero(matchRight > (sliderVals['templateThr']*0.01))
-    matchListLeft =  np.nonzero(matchLeft > (sliderVals['templateThr']*0.01))
-    matchList = (matchListLeft,matchListRight)
-    return matchList
-
-
-def FilterPupilGlint(glints, pupils):
-    glintList = []
-    glintList1 = []
-    pupilList = []
-    sliderVals = getSliderVals()
-    result = []
-
-    for candA in glints:
-        for candB in glints:
-        #only accepting points with a certain distance to each other.
-            if (Distance(candA[0],candB[0])> sliderVals['glintMinDist'] and Distance(candA[0],candB[0]) < sliderVals['glintMaxDist']):
-                glintList.append(candA)
-
-    #run through the remaining glints, keeping those that are close to the pupil candidates.
-    for glintCand in glintList:
-            for pupCand in pupils:
-                if(Distance(glintCand[0],pupCand[0])>sliderVals['glint&pubMINDist'] and Distance(glintCand[0],pupCand[0])<sliderVals['glint&pubMAXDist']):
-                    glintList1.append(glintCand)
-
-    #run through the pupil candidates keeping those that are close to the fina glints list
-    for candP in pupils:
-        for glintCand in glintList1:
-            if(Distance(candP[0],glintCand[0])>sliderVals['glint&pubMINDist'] and Distance(candP[0],glintCand[0])<sliderVals['glint&pubMAXDist']):
-                pupilList.append(candP)
-    #sort out the pupils too far away from the found glints.
-    return (set(glintList1),set(pupilList))
-
-
 
 # vwriter = cv2.VideoWriter("test.avi",('F','F','V','1'));
 def update(I):
