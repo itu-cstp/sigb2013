@@ -12,9 +12,6 @@ from scipy.cluster.vq import *
 from datetime import datetime
 import unittest
 
-
-
-
 inputFile = "Sequences/eye1.avi"
 outputFile = "eyeTrackerResult.mp4"
 
@@ -29,6 +26,22 @@ tempSet = False
 frameNr =0
 props = RegionProps()
 
+def zeit(fun,desc=""):
+    """
+    Helper method for timekeeping
+    """
+    print desc
+    timestart = datetime.now()
+    res = fun()
+    print datetime.now() - timestart
+    return res
+
+def sigurt(v1,v2):
+    """
+    Sigurts way of calculating angles
+    """
+    v2mark = v2 - v1
+    return math.fabs(v2mark)
 
 def detectPupilKMeans(gray,K=4,distanceWeight=1,reSize=(30,30)):
     smallI = cv2.resize(gray, reSize)
@@ -62,10 +75,9 @@ def detectPupilKMeans(gray,K=4,distanceWeight=1,reSize=(30,30)):
 
     return thr
 
-
 def GetPupil(gray,thr,minArea=4200,maxArea=6000):
     """
-    Locate the best matches for pupil in a gray scale image
+    Locate the best matches (plural) for pupil in a gray scale image
     """
     props = RegionProps()
 
@@ -93,7 +105,6 @@ def GetPupil(gray,thr,minArea=4200,maxArea=6000):
                 matches.append(ellips)
     return matches
 
-
 def GetGlints(gray,thr,minSize, maxSize):
         ''' Given a gray level image, gray and threshold
         value return a list of glint locations'''
@@ -118,17 +129,6 @@ def GetGlints(gray,thr,minSize, maxSize):
 
         # returning a list of candidate ellipsis
         return matches
-
-def zeit(fun,desc=""):
-    print desc
-    timestart = datetime.now()
-    res = fun()
-    print datetime.now() - timestart
-    return res
-
-def sigurt(v1,v2):
-    v2mark = v2 - v1
-    return math.fabs(v2mark)
 
 def angle(v1, v2):
     return np.arccos(np.dot(v1,v2)/(length(v1)*length(v2)))
@@ -225,7 +225,8 @@ def findEllipseContour(img, gradientInfo, C, circleRadius,nPts=30):
             cv2.circle(img,grads[0],1,(0,255,0))
             cv2.circle(img,grads[1],1,(0,255,0))
 
-        cv2.imshow("Aux",img)
+        #cv2.imshow("Aux",img)
+        return img
 
 def findMaxGradientValueOnNormal(gradientMagnitude,p1,p2,irisNorm):
     pts = sbt2.getLineCoordinates(p1,p2)
@@ -243,12 +244,9 @@ def findMaxGradientValueOnNormal(gradientMagnitude,p1,p2,irisNorm):
     
     r = []
     for i in range(len(sGrads)):
-        r.append(grads[sGrads[i]]) 
-    return r
+        r.append(grads[sGrads[i]])
 
-## Threshold
-## Blob of proper size
-## Blob of Shape
+    return r
 
 def Distance(a, b):
     """
@@ -284,6 +282,7 @@ def GetIrisUsingNormals(gradientInfo,pupil,pupilRadius,point, uv, normals,img=No
         if(diff < threshold):
             cv2.circle(img,(x,y),3,(255,255,0))
             coords.append((x,y))
+
     return coords
 
 def GetEyeCorners(img, leftTemplate, rightTemplate,pupilPosition=None):
@@ -293,6 +292,7 @@ def GetEyeCorners(img, leftTemplate, rightTemplate,pupilPosition=None):
     matchListRight = np.nonzero(matchRight > (sliderVals['templateThr']*0.01))
     matchListLeft =  np.nonzero(matchLeft > (sliderVals['templateThr']*0.01))
     matchList = (matchListLeft,matchListRight)
+
     return matchList
 
 
@@ -301,7 +301,6 @@ def FilterPupilGlint(glints, pupils):
     glintList1 = []
     pupilList = []
     sliderVals = getSliderVals()
-    result = []
 
     for candA in glints:
         for candB in glints:
@@ -320,6 +319,7 @@ def FilterPupilGlint(glints, pupils):
         for glintCand in glintList1:
             if(Distance(candP[0],glintCand[0])>sliderVals['glint&pubMINDist'] and Distance(candP[0],glintCand[0])<sliderVals['glint&pubMAXDist']):
                 pupilList.append(candP)
+
     #sort out the pupils too far away from the found glints.
     return (set(glintList1),set(pupilList))
 
@@ -379,7 +379,7 @@ def detectPupilHough(gray):
 
 # vwriter = cv2.VideoWriter("test.avi",('F','F','V','1'));
 def update(I):
-        update2(I)
+    return update2(I)
 
 def update2(I):
     '''Calculate the image features and display the result based on the slider values
@@ -395,8 +395,8 @@ def update2(I):
 
     cv2.setTrackbarPos('pupilThr','Threshold',98)#detectPupilKMeans(gray,8,15))
 
-    #detectPupilHough(gray)
-    #detectIrisHough(gray)
+    detectPupilHough(gray)
+    detectIrisHough(gray)
 
 # Do the magic  pupils = ellipsis, glints = ellipsis
     pupils = GetPupil(gray,sliderVals['pupilThr'],sliderVals['pupMinSize'],sliderVals['pupMaxSize'])
@@ -453,7 +453,8 @@ def update2(I):
     drawImg = img.copy()
     #
     #
-    cv2.imshow('Result',drawImg)
+    # cv2.imshow('Result',drawImg)
+    return drawImg
 
 def printUsage():
     print "Q or ESC: Stop"
@@ -464,11 +465,15 @@ def printUsage():
     print 'c: close video sequence'
 
 def run(fileName,resultFile='eyeTrackingResults.avi'):
-    global imgOrig, frameNr,drawImg,leftTemplate,rightTemplate,tempSet;
+    global imgOrig, frameNr, leftTemplate,rightTemplate,tempSet;
     setupWindowSliders()
     props = RegionProps()
     cap,imgOrig,sequenceOK = getImageSequence(fileName)
-    videoWriter = 0;
+
+
+    N,M,C = imgOrig.shape
+
+    videoWriter = cv2.VideoWriter(resultFile, cv.CV_FOURCC('D','I','V','3'), 15.0,(N,M),True) #Make a video writer
 
     frameNr =0
     if(sequenceOK):
@@ -497,12 +502,9 @@ def run(fileName,resultFile='eyeTrackingResults.avi'):
             break
         if (ch==ord('s')):
             if((saveFrames)):
-                videoWriter.release()
                 saveFrames=False
                 print "End recording"
             else:
-                imSize = np.shape(imgOrig)
-                videoWriter = cv2.VideoWriter(resultFile, cv.CV_FOURCC('D','I','V','3'), 15.0,(imSize[1],imSize[0]),True) #Make a video writer
                 saveFrames = True
                 print "Recording..."
 
@@ -524,12 +526,13 @@ def run(fileName,resultFile='eyeTrackingResults.avi'):
         if(sliderVals['Running']):
             sequenceOK, imgOrig = cap.read()
             if(sequenceOK): #if there is an image
-                update(imgOrig)
+                drawImg = update(imgOrig)
+                cv2.imshow("Result",drawImg)
             if(saveFrames):
                 videoWriter.write(drawImg)
 
 
-        # videoWriter.release
+        #videoWriter.release()
 
 
 
