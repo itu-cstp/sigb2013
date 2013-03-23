@@ -1,16 +1,44 @@
-\documentclass[a4paper,11pt]{article}
-\usepackage[utf8]{inputenc}
-\usepackage{graphicx}
+\documentclass[]{article}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
 \usepackage[english]{babel}
-%\usepackage[vmargin=3.5cm]{geometry}
-\usepackage[linktocpage=true]{hyperref}
-\hypersetup{
-    colorlinks,
-    citecolor=black,
-    filecolor=black,
-    linkcolor=black,
-    urlcolor=black
-}
+\ifxetex
+  \usepackage{fontspec,xltxtra,xunicode}
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+\else
+  \ifluatex
+    \usepackage{fontspec}
+    \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \else
+    \usepackage[utf8]{inputenc}
+  \fi
+\fi
+\usepackage{graphicx}
+% We will generate all images so they have a width \maxwidth. This means
+% that they will get their normal width if they fit onto the page, but
+% are scaled down if they would overflow the margins.
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+\else\Gin@nat@width\fi}
+\makeatother
+\let\Oldincludegraphics\includegraphics
+\renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=\maxwidth]{#1}}
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex,
+              colorlinks=true,
+              linkcolor=black]{hyperref}
+\else
+  \usepackage[unicode=true,
+              colorlinks=true,
+              linkcolor=black]{hyperref}
+\fi
+\hypersetup{breaklinks=true, pdfborder={0 0 0}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\setcounter{secnumdepth}{0}
 
 \begin{document}
 
@@ -18,13 +46,13 @@
 \centering \parindent=0pt
 \newcommand{\HRule}{\rule{\textwidth}{1mm}}
 \vspace*{\stretch{1}} \HRule\\[1cm]\Huge\bfseries
-Basic Eye Tracking\\[0.7cm]
+Simple Eye Tracker\\[0.7cm]
 \large SIGB Assignment 1\\[1cm]
 \HRule\\[4cm]  
 \large by 
 \\Morten Roed Frederiksen (mrof@itu.dk),  
 \\Sigurt Dinesen (sidi@itu.dk),
-\\Christoffer Stougaard Pedersen (cstp@itu.dk)
+\\Christoffer Stougaard Pedersen (cstp@itu.dk)\\ 
 \vspace*{\stretch{2}} \normalsize %
 \begin{flushleft}
 IT-University of Copenhagen \\
@@ -33,11 +61,8 @@ Dan Witzner Hansen \& Diako Mardanbeigi \\
 \today \end{flushleft}
 \end{titlepage}
 
-
 \tableofcontents
 
-\pagebreak
-\input{csp.tex}
+\input{csp}
 
-\pagebreak
 \end{document}

@@ -1,8 +1,8 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.11.6)  23 MAR 2013 12:29
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.11.6)  23 MAR 2013 12:16
 entering extended mode
  %&-line parsing enabled.
-**main.tex
-(./main.tex
+**main2.tex
+(./main2.tex
 LaTeX2e <2009/09/24>
 Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
 yphenation, farsi, arabic, croatian, bulgarian, ukrainian, russian, czech, slov
@@ -105,21 +105,6 @@ Package: ifxetex 2009/01/23 v0.5 Provides ifxetex conditional
 Package: ifluatex 2009/04/17 v1.2 Provides the ifluatex switch (HO)
 Package ifluatex Info: LuaTeX not detected.
 )
-(/var/lib/texmf/tex/generic/babel/babel.sty
-Package: babel 2008/07/06 v3.8l The Babel package
-
-(/usr/share/texmf-texlive/tex/generic/babel/english.ldf
-Language: english 2005/03/30 v3.3o English support from the babel system
-
-(/usr/share/texmf-texlive/tex/generic/babel/babel.def
-File: babel.def 2008/07/06 v3.8l Babel common definitions
-\babel@savecnt=\count99
-\U@D=\dimen112
-)
-\l@canadian = a dialect from \language\l@american 
-\l@australian = a dialect from \language\l@british 
-\l@newzealand = a dialect from \language\l@british 
-))
 (/usr/share/texmf-texlive/tex/latex/base/inputenc.sty
 Package: inputenc 2008/03/30 v1.1d Input encoding file
 \inpenc@prehook=\toks20
@@ -357,10 +342,10 @@ Package graphics Info: Driver file: pdftex.def on input line 91.
 
 (/usr/share/texmf-texlive/tex/latex/pdftex-def/pdftex.def
 File: pdftex.def 2010/03/12 v0.04p Graphics/color for pdfTeX
-\Gread@gobject=\count100
+\Gread@gobject=\count99
 ))
-\Gin@req@height=\dimen113
-\Gin@req@width=\dimen114
+\Gin@req@height=\dimen112
+\Gin@req@width=\dimen113
 )
 (/usr/share/texmf-texlive/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2009/10/09 v6.79a Hypertext links for LaTeX
@@ -380,9 +365,9 @@ O)
 (/usr/share/texmf-texlive/tex/latex/oberdiek/xcolor-patch.sty
 Package: xcolor-patch 2009/10/02 xcolor patch
 ))
-\@linkdim=\dimen115
-\Hy@linkcounter=\count101
-\Hy@pagecounter=\count102
+\@linkdim=\dimen114
+\Hy@linkcounter=\count100
+\Hy@pagecounter=\count101
 
 (/usr/share/texmf-texlive/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2009/10/09 v6.79a Hyperref: PDFDocEncoding definition (HO)
@@ -453,9 +438,9 @@ Package pdftexcmds Info: LuaTeX not detected.
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 )))
-\Fld@menulength=\count103
-\Field@Width=\dimen116
-\Fld@charsize=\dimen117
+\Fld@menulength=\count102
+\Field@Width=\dimen115
+\Fld@charsize=\dimen116
 \Field@toks=\toks23
 Package hyperref Info: Hyper figures OFF on input line 4377.
 Package hyperref Info: Link nesting OFF on input line 4382.
@@ -468,18 +453,18 @@ Package hyperref Info: PDF/A mode OFF on input line 4407.
 (/usr/share/texmf-texlive/tex/generic/oberdiek/atbegshi.sty
 Package: atbegshi 2008/07/31 v1.9 At begin shipout hook (HO)
 )
-\Hy@abspage=\count104
-\c@Item=\count105
-\c@Hfootnote=\count106
+\Hy@abspage=\count103
+\c@Item=\count104
+\c@Hfootnote=\count105
 )
 *hyperref using default driver hpdftex*
 (/usr/share/texmf-texlive/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2009/10/09 v6.79a Hyperref driver for pdfTeX
-\Fld@listcount=\count107
+\Fld@listcount=\count106
 )
-Package hyperref Info: Option `breaklinks' set `true' on input line 37.
- (target/main.aux)
-\openout1 = `main.aux'.
+Package hyperref Info: Option `breaklinks' set `true' on input line 36.
+ (target/main2.aux)
+\openout1 = `main2.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 43.
 LaTeX Font Info:    ... okay on input line 43.
@@ -500,15 +485,15 @@ LaTeX Font Info:    ... okay on input line 43.
 
 (/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count108
-\scratchdimen=\dimen118
+\scratchcounter=\count107
+\scratchdimen=\dimen117
 \scratchbox=\box28
-\nofMPsegments=\count109
-\nofMParguments=\count110
+\nofMPsegments=\count108
+\nofMParguments=\count109
 \everyMPshowfont=\toks24
-\MPscratchCnt=\count111
-\MPscratchDim=\dimen119
-\MPnumerator=\count112
+\MPscratchCnt=\count110
+\MPscratchDim=\dimen118
+\MPnumerator=\count111
 \everyMPtoPDFconversion=\toks25
 ) (/usr/share/texmf-texlive/tex/latex/graphics/color.sty
 Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
@@ -526,57 +511,54 @@ Package: nameref 2007/05/29 v2.31 Cross-referencing by name of section
 (/usr/share/texmf-texlive/tex/latex/oberdiek/refcount.sty
 Package: refcount 2008/08/11 v3.1 Data extraction from references (HO)
 )
-\c@section@level=\count113
+\c@section@level=\count112
 )
 LaTeX Info: Redefining \ref on input line 43.
 LaTeX Info: Redefining \pageref on input line 43.
- (target/main.out)
-(target/main.out)
+ (target/main2.out)
+(target/main2.out)
 \@outlinefile=\write3
-\openout3 = `main.out'.
+\openout3 = `main2.out'.
 
 \AtBeginShipoutBox=\box29
- [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-(target/main.toc
-LaTeX Font Info:    Try loading font information for U+msa on input line 3.
- (/usr/share/texmf-texlive/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2009/06/22 v3.00 AMS symbols A
-)
-LaTeX Font Info:    Try loading font information for U+msb on input line 3.
+! I can't find file `(csp.tex)'.
+l.45 \input(csp.tex)
+                    
+(Press Enter to retry, or Control-D to exit)
+Please type another input file name: 
+! I can't find file `(csp.tex)'.
+l.45 \input(csp.tex)
+                    
+(Press Enter to retry, or Control-D to exit)
+Please type another input file name: 
+! I can't find file `(csp.tex)'.
+l.45 \input(csp.tex)
+                    
+(Press Enter to retry, or Control-D to exit)
+Please type another input file name: 
+! I can't find file `(csp.tex)'.
+l.45 \input(csp.tex)
+                    
+(Press Enter to retry, or Control-D to exit)
+Please type another input file name: 
+! I can't find file `(csp.tex)'.
+l.45 \input(csp.tex)
+                    
+(Press Enter to retry, or Control-D to exit)
+Please type another input file name: 
+! Emergency stop.
+l.45 \input(csp.tex)
+                    
+End of file on the terminal!
 
-(/usr/share/texmf-texlive/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2009/06/22 v3.00 AMS symbols B
-))
-\tf@toc=\write4
-\openout4 = `main.toc'.
-
- (./csp.tex
-<pics/houghtransform.png, id=40, 1289.81876pt x 500.87125pt>
-File: pics/houghtransform.png Graphic file (type png)
-
-<use pics/houghtransform.png>)pdfTeX warning (ext4): destination with the same 
-identifier (name{page.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.68 \end{document}
-                    [1 <./pics/houghtransform.png (PNG copy)>] [2]
-(target/main.aux) ) 
+ 
 Here is how much of TeX's memory you used:
- 6820 strings out of 493848
- 89110 string characters out of 1152823
- 157845 words of memory out of 3000000
- 9985 multiletter control sequences out of 15000+50000
- 7463 words of font info for 29 fonts, out of 3000000 for 9000
+ 6448 strings out of 493848
+ 84482 string characters out of 1152823
+ 145252 words of memory out of 3000000
+ 9663 multiletter control sequences out of 15000+50000
+ 3640 words of font info for 14 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 38i,6n,36p,240b,389s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmb
-x10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></u
-sr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr10.pfb>
-Output written on target/main.pdf (3 pages, 552546 bytes).
-PDF statistics:
- 66 PDF objects out of 1000 (max. 8388607)
- 11 named destinations out of 1000 (max. 500000)
- 54 words of extra memory for PDF output out of 10000 (max. 10000000)
-
+ 38i,1n,24p,230b,38s stack positions out of 5000i,500n,10000p,200000b,50000s
+!  ==> Fatal error occurred, no output PDF file produced!

@@ -1,4 +1,13 @@
 # Introduction
+
+This is the first mandatory assignment for the course SIGB F2013. In this assignment we'll implement a simple software eye tracker. This will be done in the programming language python with help from the opencv and numpy libraries. 
+
+This report is an attempt to document what has been done to make this eye tracker. 
+
+The basic structure for each section will be a short introduction of the goal of the section, followed by the theory behind our approach ending with a description of our actual implementation with visual aids used for documentation. Additionally we will accompany the report with captured videos demonstrating the usage of the eye tracker  
+
+![Eye located with hough](pics/houghtransform.png "Hough transform")
+
 # Pupil detection 
 ## Overall rationale and theory
 ## Theory behind thresholding
