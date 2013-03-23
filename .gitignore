@@ -37,5 +37,5 @@ nosetests.xml
 .idea_module
 
 # VIM
-.un~
-.sw*
+*.un~
+*.sw*
