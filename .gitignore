@@ -39,3 +39,6 @@ nosetests.xml
 # VIM
 *.un~
 *.sw*
+
+# Weirdness
+:
