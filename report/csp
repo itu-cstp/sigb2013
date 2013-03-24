@@ -23,7 +23,7 @@ Thresholding is a form of point processing used for seperating areas of an image
 
 ### Theory
 
-As with all point processing methods the basic theory behind thresholding is applying a calculation to every pixel in the image, effectively changing the value of that pixel. We know that the end result is a binary image, following this each pixel will be transformed into one of two values. We've so far operated on byte images so the max value is 255 and the min value is of course 0. For clarity we will assign each pixel either the min or the max value. Thus thresholding can be expressed as the following with T being the assigned Threshold value and f being the function applied to each pixel:
+As with all point processing methods the basic theory behind thresholding is applying a calculation to every pixel in the image, effectively changing the value of that pixel. We know that the end result is a binary image, following this, each pixel will be transformed into one of two values. We've so far operated on byte images so the max value is 255 and the min value is of course 0. For clarity we will assign each pixel either the min or the max value. Thus thresholding can be expressed as the following with T being the assigned Threshold value and f being the function applied to each pixel:
 
 if f$(x,y) \leq T \quad then \, g$(x,y) = 0 \quad and \quad if f$(x,y) < T \quad then \, g$(x,y) = 255
 
@@ -31,14 +31,19 @@ Performing these operations will leave us with an image where only the contours 
 
 ### Our implementation
 
+So, the usefulness of thresholding relies on having a total binary image with the foreground easily distinguishable from the background. The foreground is the pupil. The pupil is a dark circle-like object surrounded by a lighter circle (the iris). So we're looking for a threshold value that is lower than the surrounding iris. In an ideal world the pupil in it's entirety will have only one intensity throughout, and the ideal threshold value will be that. However, the world is rarely so black and white (literally) and this is isn't the case here. Although the pupil is the darkest spot it's not completely dark. So a threshold value of 1 would be far to low in most circumstances. It also requires very specialized lighting conditions to achive a pupil with the same intensity throughout, so there is no "silver bullet" threshold value which will perfectly cover the entire pupil. 
+
+What we're looking for is a value that is close enough to every part of the pupil and far enough away from every part of the iris. The way of finding this perfect value is mostly trial and error in this stage. Luckily we had a slider to play around with when searching for this value
+
 ![Good threshold](pics/threshold_good.png)
 ![Low threshold](pics/threshold_low.png)
 ![High threshold](pics/threshold_high.png)
 ![Contours found with threshold](pics/threshold_contours.png)
 
-## K-means clustering
+## Pixel classification
 
 In this section it will be demonstrated how a form of machine learning is applied in order to perform supervised classification in order to semi-automatically set a proper thresholding value 
+
 
 Clustering is the practice of grouping a set of elements into several smaller groups of elements with similar features. It has a wide range of applications within datamining and different types of analysis. Obviously what will be demonstrated here is it's use within image analysis. Clustering isn't a specific algorithm. Rather it's the task we wish to perform in order to achieve our goal. In this assignment we've used the k-means algorithm for this
 
@@ -57,3 +62,5 @@ When we have done this we have k different threshold values to choose from, give
 There are a couple of possible caveats for this approach. Firstly there is an element of uncertainty in exactly how the clusters will be distributed. We need therefore to have a high enough k value to be sure to get the right cluster. There is also some uncertainty about whether the pupil always belongs to the darkest cluster. If for instance our k-value is too high, and there exists a darker region in the image (dark spot on the skin for instance) then the value of this cluster will be chosen as a threshold value, and we might miss the pupil
 
 Through trials it was found that 8 is a good value for k 
+
+![K-Means](pics/kmeans.png)

@@ -102,7 +102,7 @@ anything important.
 As with all point processing methods the basic theory behind
 thresholding is applying a calculation to every pixel in the image,
 effectively changing the value of that pixel. We know that the end
-result is a binary image, following this each pixel will be transformed
+result is a binary image, following this, each pixel will be transformed
 into one of two values. We've so far operated on byte images so the max
 value is 255 and the min value is of course 0. For clarity we will
 assign each pixel either the min or the max value. Thus thresholding can
@@ -123,7 +123,7 @@ contours to find which one is most likely to be a pupil
 \includegraphics{pics/threshold_high.png}
 \includegraphics{pics/threshold_contours.png}
 
-\subsection{K-means clustering}
+\subsection{Pixel classification}
 
 In this section it will be demonstrated how a form of machine learning
 is applied in order to perform supervised classification in order to
@@ -178,5 +178,11 @@ spot on the skin for instance) then the value of this cluster will be
 chosen as a threshold value, and we might miss the pupil
 
 Through trials it was found that 8 is a good value for k
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{pics/kmeans.png}
+\caption{K-Means}
+\end{figure}
 
 \end{document}

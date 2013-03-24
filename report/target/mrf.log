@@ -1,8 +1,8 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.11.6)  24 MAR 2013 17:23
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.11.6)  24 MAR 2013 17:10
 entering extended mode
  %&-line parsing enabled.
-**csp.self
-(./csp.self
+**mrf.self
+(./mrf.self
 LaTeX2e <2009/09/24>
 Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
 yphenation, farsi, arabic, croatian, bulgarian, ukrainian, russian, czech, slov
@@ -322,34 +322,13 @@ Now handling font encoding U ...
    defining Unicode char U+2122 (decimal 8482)
    defining Unicode char U+2423 (decimal 9251)
 ))
-(/usr/share/texmf-texlive/tex/latex/graphics/graphicx.sty
-Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+(/usr/share/texmf-texlive/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2009/10/09 v6.79a Hypertext links for LaTeX
 
 (/usr/share/texmf-texlive/tex/latex/graphics/keyval.sty
 Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \KV@toks@=\toks22
 )
-(/usr/share/texmf-texlive/tex/latex/graphics/graphics.sty
-Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
-
-(/usr/share/texmf-texlive/tex/latex/graphics/trig.sty
-Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
-)
-(/etc/texmf/tex/latex/config/graphics.cfg
-File: graphics.cfg 2009/08/28 v1.8 graphics configuration of TeX Live
-)
-Package graphics Info: Driver file: pdftex.def on input line 91.
-
-(/usr/share/texmf-texlive/tex/latex/pdftex-def/pdftex.def
-File: pdftex.def 2010/03/12 v0.04p Graphics/color for pdfTeX
-\Gread@gobject=\count99
-))
-\Gin@req@height=\dimen112
-\Gin@req@width=\dimen113
-)
-(/usr/share/texmf-texlive/tex/latex/hyperref/hyperref.sty
-Package: hyperref 2009/10/09 v6.79a Hypertext links for LaTeX
-
 (/usr/share/texmf-texlive/tex/generic/oberdiek/ifpdf.sty
 Package: ifpdf 2009/04/10 v2.0 Provides the ifpdf switch (HO)
 Package ifpdf Info: pdfTeX in pdf mode detected.
@@ -365,9 +344,9 @@ O)
 (/usr/share/texmf-texlive/tex/latex/oberdiek/xcolor-patch.sty
 Package: xcolor-patch 2009/10/02 xcolor patch
 ))
-\@linkdim=\dimen114
-\Hy@linkcounter=\count100
-\Hy@pagecounter=\count101
+\@linkdim=\dimen112
+\Hy@linkcounter=\count99
+\Hy@pagecounter=\count100
 
 (/usr/share/texmf-texlive/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2009/10/09 v6.79a Hyperref: PDFDocEncoding definition (HO)
@@ -438,9 +417,9 @@ Package pdftexcmds Info: LuaTeX not detected.
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 )))
-\Fld@menulength=\count102
-\Field@Width=\dimen115
-\Fld@charsize=\dimen116
+\Fld@menulength=\count101
+\Field@Width=\dimen113
+\Fld@charsize=\dimen114
 \Field@toks=\toks23
 Package hyperref Info: Hyper figures OFF on input line 4377.
 Package hyperref Info: Link nesting OFF on input line 4382.
@@ -453,59 +432,63 @@ Package hyperref Info: PDF/A mode OFF on input line 4407.
 (/usr/share/texmf-texlive/tex/generic/oberdiek/atbegshi.sty
 Package: atbegshi 2008/07/31 v1.9 At begin shipout hook (HO)
 )
-\Hy@abspage=\count103
-\c@Item=\count104
-\c@Hfootnote=\count105
+\Hy@abspage=\count102
+\c@Item=\count103
+\c@Hfootnote=\count104
 )
 *hyperref using default driver hpdftex*
 (/usr/share/texmf-texlive/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2009/10/09 v6.79a Hyperref driver for pdfTeX
-\Fld@listcount=\count106
+\Fld@listcount=\count105
 )
-Package hyperref Info: Option `breaklinks' set `true' on input line 36.
- (target/csp.aux)
-\openout1 = `csp.aux'.
+Package hyperref Info: Option `breaklinks' set `true' on input line 26.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
+No file mrf.aux.
+\openout1 = `mrf.aux'.
 
-(/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
-[Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count107
-\scratchdimen=\dimen117
-\scratchbox=\box28
-\nofMPsegments=\count108
-\nofMParguments=\count109
-\everyMPshowfont=\toks24
-\MPscratchCnt=\count110
-\MPscratchDim=\dimen118
-\MPnumerator=\count111
-\everyMPtoPDFconversion=\toks25
-) (/usr/share/texmf-texlive/tex/latex/graphics/color.sty
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+(/usr/share/texmf-texlive/tex/latex/graphics/color.sty
 Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
 
 (/etc/texmf/tex/latex/config/color.cfg
 File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package color Info: Driver file: pdftex.def on input line 130.
-)
-Package hyperref Info: Link coloring ON on input line 43.
 
-(/usr/share/texmf-texlive/tex/latex/hyperref/nameref.sty
+(/usr/share/texmf-texlive/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2010/03/12 v0.04p Graphics/color for pdfTeX
+\Gread@gobject=\count106
+
+(/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count107
+\scratchdimen=\dimen115
+\scratchbox=\box28
+\nofMPsegments=\count108
+\nofMParguments=\count109
+\everyMPshowfont=\toks24
+\MPscratchCnt=\count110
+\MPscratchDim=\dimen116
+\MPnumerator=\count111
+\everyMPtoPDFconversion=\toks25
+)))
+Package hyperref Info: Link coloring ON on input line 33.
+ (/usr/share/texmf-texlive/tex/latex/hyperref/nameref.sty
 Package: nameref 2007/05/29 v2.31 Cross-referencing by name of section
 
 (/usr/share/texmf-texlive/tex/latex/oberdiek/refcount.sty
@@ -513,69 +496,124 @@ Package: refcount 2008/08/11 v3.1 Data extraction from references (HO)
 )
 \c@section@level=\count112
 )
-LaTeX Info: Redefining \ref on input line 43.
-LaTeX Info: Redefining \pageref on input line 43.
- (target/csp.out)
-(target/csp.out)
+LaTeX Info: Redefining \ref on input line 33.
+LaTeX Info: Redefining \pageref on input line 33.
 \@outlinefile=\write3
-\openout3 = `csp.out'.
+\openout3 = `mrf.out'.
 
 \AtBeginShipoutBox=\box29
- <pics/houghtransform.png, id=39, 1289.81876pt x 500.87125pt>
-File: pics/houghtransform.png Graphic file (type png)
 
-<use pics/houghtransform.png> [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./pics/houghtransform.png 
-(PNG copy)>]
-LaTeX Font Info:    Try loading font information for U+msa on input line 112.
+! Package inputenc Error: Unicode char \u8:∑ not set up for use with LaTeX.
 
-(/usr/share/texmf-texlive/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2009/06/22 v3.00 AMS symbols A
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.49 h{[}m,n{]}=∑
+                   g{[}k,l{]} f{[}m+k,n+l{]}
+? 
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 69.
+(/usr/share/texmf-texlive/tex/latex/base/omscmr.fd
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 112.
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 69.
 
-(/usr/share/texmf-texlive/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2009/06/22 v3.00 AMS symbols B
+
+! Package inputenc Error: Unicode char \u8:⇔ not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.70 ...extbar{}F\textbar{}\textbar{} * cos V\\⇔
+                                                   cos V = (H dot F) /
+? 
+! Undefined control sequence.
+l.76 cos V \euro
+                {} {[}-1,1{]}, and since the image vectors only contains
+? 
+
+! Package inputenc Error: Unicode char \u8:∑ not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.85 Normalized Cross Correlation (x,y) = ∑
+                                             g{[}k,l{]} f{[}m+k,n+l{]}
+? 
+[1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+LaTeX Font Info:    Try loading font information for OML+cmr on input line 114.
+
+
+(/usr/share/texmf-texlive/tex/latex/base/omlcmr.fd
+File: omlcmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-<pics/threshold_good.png, id=48, 1275.76625pt x 562.1pt>
-File: pics/threshold_good.png Graphic file (type png)
+LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10> not available
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 114.
+LaTeX Font Info:    Font shape `OML/cmr/m/it' in size <10> not available
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 116.
 
-<use pics/threshold_good.png>
-<pics/threshold_low.png, id=49, 1293.83376pt x 568.1225pt>
-File: pics/threshold_low.png Graphic file (type png)
+Underfull \hbox (badness 3333) in paragraph at lines 101--119
+[]\OT1/cmr/m/n/10 Our Im-ple-men-ta-tion: def GetEyeCorners(img, left-Tem-plate
+, right-Tem-
+ []
 
-<use pics/threshold_low.png>
-<pics/threshold_high.png, id=50, 1301.86375pt x 552.0625pt>
-File: pics/threshold_high.png Graphic file (type png)
 
-<use pics/threshold_high.png>
-<pics/threshold_contours.png, id=51, 1080.035pt x 567.11874pt>
-File: pics/threshold_contours.png Graphic file (type png)
+Underfull \hbox (badness 2359) in paragraph at lines 101--119
+\OT1/cmr/m/n/10 plate,pupilPosition=None): #The method pa-ram-e-ters are: the i
+m-age,
+ []
 
-<use pics/threshold_contours.png> [2] [3 <./pics/threshold_good.png (PNG copy)>
- <./pics/threshold_low.png (PNG copy)> <./pics/threshold_high.png (PNG copy)>]
-[4 <./pics/threshold_contours.png (PNG copy)>]
-<pics/kmeans.png, id=67, 59.22125pt x 57.21375pt>
-File: pics/kmeans.png Graphic file (type png)
- <use pics/kmeans.png>
-[5 <./pics/kmeans.png (PNG copy)>] (target/csp.aux) ) 
+
+Underfull \hbox (badness 4328) in paragraph at lines 101--119
+\OT1/cmr/m/n/10 tem-plates and op-tional pupil po-si-tion. slid-er-Vals = get-S
+lid-er-Vals()
+ []
+
+
+Underfull \hbox (badness 1383) in paragraph at lines 101--119
+\OT1/cmr/m/n/10 #En-able ad-just-ment from slid-er-val-ues for match thresh-old
+. match-Left
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 101--119
+\OT1/cmr/m/n/10 = cv2.matchTemplate(img,leftTemplate,cv2.TM[]CCOEFF[]NORMED)
+ []
+
+
+Overfull \hbox (24.31189pt too wide) in paragraph at lines 101--119
+\OT1/cmr/m/n/10 matchRight = cv2.matchTemplate(img,rightTemplate,cv2.TM[]CCOEFF
+[]NORMED)
+ []
+
+
+Underfull \hbox (badness 4792) in paragraph at lines 101--119
+\OT1/cmr/m/it/10 match-ListLeft = np.nonzero(matchLeft \OML/cmm/m/it/10 > \OT1/
+cmr/m/it/10 (slid-er-Vals[`templateThr']\OT1/cmr/m/n/10 0.01))
+ []
+
+[2] [3] (target/mrf.aux) ) 
 Here is how much of TeX's memory you used:
- 6563 strings out of 493848
- 86345 string characters out of 1152823
- 150252 words of memory out of 3000000
- 9735 multiletter control sequences out of 15000+50000
- 6857 words of font info for 27 fonts, out of 3000000 for 9000
+ 6342 strings out of 493848
+ 83221 string characters out of 1152823
+ 149368 words of memory out of 3000000
+ 9561 multiletter control sequences out of 15000+50000
+ 3986 words of font info for 15 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 38i,6n,36p,240b,303s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share/texmf-texlive/
-fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-texlive/fonts/type1
-/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-texlive/fonts/type1/public/ams
-fonts/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cm
-r10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on target/csp.pdf (5 pages, 1596464 bytes).
+ 38i,5n,24p,229b,301s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/share/texmf-texlive/fonts/type1/public/amsfonts
+/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr10.p
+fb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/sh
+are/texmf-texlive/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on target/mrf.pdf (3 pages, 62997 bytes).
 PDF statistics:
- 95 PDF objects out of 1000 (max. 8388607)
- 17 named destinations out of 1000 (max. 500000)
- 103 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 35 PDF objects out of 1000 (max. 8388607)
+ 4 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
