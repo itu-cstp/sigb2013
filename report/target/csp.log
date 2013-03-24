@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.11.6)  23 MAR 2013 12:13
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.11.6)  24 MAR 2013 12:32
 entering extended mode
  %&-line parsing enabled.
 **csp.self
@@ -521,27 +521,58 @@ LaTeX Info: Redefining \pageref on input line 43.
 \openout3 = `csp.out'.
 
 \AtBeginShipoutBox=\box29
- <pics/houghtransform.png, id=27, 1289.81876pt x 500.87125pt>
+ <pics/houghtransform.png, id=39, 1289.81876pt x 500.87125pt>
 File: pics/houghtransform.png Graphic file (type png)
 
 <use pics/houghtransform.png> [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./pics/houghtransform.png 
-(PNG copy)>] (target/csp.aux) ) 
+(PNG copy)>]
+LaTeX Font Info:    Try loading font information for U+msa on input line 112.
+
+(/usr/share/texmf-texlive/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2009/06/22 v3.00 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 112.
+
+(/usr/share/texmf-texlive/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2009/06/22 v3.00 AMS symbols B
+)
+<pics/threshold_good.png, id=48, 1275.76625pt x 562.1pt>
+File: pics/threshold_good.png Graphic file (type png)
+
+<use pics/threshold_good.png>
+<pics/threshold_low.png, id=49, 1293.83376pt x 568.1225pt>
+File: pics/threshold_low.png Graphic file (type png)
+
+<use pics/threshold_low.png>
+<pics/threshold_high.png, id=50, 1301.86375pt x 552.0625pt>
+File: pics/threshold_high.png Graphic file (type png)
+
+<use pics/threshold_high.png>
+<pics/threshold_contours.png, id=51, 1080.035pt x 567.11874pt>
+File: pics/threshold_contours.png Graphic file (type png)
+
+<use pics/threshold_contours.png> [2] [3 <./pics/threshold_good.png (PNG copy)>
+ <./pics/threshold_low.png (PNG copy)> <./pics/threshold_high.png (PNG copy)>]
+[4 <./pics/threshold_contours.png (PNG copy)>] (target/csp.aux) ) 
 Here is how much of TeX's memory you used:
- 6496 strings out of 493848
- 85137 string characters out of 1152823
- 149252 words of memory out of 3000000
- 9695 multiletter control sequences out of 15000+50000
- 4850 words of font info for 18 fonts, out of 3000000 for 9000
+ 6554 strings out of 493848
+ 86208 string characters out of 1152823
+ 150252 words of memory out of 3000000
+ 9729 multiletter control sequences out of 15000+50000
+ 6857 words of font info for 27 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 38i,6n,36p,240b,300s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share/texmf-texlive/fonts/type1/public/ams
-fonts/cm/cmbx12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cm
-r10.pfb>
-Output written on target/csp.pdf (1 page, 528012 bytes).
+ 38i,6n,36p,240b,303s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/share/te
+xmf-texlive/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-texlive
+/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-texlive/fonts/type
+1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts/type1/public/am
+sfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cm
+sy10.pfb>
+Output written on target/csp.pdf (4 pages, 1592196 bytes).
 PDF statistics:
- 48 PDF objects out of 1000 (max. 8388607)
- 9 named destinations out of 1000 (max. 500000)
- 54 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 89 PDF objects out of 1000 (max. 8388607)
+ 15 named destinations out of 1000 (max. 500000)
+ 98 words of extra memory for PDF output out of 10000 (max. 10000000)
 
