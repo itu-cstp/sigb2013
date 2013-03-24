@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.11.6)  23 MAR 2013 12:29
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.11.6)  24 MAR 2013 16:20
 entering extended mode
  %&-line parsing enabled.
 **main.tex
@@ -540,11 +540,11 @@ LaTeX Info: Redefining \pageref on input line 43.
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
 (target/main.toc
-LaTeX Font Info:    Try loading font information for U+msa on input line 3.
+LaTeX Font Info:    Try loading font information for U+msa on input line 4.
  (/usr/share/texmf-texlive/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 3.
+LaTeX Font Info:    Try loading font information for U+msb on input line 4.
 
 (/usr/share/texmf-texlive/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
@@ -556,27 +556,47 @@ File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 <pics/houghtransform.png, id=40, 1289.81876pt x 500.87125pt>
 File: pics/houghtransform.png Graphic file (type png)
 
-<use pics/houghtransform.png>)pdfTeX warning (ext4): destination with the same 
-identifier (name{page.1}) has been already used, duplicate ignored
+<use pics/houghtransform.png>pdfTeX warning (ext4): destination with the same i
+dentifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.68 \end{document}
-                    [1 <./pics/houghtransform.png (PNG copy)>] [2]
-(target/main.aux) ) 
+l.32 
+      [1 <./pics/houghtransform.png (PNG copy)>] [2]
+<pics/threshold_good.png, id=53, 1275.76625pt x 562.1pt>
+File: pics/threshold_good.png Graphic file (type png)
+
+<use pics/threshold_good.png>
+<pics/threshold_low.png, id=54, 1293.83376pt x 568.1225pt>
+File: pics/threshold_low.png Graphic file (type png)
+
+<use pics/threshold_low.png>
+<pics/threshold_high.png, id=55, 1301.86375pt x 552.0625pt>
+File: pics/threshold_high.png Graphic file (type png)
+
+<use pics/threshold_high.png>
+<pics/threshold_contours.png, id=56, 1080.035pt x 567.11874pt>
+File: pics/threshold_contours.png Graphic file (type png)
+
+<use pics/threshold_contours.png> [3 <./pics/threshold_good.png (PNG copy)> <./
+pics/threshold_low.png (PNG copy)> <./pics/threshold_high.png (PNG copy)>]
+[4 <./pics/threshold_contours.png (PNG copy)>]) [5] (target/main.aux) ) 
 Here is how much of TeX's memory you used:
- 6820 strings out of 493848
- 89110 string characters out of 1152823
- 157845 words of memory out of 3000000
- 9985 multiletter control sequences out of 15000+50000
+ 6848 strings out of 493848
+ 89724 string characters out of 1152823
+ 158845 words of memory out of 3000000
+ 10003 multiletter control sequences out of 15000+50000
  7463 words of font info for 29 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
  38i,6n,36p,240b,389s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmb
-x10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></u
-sr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr10.pfb>
-Output written on target/main.pdf (3 pages, 552546 bytes).
+</usr/sh
+are/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-t
+exlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-texlive/font
+s/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts/type1/pub
+lic/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts
+/cm/cmsy10.pfb>
+Output written on target/main.pdf (6 pages, 1606201 bytes).
 PDF statistics:
- 66 PDF objects out of 1000 (max. 8388607)
- 11 named destinations out of 1000 (max. 500000)
- 54 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 94 PDF objects out of 1000 (max. 8388607)
+ 17 named destinations out of 1000 (max. 500000)
+ 74 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -126,7 +126,7 @@ contours to find which one is most likely to be a pupil
 \subsection{K-means clustering}
 
 In this section it will be demonstrated how a form of machine learning
-is applied in order to perform unsupervised classification in order to
+is applied in order to perform supervised classification in order to
 semi-automatically set a proper thresholding value
 
 Clustering is the practice of grouping a set of elements into several
@@ -141,8 +141,42 @@ K-means is a clustering algorithm which can group a number of
 observations/data points into k number of clusters based on their
 nearest mean value.
 
+The properties of the k-means algorithm (k groups based on mean
+intensity) combined with an existing knowledge of the properties of the
+eye(the pupil is the darkest part) makes it possible to use k-means for
+setting a threshold value automatically
+
 \subsubsection{Theory}
 
+The basic idea behind k-means clustering is to iteratively run through a
+dataset assigning points in their correct cluster based on previously
+selected values. Initially k points a selected and denoted as a center
+for it's cluster, c\_1, \ldots{}, c\_k. These points can be selected on
+random or based on some guessed distribution. On each run through the
+dataset every points is examined. For each point the closest c is found,
+and the point is marked as to belong to this cluster. Once all points
+have been examined and placed in a cluster, the mean value of each
+cluster is calculated as c\_i\_val. Compare the mean value for the
+cluster with the previously recorded value of c\_i\_val. If it has
+changed, another run through is performed. This continues until a
+desired level of precision is achieved or amount of runs have taken
+place
+
+When we have done this we have k different threshold values to choose
+from, given our knowledge of the pupil, we will choose the one with the
+lowest mean value (c\_i\_val).
+
 \subsubsection{Our implementation}
+
+There are a couple of possible caveats for this approach. Firstly there
+is an element of uncertainty in exactly how the clusters will be
+distributed. We need therefore to have a high enough k value to be sure
+to get the right cluster. There is also some uncertainty about whether
+the pupil always belongs to the darkest cluster. If for instance our
+k-value is too high, and there exists a darker region in the image (dark
+spot on the skin for instance) then the value of this cluster will be
+chosen as a threshold value, and we might miss the pupil
+
+Through trials it was found that 8 is a good value for k
 
 \end{document}

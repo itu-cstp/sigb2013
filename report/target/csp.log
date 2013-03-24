@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.11.6)  24 MAR 2013 12:32
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.11.6)  24 MAR 2013 15:27
 entering extended mode
  %&-line parsing enabled.
 **csp.self
@@ -555,24 +555,24 @@ File: pics/threshold_contours.png Graphic file (type png)
 
 <use pics/threshold_contours.png> [2] [3 <./pics/threshold_good.png (PNG copy)>
  <./pics/threshold_low.png (PNG copy)> <./pics/threshold_high.png (PNG copy)>]
-[4 <./pics/threshold_contours.png (PNG copy)>] (target/csp.aux) ) 
+[4 <./pics/threshold_contours.png (PNG copy)>] [5] (target/csp.aux) ) 
 Here is how much of TeX's memory you used:
- 6554 strings out of 493848
- 86208 string characters out of 1152823
+ 6557 strings out of 493848
+ 86248 string characters out of 1152823
  150252 words of memory out of 3000000
- 9729 multiletter control sequences out of 15000+50000
+ 9731 multiletter control sequences out of 15000+50000
  6857 words of font info for 27 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
  38i,6n,36p,240b,303s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share/te
-xmf-texlive/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-texlive
-/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-texlive/fonts/type
-1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts/type1/public/am
-sfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cm
-sy10.pfb>
-Output written on target/csp.pdf (4 pages, 1592196 bytes).
+</usr/shar
+e/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-tex
+live/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-texlive/fonts/
+type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts/type1/publi
+c/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/c
+m/cmsy10.pfb>
+Output written on target/csp.pdf (5 pages, 1594786 bytes).
 PDF statistics:
- 89 PDF objects out of 1000 (max. 8388607)
- 15 named destinations out of 1000 (max. 500000)
+ 93 PDF objects out of 1000 (max. 8388607)
+ 16 named destinations out of 1000 (max. 500000)
  98 words of extra memory for PDF output out of 10000 (max. 10000000)
 
