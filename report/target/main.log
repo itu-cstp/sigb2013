@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.11.6)  24 MAR 2013 16:20
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.11.6)  25 MAR 2013 23:36
 entering extended mode
  %&-line parsing enabled.
 **main.tex
@@ -553,50 +553,308 @@ File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 \openout4 = `main.toc'.
 
  (./csp.tex
-<pics/houghtransform.png, id=40, 1289.81876pt x 500.87125pt>
+<pics/houghtransform.png, id=95, 1289.81876pt x 500.87125pt>
 File: pics/houghtransform.png Graphic file (type png)
 
 <use pics/houghtransform.png>pdfTeX warning (ext4): destination with the same i
 dentifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.32 
-      [1 <./pics/houghtransform.png (PNG copy)>] [2]
-<pics/threshold_good.png, id=53, 1275.76625pt x 562.1pt>
+l.34 
+      [1] [2 <./pics/houghtransform.png (PNG copy)>] [3]
+<pics/threshold_good.png, id=116, 1275.76625pt x 562.1pt>
 File: pics/threshold_good.png Graphic file (type png)
 
 <use pics/threshold_good.png>
-<pics/threshold_low.png, id=54, 1293.83376pt x 568.1225pt>
+<pics/threshold_low.png, id=119, 1293.83376pt x 568.1225pt>
 File: pics/threshold_low.png Graphic file (type png)
 
 <use pics/threshold_low.png>
-<pics/threshold_high.png, id=55, 1301.86375pt x 552.0625pt>
+<pics/threshold_high.png, id=120, 1301.86375pt x 552.0625pt>
 File: pics/threshold_high.png Graphic file (type png)
 
-<use pics/threshold_high.png>
-<pics/threshold_contours.png, id=56, 1080.035pt x 567.11874pt>
+<use pics/threshold_high.png> [4 <./pics/threshold_good.png (PNG copy)>]
+[5 <./pics/threshold_low.png (PNG copy)> <./pics/threshold_high.png (PNG copy)>
+] <pics/threshold_contours.png, id=134, 1080.035pt x 567.11874pt>
 File: pics/threshold_contours.png Graphic file (type png)
 
-<use pics/threshold_contours.png> [3 <./pics/threshold_good.png (PNG copy)> <./
-pics/threshold_low.png (PNG copy)> <./pics/threshold_high.png (PNG copy)>]
-[4 <./pics/threshold_contours.png (PNG copy)>]) [5] (target/main.aux) ) 
+<use pics/threshold_contours.png> [6 <./pics/threshold_contours.png (PNG copy)>
+] <pics/glintsthr.png, id=141, 1074.0125pt x 569.12625pt>
+File: pics/glintsthr.png Graphic file (type png)
+
+<use pics/glintsthr.png>
+Overfull \hbox (337.49405pt too wide) in paragraph at lines 243--243
+[]        \OT1/cmtt/m/n/10 if (Distance(candA[0],candB[0])> sliderVals['glintMi
+nDist'] and Distance(candA[0],candB[0]) < sliderVals['glintMaxDist']):[] 
+ []
+
+
+Overfull \hbox (116.99597pt too wide) in paragraph at lines 243--243
+[]\OT1/cmtt/m/n/10 #run through the remaining glints, keeping those that are cl
+ose to the pupil candidates.[] 
+ []
+
+
+Overfull \hbox (442.49313pt too wide) in paragraph at lines 243--243
+[]            \OT1/cmtt/m/n/10 if(Distance(glintCand[0],pupCand[0])>sliderVals[
+'glint&pubMINDist'] and Distance(glintCand[0],pupCand[0])<sliderVals['glint&pub
+MAXDist']):[] 
+ []
+
+
+Overfull \hbox (106.49606pt too wide) in paragraph at lines 243--243
+[]\OT1/cmtt/m/n/10 #run through the pupil candidates keeping those that are clo
+se to the fina glints list[] 
+ []
+
+[7 <./pics/glintsthr.png (PNG copy)>]
+Overfull \hbox (400.4935pt too wide) in paragraph at lines 243--243
+[]        \OT1/cmtt/m/n/10 if(Distance(candP[0],glintCand[0])>sliderVals['glint
+&pubMINDist'] and Distance(candP[0],glintCand[0])<sliderVals['glint&pubMAXDist'
+]):[] 
+ []
+
+[8] [9] <pics/kmeans.png, id=155, 59.22125pt x 57.21375pt>
+File: pics/kmeans.png Graphic file (type png)
+
+<use pics/kmeans.png>
+
+LaTeX Warning: Reference `kmeans' on page 10 undefined on input line 356.
+
+) (./template_matching.tex [10 <./pics/kmeans.png (PNG copy)>] [11]
+Overfull \hbox (27.74675pt too wide) in paragraph at lines 113--113
+[]\OT1/cmtt/m/n/10 def GetEyeCorners(img, leftTemplate, rightTemplate,pupilPosi
+tion=None):[] 
+ []
+
+
+Overfull \hbox (80.24629pt too wide) in paragraph at lines 113--113
+[]    \OT1/cmtt/m/n/10 #The method parameters are: the image, templates and opt
+ional pupil position.[] 
+ []
+
+
+Overfull \hbox (32.9967pt too wide) in paragraph at lines 113--113
+[]    \OT1/cmtt/m/n/10 matchLeft = cv2.matchTemplate(img,leftTemplate,cv2.TM_CC
+OEFF_NORMED)[] 
+ []
+
+
+Overfull \hbox (43.49661pt too wide) in paragraph at lines 113--113
+[]    \OT1/cmtt/m/n/10 matchRight = cv2.matchTemplate(img,rightTemplate,cv2.TM_
+CCOEFF_NORMED)[] 
+ []
+
+
+Overfull \hbox (300.74437pt too wide) in paragraph at lines 113--113
+[]    \OT1/cmtt/m/n/10 #The openCV library allows use of different matching met
+hods. Here we use COOEFF_NORMED = normalized cross corellation.[] 
+ []
+
+
+Overfull \hbox (127.49588pt too wide) in paragraph at lines 113--113
+[]        \OT1/cmtt/m/n/10 #If the pupil position is set, slice the image in tw
+o halfs at the pupil position.[] 
+ []
+
+
+Overfull \hbox (64.49643pt too wide) in paragraph at lines 113--113
+[]    \OT1/cmtt/m/n/10 matchListRight = np.nonzero(matchRight > (sliderVals['te
+mplateThr']*0.01))[] 
+ []
+
+
+Overfull \hbox (59.24648pt too wide) in paragraph at lines 113--113
+[]    \OT1/cmtt/m/n/10 matchListLeft =  np.nonzero(matchLeft > (sliderVals['tem
+plateThr']*0.01))[] 
+ []
+
+<pics/template_matching/1.png, id=167, 1278.7775pt x 961.5925pt>
+File: pics/template_matching/1.png Graphic file (type png)
+
+<use pics/template_matching/1.png> [12]
+<pics/template_matching/2.png, id=177, 1286.8075pt x 961.5925pt>
+File: pics/template_matching/2.png Graphic file (type png)
+
+<use pics/template_matching/2.png>
+<pics/template_matching/3.png, id=179, 1280.785pt x 963.6pt>
+File: pics/template_matching/3.png Graphic file (type png)
+
+<use pics/template_matching/3.png>
+<pics/template_matching/4.png, id=181, 1278.7775pt x 965.6075pt>
+File: pics/template_matching/4.png Graphic file (type png)
+
+<use pics/template_matching/4.png>
+<pics/template_matching/5.png, id=183, 1284.8pt x 967.615pt>
+File: pics/template_matching/5.png Graphic file (type png)
+
+<use pics/template_matching/5.png> [13 <./pics/template_matching/1.png (PNG cop
+y)>] [14 <./pics/template_matching/2.png (PNG copy)>] [15 <./pics/template_matc
+hing/3.png (PNG copy)>] [16 <./pics/template_matching/4.png (PNG copy)>]
+[17 <./pics/template_matching/5.png (PNG copy)>]
+<pics/template_matching/6.png, id=210, 1278.7775pt x 967.615pt>
+File: pics/template_matching/6.png Graphic file (type png)
+
+<use pics/template_matching/6.png>) [18 <./pics/template_matching/6.png (PNG co
+py)>] (./hough.tex <pics/hough/1.jpg, id=218, 765.86125pt x 336.25626pt>
+File: pics/hough/1.jpg Graphic file (type jpg)
+
+<use pics/hough/1.jpg> [19 <./pics/hough/1.jpg>]
+
+LaTeX Warning: Reference `hough3' on page 20 undefined on input line 37.
+
+
+LaTeX Warning: Reference `hough2' on page 20 undefined on input line 38.
+
+<pics/hough/2.png, id=226, 1228.59pt x 574.145pt>
+File: pics/hough/2.png Graphic file (type png)
+ <use pics/hough/2.png>
+<pics/hough/3.png, id=227, 1282.7925pt x 1011.78pt>
+File: pics/hough/3.png Graphic file (type png)
+ <use pics/hough/3.png>
+<pics/hough/4.png, id=228, 1280.785pt x 961.5925pt>
+File: pics/hough/4.png Graphic file (type png)
+ <use pics/hough/4.png>
+<pics/hough/5.png, id=229, 2129.9575pt x 939.51pt>
+File: pics/hough/5.png Graphic file (type png)
+ <use pics/hough/5.png>
+[20 <./pics/hough/2.png (PNG copy)>] [21 <./pics/hough/3.png (PNG copy)>]
+[22 <./pics/hough/4.png (PNG copy)> <./pics/hough/5.png (PNG copy)>]
+<pics/hough/6.png, id=247, 513.92pt x 321.2pt>
+File: pics/hough/6.png Graphic file (type png)
+ <use pics/hough/6.png> [23 <./pics/hough/6.png (PNG copy)>]
+Overfull \hbox (820.48984pt too wide) in paragraph at lines 159--159
+[]    \OT1/cmtt/m/n/10 #The image is blurred to remove noise, that could potent
+ially create gradiants where there are no edge. Its a fine line though, as the 
+blurring potentially could make it harder to find the edges we're trying to loc
+ate.[] 
+ []
+
+
+Overfull \hbox (22.4968pt too wide) in paragraph at lines 159--159
+[]    \OT1/cmtt/m/n/10 #This is so we can adjust the min/max radius for accepte
+d circles.[] 
+ []
+
+
+Overfull \hbox (190.49533pt too wide) in paragraph at lines 159--159
+[]    \OT1/cmtt/m/n/10 #This determines the resolution of the Hough-space and t
+he minimum distance between found circles.[] 
+ []
+
+
+Overfull \hbox (153.74565pt too wide) in paragraph at lines 159--159
+[]    \OT1/cmtt/m/n/10 #As the Cv2 uses canny edge detection, this sets the thr
+eshold for accepting \line" pixels.[] 
+ []
+
+
+Overfull \hbox (106.49606pt too wide) in paragraph at lines 159--159
+[]    \OT1/cmtt/m/n/10 #Determins how many votes that a circle should receive t
+o be accepted (and drawn).[] 
+ []
+
+
+Overfull \hbox (368.99377pt too wide) in paragraph at lines 159--159
+[]        \OT1/cmtt/m/n/10 circles = cv2.HoughCircles(blur,cv2.cv.CV_HOUGH_GRAD
+IENT, dp,minDist,                 None, highThr,accThr,minRadius, maxRadius)[] 
+
+ []
+
+
+Overfull \hbox (27.74675pt too wide) in paragraph at lines 159--159
+[]    \OT1/cmtt/m/n/10 #The actual cv2 method that uses all the parameters just
+ explained.[] 
+ []
+
+
+Overfull \hbox (158.9956pt too wide) in paragraph at lines 159--159
+[]    \OT1/cmtt/m/n/10 #The rest is just drawing the circles (drawing a red cir
+cle for the circle with most votes.)[] 
+ []
+
+
+Overfull \hbox (106.49606pt too wide) in paragraph at lines 159--159
+[]                \OT1/cmtt/m/n/10 cv2.circle(gColor, (int(c[0]),int(c[1])),c[2
+], (int(k*255/M),k*128,0))[] 
+ []
+
+
+Overfull \hbox (90.7462pt too wide) in paragraph at lines 159--159
+[]                        \OT1/cmtt/m/n/10 cv2.circle(gColor, (int(c[0]),int(c[
+1])),c[2], (0,0,255),5)[] 
+ []
+
+
+LaTeX Warning: Reference `hough7' on page 24 undefined on input line 168.
+
+<pics/hough/7.png, id=255, 1274.7625pt x 969.6225pt>
+File: pics/hough/7.png Graphic file (type png)
+ <use pics/hough/7.png>
+[24] <pics/hough/8.png, id=262, 1274.7625pt x 967.615pt>
+File: pics/hough/8.png Graphic file (type png)
+
+<use pics/hough/8.png> <pics/hough/9.png, id=263, 1276.77pt x 963.6pt>
+File: pics/hough/9.png Graphic file (type png)
+
+<use pics/hough/9.png> <pics/hough/10.png, id=264, 1278.7775pt x 965.6075pt>
+File: pics/hough/10.png Graphic file (type png)
+
+<use pics/hough/10.png> <pics/hough/11.png, id=265, 1278.7775pt x 969.6225pt>
+File: pics/hough/11.png Graphic file (type png)
+
+<use pics/hough/11.png> <pics/hough/12.png, id=266, 1282.7925pt x 957.5775pt>
+File: pics/hough/12.png Graphic file (type png)
+
+<use pics/hough/12.png> <pics/hough/13.png, id=267, 1282.7925pt x 961.5925pt>
+File: pics/hough/13.png Graphic file (type png)
+
+<use pics/hough/13.png> <pics/hough/14.png, id=268, 1272.755pt x 939.51pt>
+File: pics/hough/14.png Graphic file (type png)
+
+<use pics/hough/14.png> <pics/hough/15.png, id=269, 1260.71pt x 953.5625pt>
+File: pics/hough/15.png Graphic file (type png)
+
+<use pics/hough/15.png> <pics/hough/16.png, id=270, 1282.7925pt x 969.6225pt>
+File: pics/hough/16.png Graphic file (type png)
+
+<use pics/hough/16.png> [25 <./pics/hough/7.png (PNG copy)>] [26 <./pics/hough/
+8.png (PNG copy)>] [27 <./pics/hough/9.png (PNG copy)>] [28 <./pics/hough/10.pn
+g (PNG copy)>] [29 <./pics/hough/11.png (PNG copy)>] [30 <./pics/hough/12.png (
+PNG copy)>] [31 <./pics/hough/13.png (PNG copy)>] [32 <./pics/hough/14.png (PNG
+ copy)>] [33 <./pics/hough/15.png (PNG copy)>] [34 <./pics/hough/16.png (PNG co
+py)>]) [35] [36] (target/main.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
 Here is how much of TeX's memory you used:
- 6848 strings out of 493848
- 89724 string characters out of 1152823
- 158845 words of memory out of 3000000
- 10003 multiletter control sequences out of 15000+50000
- 7463 words of font info for 29 fonts, out of 3000000 for 9000
+ 7093 strings out of 493848
+ 93378 string characters out of 1152823
+ 166376 words of memory out of 3000000
+ 10139 multiletter control sequences out of 15000+50000
+ 7977 words of font info for 31 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 38i,6n,36p,240b,389s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/sh
-are/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-t
-exlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-texlive/font
-s/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts/type1/pub
-lic/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts
-/cm/cmsy10.pfb>
-Output written on target/main.pdf (6 pages, 1606201 bytes).
+ 38i,6n,39p,462b,433s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/sha
+re/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-te
+xlive/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-texlive/fonts
+/type1/public/amsfonts/cmextra/cmex7.pfb></usr/share/texmf-texlive/fonts/type1/
+public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsf
+onts/cm/cmmi5.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi
+7.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/
+share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texmf-t
+exlive/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-texlive/fonts/
+type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/publi
+c/amsfonts/cm/cmsy7.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/c
+m/cmti10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt10.pf
+b>
+Output written on target/main.pdf (37 pages, 19274333 bytes).
 PDF statistics:
- 94 PDF objects out of 1000 (max. 8388607)
- 17 named destinations out of 1000 (max. 500000)
- 74 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 408 PDF objects out of 1000 (max. 8388607)
+ 98 named destinations out of 1000 (max. 500000)
+ 282 words of extra memory for PDF output out of 10000 (max. 10000000)
 
