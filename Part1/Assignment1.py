@@ -2,7 +2,6 @@ import cv2
 cv2.namedWindow("Bah")   #workaround for arch linux
 cv2.destroyAllWindows() #workaround for arch linux
 import cv
-import pylab
 from SIGBTools import *
 import SIGBTools2 as sbt2
 import numpy as np
@@ -10,9 +9,10 @@ import math
 import sys
 from scipy.cluster.vq import *
 from datetime import datetime
-import unittest
+from matplotlib import pyplot as plt
 
-inputFile = "Sequences/eye1.avi"
+#inputFile = "Sequences/eye1.avi"
+inputFile = "Sequences/ghurt.avi"
 outputFile = "eyeTrackerResult.mp4"
 
 #--------------------------
@@ -25,6 +25,7 @@ rightTemplate = []
 tempSet = False
 frameNr =0
 props = RegionProps()
+auxWriter = cv2.VideoWriter("aux.avi", cv.CV_FOURCC('D','I','V','3'), 15.0,(480,640),True) #Make a video writer
 
 def zeit(fun,desc=""):
     """
@@ -44,7 +45,9 @@ def sigurt(v1,v2):
     return math.fabs(v2mark)
 
 def detectPupilKMeans(gray,K=4,distanceWeight=1,reSize=(30,30)):
+    #reSize = (np.shape(gray)[0]/10,np.shape(gray)[1]/10) # Only for toying when taking pictures, is sloooooow
     smallI = cv2.resize(gray, reSize)
+
     M,N = smallI.shape
     X,Y = np.meshgrid(range(M),range(N))
 
@@ -55,21 +58,24 @@ def detectPupilKMeans(gray,K=4,distanceWeight=1,reSize=(30,30)):
 
     #make a feature vectors containing (x,y,intensity)
     features = np.zeros((O,3))
-    features[:,0] = z;
-    features[:,1] = y/distanceWeight; #Divide so that the distance of position weighs less
+    features[:,0] = z
+    features[:,1] = y/distanceWeight #Divide so that the distance of position weighs less
 
-    features[:,2] = x/distanceWeight;
+    features[:,2] = x/distanceWeight
     features = np.array(features,'f')
     # cluster data
     centroids,variance = kmeans(features,K)
     #use the found clusters to map
     label,distance = vq(features,centroids)
-    # re-create image from
-    labelIm = np.array(np.reshape(label,(M,N)))
+    labelIm = centroids[label]
 
+    #plt.hist(z,256,[0,256]),plt.show()
+
+    #im = labelIm.reshape(M,N,-1)
+    #cv2.imshow("Aux",im)
     # Find the lowest valued class
     thr = 255
-    for i in range(K):
+    for i in range(len(centroids)):
         if(centroids[i][0] < thr):
             thr = centroids[i][0]
 
@@ -79,20 +85,24 @@ def GetPupil(gray,thr,minArea=4200,maxArea=6000):
     """
     Locate the best matches (plural) for pupil in a gray scale image
     """
+    gray = gray.copy()
     props = RegionProps()
 
+    N,M = np.shape(gray)
+
     val,binI =cv2.threshold(gray, thr, 255, cv2.THRESH_BINARY_INV)
+    cv2.imshow("Aux",binI)
 
     binI = cv2.morphologyEx(binI,cv2.MORPH_CLOSE,cv2.getStructuringElement(cv2.MORPH_RECT, (10,10)))
 
     binI = cv2.morphologyEx(binI,cv2.MORPH_OPEN,cv2.getStructuringElement(cv2.MORPH_CROSS,(10,10)))
-    #cv2.imshow("Aux", binI)
 
     #Calculate blobs
     contours, hierarchy = cv2.findContours(binI, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
     matches = []
     for con in contours:
         a = cv2.contourArea(con)
+        cv2.drawContours(gray,[con],0,(255,0,0))
         # extend = props.CalcContourProperties(con,properties=["extend"]) # We don't use this because it's not needed
 
         if(a==0 or a<minArea or a>maxArea):
@@ -112,6 +122,7 @@ def GetGlints(gray,thr,minSize, maxSize):
         gray = gray.copy()
 
         val, binI = cv2.threshold(gray, thr, 255, cv2.THRESH_BINARY_INV)
+
         # Opening
         binI = cv2.morphologyEx(binI,cv2.MORPH_OPEN,cv2.getStructuringElement(cv2.MORPH_CROSS,(20,20)))
         contours, hierarchy = cv2.findContours(binI, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
@@ -257,12 +268,10 @@ def Distance(a, b):
     x2,y2 = b
     return math.sqrt(math.pow((x2-x1),2)+math.pow((y2-y1),2))
 
-
 def GetIrisUsingThreshold(gray,pupil):
 	''' Given a gray level image, gray and threshold
 	value return a list of iris locations'''
 	pass
-
 
 def GetIrisUsingNormals(gradientInfo,pupil,pupilRadius,point, uv, normals,img=None):
     ''' Given a gray level image, gray and the length of the normals, normalLength
@@ -295,7 +304,6 @@ def GetEyeCorners(img, leftTemplate, rightTemplate,pupilPosition=None):
 
     return matchList
 
-
 def FilterPupilGlint(glints, pupils):
     glintList = []
     glintList1 = []
@@ -322,7 +330,6 @@ def FilterPupilGlint(glints, pupils):
 
     #sort out the pupils too far away from the found glints.
     return (set(glintList1),set(pupilList))
-
 
 def detectIrisHough(gray):
     blur = cv2.GaussianBlur(gray, (11,11),11)
@@ -393,12 +400,13 @@ def update2(I):
     
     #getGradientImageInfo(gray)
 
-    cv2.setTrackbarPos('pupilThr','Threshold',98)#detectPupilKMeans(gray,8,15))
+    #cv2.setTrackbarPos('pupilThr','Threshold',sliderVals['pupilThr'])
+    cv2.setTrackbarPos('pupilThr','Threshold',detectPupilKMeans(gray,8,15))
 
-    detectPupilHough(gray)
-    detectIrisHough(gray)
+    #detectPupilHough(gray)
+    #detectIrisHough(gray)
 
-# Do the magic  pupils = ellipsis, glints = ellipsis
+    # Do the magic  pupils = ellipsis, glints = ellipsis
     pupils = GetPupil(gray,sliderVals['pupilThr'],sliderVals['pupMinSize'],sliderVals['pupMaxSize'])
     glints = GetGlints(gray,sliderVals['glintThr'],sliderVals['glintMinSize'],sliderVals['glintMaxSize'])
     glints, pupils = FilterPupilGlint(glints,pupils)
@@ -465,15 +473,15 @@ def printUsage():
     print 'c: close video sequence'
 
 def run(fileName,resultFile='eyeTrackingResults.avi'):
-    global imgOrig, frameNr, leftTemplate,rightTemplate,tempSet;
+    global imgOrig, frameNr, leftTemplate,rightTemplate,tempSet,auxWriter
     setupWindowSliders()
     props = RegionProps()
     cap,imgOrig,sequenceOK = getImageSequence(fileName)
 
-
     N,M,C = imgOrig.shape
 
     videoWriter = cv2.VideoWriter(resultFile, cv.CV_FOURCC('D','I','V','3'), 15.0,(N,M),True) #Make a video writer
+    auxWriter = cv2.VideoWriter("aux.avi", cv.CV_FOURCC('D','I','V','3'), 15.0,(480,640),True) #Make a video writer
 
     frameNr =0
     if(sequenceOK):
@@ -548,14 +556,14 @@ def setText(dst, (x, y), s):
 def setupWindowSliders():
     cv2.namedWindow("Result")
     cv2.namedWindow('Threshold')
-    #cv2.namedWindow("Temp")
-    #cv2.namedWindow("Aux")
+
+    #Threshold value for the glint intensities
+    cv2.createTrackbar('glintThr','Threshold', 240, 255,onSlidersChange)
     #Threshold value for the pupil intensity
     cv2.createTrackbar('pupilThr','Threshold', 129, 255, onSlidersChange)
     #Threashold value for template matching
     cv2.createTrackbar('templateThr','Threshold', 85, 100, onSlidersChange)
-    #Threshold value for the glint intensities
-    cv2.createTrackbar('glintThr','Threshold', 240, 255,onSlidersChange)
+
     #define the minimum and maximum areas of the pupil
     cv2.createTrackbar('pupMinSize','Threshold', 30, 200, onSlidersChange)
     cv2.createTrackbar('pupMaxSize','Threshold', 120,600, onSlidersChange)

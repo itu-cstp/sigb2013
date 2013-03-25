@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.11.6)  24 MAR 2013 17:23
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.11.6)  25 MAR 2013 21:28
 entering extended mode
  %&-line parsing enabled.
 **csp.self
@@ -521,61 +521,107 @@ LaTeX Info: Redefining \pageref on input line 43.
 \openout3 = `csp.out'.
 
 \AtBeginShipoutBox=\box29
- <pics/houghtransform.png, id=39, 1289.81876pt x 500.87125pt>
+ <pics/houghtransform.png, id=43, 1289.81876pt x 500.87125pt>
 File: pics/houghtransform.png Graphic file (type png)
 
 <use pics/houghtransform.png> [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./pics/houghtransform.png 
 (PNG copy)>]
-LaTeX Font Info:    Try loading font information for U+msa on input line 112.
+LaTeX Font Info:    Try loading font information for U+msa on input line 122.
 
 (/usr/share/texmf-texlive/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 112.
+LaTeX Font Info:    Try loading font information for U+msb on input line 122.
 
 (/usr/share/texmf-texlive/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
-)
-<pics/threshold_good.png, id=48, 1275.76625pt x 562.1pt>
+) [2]
+<pics/threshold_good.png, id=60, 1275.76625pt x 562.1pt>
 File: pics/threshold_good.png Graphic file (type png)
 
 <use pics/threshold_good.png>
-<pics/threshold_low.png, id=49, 1293.83376pt x 568.1225pt>
+<pics/threshold_low.png, id=63, 1293.83376pt x 568.1225pt>
 File: pics/threshold_low.png Graphic file (type png)
 
 <use pics/threshold_low.png>
-<pics/threshold_high.png, id=50, 1301.86375pt x 552.0625pt>
+<pics/threshold_high.png, id=64, 1301.86375pt x 552.0625pt>
 File: pics/threshold_high.png Graphic file (type png)
 
 <use pics/threshold_high.png>
-<pics/threshold_contours.png, id=51, 1080.035pt x 567.11874pt>
+<pics/threshold_contours.png, id=66, 1080.035pt x 567.11874pt>
 File: pics/threshold_contours.png Graphic file (type png)
 
-<use pics/threshold_contours.png> [2] [3 <./pics/threshold_good.png (PNG copy)>
+<use pics/threshold_contours.png> [3] [4 <./pics/threshold_good.png (PNG copy)>
  <./pics/threshold_low.png (PNG copy)> <./pics/threshold_high.png (PNG copy)>]
-[4 <./pics/threshold_contours.png (PNG copy)>]
-<pics/kmeans.png, id=67, 59.22125pt x 57.21375pt>
+[5 <./pics/threshold_contours.png (PNG copy)>]
+<pics/glintsthr.png, id=87, 1074.0125pt x 569.12625pt>
+File: pics/glintsthr.png Graphic file (type png)
+
+<use pics/glintsthr.png>
+Overfull \hbox (337.49405pt too wide) in paragraph at lines 287--287
+[]        \OT1/cmtt/m/n/10 if (Distance(candA[0],candB[0])> sliderVals['glintMi
+nDist'] and Distance(candA[0],candB[0]) < sliderVals['glintMaxDist']):[] 
+ []
+
+
+Overfull \hbox (116.99597pt too wide) in paragraph at lines 287--287
+[]\OT1/cmtt/m/n/10 #run through the remaining glints, keeping those that are cl
+ose to the pupil candidates.[] 
+ []
+
+
+Overfull \hbox (442.49313pt too wide) in paragraph at lines 287--287
+[]            \OT1/cmtt/m/n/10 if(Distance(glintCand[0],pupCand[0])>sliderVals[
+'glint&pubMINDist'] and Distance(glintCand[0],pupCand[0])<sliderVals['glint&pub
+MAXDist']):[] 
+ []
+
+
+Overfull \hbox (106.49606pt too wide) in paragraph at lines 287--287
+[]\OT1/cmtt/m/n/10 #run through the pupil candidates keeping those that are clo
+se to the fina glints list[] 
+ []
+
+[6 <./pics/glintsthr.png (PNG copy)>]
+Overfull \hbox (400.4935pt too wide) in paragraph at lines 287--287
+[]        \OT1/cmtt/m/n/10 if(Distance(candP[0],glintCand[0])>sliderVals['glint
+&pubMINDist'] and Distance(candP[0],glintCand[0])<sliderVals['glint&pubMAXDist'
+]):[] 
+ []
+
+[7] [8] <pics/kmeans.png, id=102, 59.22125pt x 57.21375pt>
 File: pics/kmeans.png Graphic file (type png)
- <use pics/kmeans.png>
-[5 <./pics/kmeans.png (PNG copy)>] (target/csp.aux) ) 
+
+<use pics/kmeans.png>
+
+LaTeX Warning: Reference `kmeans' on page 9 undefined on input line 400.
+
+[9 <./pics/kmeans.png (PNG copy)>] (target/csp.aux)
+
+LaTeX Warning: There were undefined references.
+
+ ) 
 Here is how much of TeX's memory you used:
- 6563 strings out of 493848
- 86345 string characters out of 1152823
- 150252 words of memory out of 3000000
- 9735 multiletter control sequences out of 15000+50000
- 6857 words of font info for 27 fonts, out of 3000000 for 9000
+ 6586 strings out of 493848
+ 86597 string characters out of 1152823
+ 153517 words of memory out of 3000000
+ 9746 multiletter control sequences out of 15000+50000
+ 7025 words of font info for 28 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 38i,6n,36p,240b,303s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share/texmf-texlive/
-fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-texlive/fonts/type1
-/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-texlive/fonts/type1/public/ams
-fonts/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cm
-r10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on target/csp.pdf (5 pages, 1596464 bytes).
+ 38i,6n,36p,280b,421s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/sha
+re/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-te
+xlive/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts
+/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf-texlive/fonts/type1/publi
+c/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/c
+m/cmr7.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/
+texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on target/csp.pdf (9 pages, 1909964 bytes).
 PDF statistics:
- 95 PDF objects out of 1000 (max. 8388607)
- 17 named destinations out of 1000 (max. 500000)
- 103 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 145 PDF objects out of 1000 (max. 8388607)
+ 27 named destinations out of 1000 (max. 500000)
+ 116 words of extra memory for PDF output out of 10000 (max. 10000000)
 
