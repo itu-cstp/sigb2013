@@ -44,6 +44,7 @@ radius, and spaced with 0.314 radians. In principle this method should provide
 20 points on the periphery of the pupil, and should be extensible to finding
 the limbus. In practice, however, a few problems might arise.
 
+\subsubsection{Using gradient orientation}
 When examining the above two images of the eye, it becomes obvious that the
 pupils edge might not be have the highest gradient magnitude. For example, the
 eyelashes and glints might give a larger intensity change, than the
@@ -56,8 +57,18 @@ correct. Thus, the angle between normal and gradient on the pupil edge will be
 small.The gradients’ angles to the positive x-axis is found and compared to the
 normals angle to the positive x-axis. The angle between a vector and the
 positive x-axis can be found by applying the arctangens2 operator to its
-lengths:atan2$(x,y)$.
+lengths: atan2$(x,y)$.
 
+The use of gradient orientation presents a new problem; performance. The use of
+the atan2 operator proves to be heavy enough that it became necessary to reduce
+the size of the input image. As this method assumes a previous estimate of the
+pupil’s location, it might be preferable to select an image patch around the
+eye, rather than actually downsampling the input image. Though the latter will
+be less robust to change in eye size or distance to the camera. The described
+method is applicable to limbus detection, but in practice the iris is much
+harder to detect. This is probably due to the smaller contrast between iris and
+sclera, as well as to the edge between them being ‘jagged’ (this is most
+visible in the right side of iris in the above gradient image).
 
 %In the current
 %configuration, the provided code does not do limbus detection as it turns out
