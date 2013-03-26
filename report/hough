@@ -161,4 +161,4 @@ Use the last known position to filter out wrong results. (as the video is about 
 
 ## Conclusion:
 
-Out of the box, Hough transform works quite well for pupil/iris detection, its robust even if the image contains noise (salt and pepper, not large distractions), and when considering that the method allows for searching for multiple times appearence of a shape in a single pass its both fast and reliable.
+Out of the box, Hough transform works quite well for pupil/iris detection, its robust even if the image contains noise (salt and pepper, not large distractions), and when considering that the method allows for searching for multiple times appearence of a shape in a single pass its both fast and reliable
