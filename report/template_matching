@@ -1,6 +1,6 @@
 # Template Matching
 
-*What do we want to achieve?*
+## What do we want to achieve?
 
 We want to describe how a succesful match is found for a template when matching it with an image. We want to explain the main theories behind the methods, and test our implementation under various circumstances.
 
@@ -61,6 +61,7 @@ Our Implementation is seen in figure \ref{getEyeCorners}
 
 ![GetEyeCorners \label{getEyeCorners}](pics/template_matching/getEye.png)
 
+\pagebreak
 
 ## Our Results: (Also see video)
 We found that, when using the normalize cross corellation, a good starting threshold is 0.85. That doesn’t draw to many detections from the start and, provides a good starting point for further adjustments. 
@@ -68,31 +69,20 @@ All the tests runs utilizes the pupil position, allowing matches for the left te
 
 ### Test 1 - Unknown Subject.
 
-![Threshold 85 \label{tm1}](pics/template_matching/1.png)
+![As we see in figure \ref{tm1}, with at threshold of 0.85, things work out fine, when there are not too much movement in the image. In controlled light, controlled subjects, the correlations methods works like a charm. \label{tm1}](pics/template_matching/1.png)
 
-As we see in figure \ref{tm1}, with at threshold of 0.85, things work out fine, when there are not too much movement in the image. In controlled light, controlled subjects, the correlations methods works like a charm.
+![Seen in figure \ref{tm2}. As soon as the subject moves too much, the threshold has to be lowered to find any results. It quickly becomes a problem having a shared threshold for both template matchings (left & right), as the circumstances around the two places in the image are quite different \label{tm2}](pics/template_matching/2.png)
 
-![Threshold 66 \label{tm2}](pics/template_matching/2.png)
+![Seen in figure \ref{tm3}. Lowering the threshold even more, allows the subject to move more freely and still finding matches in both sides. Again we see a big difference in which sides that struggle and which that finds multible matches. \label{tm3}](pics/template_matching/3.png)
 
-Seen in figure \ref{tm2}. As soon as the subject moves too much, the threshold has to be lowered to find any results. It quickly becomes a problem having a shared threshold for both template matchings (left & right), as the circumstances around the two places in the image are quite different.
-
-![Threshold 42 \label{tm3}](pics/template_matching/3.png)
-
-Seen in figure \ref{tm3}. Lowering the threshold even more, allows the subject to move more freely and still finding matches in both sides. Again we see a big difference in which sides that struggle and which that finds multible matches.
 
 ### Test 2 - Young Master Ghurt - recorded tuesday 12/03/13
 
-![Threshold 92 \label{tm4}](pics/template_matching/4.png)
+![In figure \ref{tm4}. Starting out with a high threshold of 0.92 seems to work quite well. When the template contains enough contrasts/diversity, and the subject remains still, the errors are few \label{tm4}](pics/template_matching/4.png)
 
-In figure \ref{tm4}. Starting out with a high threshold of 0.92 seems to work quite well. When the template contains enough contrasts/diversity, and the subject remains still, the errors are few
+![In figure \ref{tm5} we see it doesn’t take a lot of change before the threshold has to be lowered to find a result. Again there is a huge difference on the sides, and we can conclude that a shared threshold wouldn’t be suitable in an industrial/finished solution. \label{tm5}](pics/template_matching/5.png)
 
-![Threshold 72 \label{tm5}](pics/template_matching/5.png)
-
-In figure \ref{tm5} we see it doesn’t take a lot of change before the threshold has to be lowered to find a result. Again there is a huge difference on the sides, and we can conclude that a shared threshold wouldn’t be suitable in an industrial/finished solution.
-
-![Threshold 59 \label{tm6}](pics/template_matching/6.png)
-
-In figure \ref{tm6} we see as we continue the path downwards lowering the threshold to find matches at the sides, a lot of false results now appear, as the match no longer have to fit perfectly. This is not a bad setup for further development, as the “bad” results easily could be filtered away. (in the sense that too many matches are better than none at all).
+![In figure \ref{tm6} we see as we continue the path downwards lowering the threshold to find matches at the sides, a lot of false results now appear, as the match no longer have to fit perfectly. This is not a bad setup for further development, as the “bad” results easily could be filtered away. (in the sense that too many matches are better than none at all). \label{tm6}](pics/template_matching/6.png)
 
 ## Concluding on the results and improving the method:
 

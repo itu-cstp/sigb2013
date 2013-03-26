@@ -44,7 +44,7 @@
 
 \section{Template Matching}
 
-\emph{What do we want to achieve?}
+\subsection{What do we want to achieve?}
 
 We want to describe how a succesful match is found for a template when
 matching it with an image. We want to explain the main theories behind
@@ -136,6 +136,8 @@ Our Implementation is seen in figure \ref{getEyeCorners}
 \includegraphics{pics/template_matching/getEye.png}
 \caption{GetEyeCorners \label{getEyeCorners}}
 \end{figure}
+
+\pagebreak
 
 \subsection{Our Results: (Also see video)}
 

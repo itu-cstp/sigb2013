@@ -1,6 +1,6 @@
 \section{Template Matching}
 
-\emph{What do we want to achieve?}
+\subsection{What do we want to achieve?}
 
 We want to describe how a succesful match is found for a template when
 matching it with an image. We want to explain the main theories behind
@@ -69,7 +69,7 @@ This can be refined further by subtracting the means for both template
 and image patch. This gives us the zero mean normalized
 cross-correlation, AKA correlation coefficient:
 
-$h[m,n] = \frac{ \sum{k,l}{(g[k,l]-\bar{g})(f[m+k,n+l]-\bar{f}_{m,n})}}{((\sum{k,l}{g[k,l]-\bar{g})^2\sum{k,l}{(f[m+k,n+l]-\bar{f}_{m,n})^2)}^{0.5}}}$
+\[h[m,n] = \frac{ \sum{k,l}{(g[k,l]-\bar{g})(f[m+k,n+l]-\bar{f}_{m,n})}}{((\sum{k,l}{g[k,l]-\bar{g})^2\sum{k,l}{(f[m+k,n+l]-\bar{f}_{m,n})^2)}^{0.5}}}\]
 
 This gives a very accurate result, but is pretty slow as well.
 
@@ -77,40 +77,24 @@ This gives a very accurate result, but is pretty slow as well.
 
 Sum of squared difference:
 
-$(u,v)=\sum{x,y}{f(x,y)-t(x-u,y-v)}^2$
+$d(u,v)=\sum{x,y}{f(x,y)-t(x-u,y-v)}^2$
 
-s compares each corresponding pixels describing the difference between
-them with a calculated positive number. (because of the squared) The
-closer to zero the final result is, the better the match. The image
+This compares each corresponding pixels describing the difference
+between them with a calculated positive number. (because of the squared)
+The closer to zero the final result is, the better the match. The image
 viewed (where white equals good results) are calculated with: image
 (x,y) = 1 - sqrt(result of above expression).
 
-Our Implementation:
+Our Implementation is seen in figure \ref{getEyeCorners}
 
-\begin{verbatim}
-def GetEyeCorners(img, leftTemplate, rightTemplate,pupilPosition=None):
-    #The method parameters are: the image, templates and optional pupil position.
-    sliderVals = getSliderVals()
+\begin{figure}[htbp]
+\centering
+\includegraphics{pics/template_matching/getEye.png}
+\caption{GetEyeCorners \label{getEyeCorners}}
+\end{figure}
 
-    #Enable adjustment from slidervalues for match threshold. 
-    matchLeft = cv2.matchTemplate(img,leftTemplate,cv2.TM_CCOEFF_NORMED)
-    matchRight = cv2.matchTemplate(img,rightTemplate,cv2.TM_CCOEFF_NORMED)
+\pagebreak
 
-    #The openCV library allows use of different matching methods. Here we use COOEFF_NORMED = normalized cross corellation.
-    #Matching both for left template and right template.
-
-    if (pupilPosition != None):
-        #If the pupil position is set, slice the image in two halfs at the pupil position. 
-        pupX,pupY = pupilPosition
-        matchRight = matchRight[:,pupX:]
-        matchLeft = matchLeft[:,:pupX]
-    matchListRight = np.nonzero(matchRight > (sliderVals['templateThr']*0.01))
-    matchListLeft =  np.nonzero(matchLeft > (sliderVals['templateThr']*0.01))
-
-    #Sort out the results with values below the match threshold.
-    matchList = (matchListLeft,matchListRight)
-    return matchList
-\end{verbatim}
 \subsection{Our Results: (Also see video)}
 
 We found that, when using the normalize cross corellation, a good
@@ -125,72 +109,62 @@ matches.
 \begin{figure}[htbp]
 \centering
 \includegraphics{pics/template_matching/1.png}
-\caption{Threshold 85 \label{tm1}}
+\caption{As we see in figure \ref{tm1}, with at threshold of 0.85,
+things work out fine, when there are not too much movement in the image.
+In controlled light, controlled subjects, the correlations methods works
+like a charm. \label{tm1}}
 \end{figure}
-
-As we see in figure \ref{tm1}, with at threshold of 0.85, things work
-out fine, when there are not too much movement in the image. In
-controlled light, controlled subjects, the correlations methods works
-like a charm.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics{pics/template_matching/2.png}
-\caption{Threshold 66 \label{tm2}}
+\caption{Seen in figure \ref{tm2}. As soon as the subject moves too
+much, the threshold has to be lowered to find any results. It quickly
+becomes a problem having a shared threshold for both template matchings
+(left \& right), as the circumstances around the two places in the image
+are quite different \label{tm2}}
 \end{figure}
-
-Seen in figure \ref{tm2}. As soon as the subject moves too much, the
-threshold has to be lowered to find any results. It quickly becomes a
-problem having a shared threshold for both template matchings (left \&
-right), as the circumstances around the two places in the image are
-quite different.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics{pics/template_matching/3.png}
-\caption{Threshold 42 \label{tm3}}
+\caption{Seen in figure \ref{tm3}. Lowering the threshold even more,
+allows the subject to move more freely and still finding matches in both
+sides. Again we see a big difference in which sides that struggle and
+which that finds multible matches. \label{tm3}}
 \end{figure}
-
-Seen in figure \ref{tm3}. Lowering the threshold even more, allows the
-subject to move more freely and still finding matches in both sides.
-Again we see a big difference in which sides that struggle and which
-that finds multible matches.
 
 \subsubsection{Test 2 - Young Master Ghurt - recorded tuesday 12/03/13}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics{pics/template_matching/4.png}
-\caption{Threshold 92 \label{tm4}}
+\caption{In figure \ref{tm4}. Starting out with a high threshold of 0.92
+seems to work quite well. When the template contains enough
+contrasts/diversity, and the subject remains still, the errors are few
+\label{tm4}}
 \end{figure}
-
-In figure \ref{tm4}. Starting out with a high threshold of 0.92 seems to
-work quite well. When the template contains enough contrasts/diversity,
-and the subject remains still, the errors are few
 
 \begin{figure}[htbp]
 \centering
 \includegraphics{pics/template_matching/5.png}
-\caption{Threshold 72 \label{tm5}}
+\caption{In figure \ref{tm5} we see it doesn't take a lot of change
+before the threshold has to be lowered to find a result. Again there is
+a huge difference on the sides, and we can conclude that a shared
+threshold wouldn't be suitable in an industrial/finished solution.
+\label{tm5}}
 \end{figure}
-
-In figure \ref{tm5} we see it doesn't take a lot of change before the
-threshold has to be lowered to find a result. Again there is a huge
-difference on the sides, and we can conclude that a shared threshold
-wouldn't be suitable in an industrial/finished solution.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics{pics/template_matching/6.png}
-\caption{Threshold 59 \label{tm6}}
+\caption{In figure \ref{tm6} we see as we continue the path downwards
+lowering the threshold to find matches at the sides, a lot of false
+results now appear, as the match no longer have to fit perfectly. This
+is not a bad setup for further development, as the ``bad'' results
+easily could be filtered away. (in the sense that too many matches are
+better than none at all). \label{tm6}}
 \end{figure}
-
-In figure \ref{tm6} we see as we continue the path downwards lowering
-the threshold to find matches at the sides, a lot of false results now
-appear, as the match no longer have to fit perfectly. This is not a bad
-setup for further development, as the ``bad'' results easily could be
-filtered away. (in the sense that too many matches are better than none
-at all).
 
 \subsection{Concluding on the results and improving the method:}
 
