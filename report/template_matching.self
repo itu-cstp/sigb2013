@@ -113,7 +113,7 @@ This can be refined further by subtracting the means for both template
 and image patch. This gives us the zero mean normalized
 cross-correlation, AKA correlation coefficient:
 
-$h[m,n] = \frac{ \sum{k,l}{(g[k,l]-\bar{g})(f[m+k,n+l]-\bar{f}_{m,n})}}{((\sum{k,l}{g[k,l]-\bar{g})^2\sum{k,l}{(f[m+k,n+l]-\bar{f}_{m,n})^2)}^{0.5}}}$
+\[h[m,n] = \frac{ \sum{k,l}{(g[k,l]-\bar{g})(f[m+k,n+l]-\bar{f}_{m,n})}}{((\sum{k,l}{g[k,l]-\bar{g})^2\sum{k,l}{(f[m+k,n+l]-\bar{f}_{m,n})^2)}^{0.5}}}\]
 
 This gives a very accurate result, but is pretty slow as well.
 
@@ -121,40 +121,22 @@ This gives a very accurate result, but is pretty slow as well.
 
 Sum of squared difference:
 
-$(u,v)=\sum{x,y}{f(x,y)-t(x-u,y-v)}^2$
+$d(u,v)=\sum{x,y}{f(x,y)-t(x-u,y-v)}^2$
 
-s compares each corresponding pixels describing the difference between
-them with a calculated positive number. (because of the squared) The
-closer to zero the final result is, the better the match. The image
+This compares each corresponding pixels describing the difference
+between them with a calculated positive number. (because of the squared)
+The closer to zero the final result is, the better the match. The image
 viewed (where white equals good results) are calculated with: image
 (x,y) = 1 - sqrt(result of above expression).
 
-Our Implementation:
+Our Implementation is seen in figure \ref{getEyeCorners}
 
-\begin{verbatim}
-def GetEyeCorners(img, leftTemplate, rightTemplate,pupilPosition=None):
-    #The method parameters are: the image, templates and optional pupil position.
-    sliderVals = getSliderVals()
+\begin{figure}[htbp]
+\centering
+\includegraphics{pics/template_matching/getEye.png}
+\caption{GetEyeCorners \label{getEyeCorners}}
+\end{figure}
 
-    #Enable adjustment from slidervalues for match threshold. 
-    matchLeft = cv2.matchTemplate(img,leftTemplate,cv2.TM_CCOEFF_NORMED)
-    matchRight = cv2.matchTemplate(img,rightTemplate,cv2.TM_CCOEFF_NORMED)
-
-    #The openCV library allows use of different matching methods. Here we use COOEFF_NORMED = normalized cross corellation.
-    #Matching both for left template and right template.
-
-    if (pupilPosition != None):
-        #If the pupil position is set, slice the image in two halfs at the pupil position. 
-        pupX,pupY = pupilPosition
-        matchRight = matchRight[:,pupX:]
-        matchLeft = matchLeft[:,:pupX]
-    matchListRight = np.nonzero(matchRight > (sliderVals['templateThr']*0.01))
-    matchListLeft =  np.nonzero(matchLeft > (sliderVals['templateThr']*0.01))
-
-    #Sort out the results with values below the match threshold.
-    matchList = (matchListLeft,matchListRight)
-    return matchList
-\end{verbatim}
 \subsection{Our Results: (Also see video)}
 
 We found that, when using the normalize cross corellation, a good
@@ -164,7 +146,7 @@ All the tests runs utilizes the pupil position, allowing matches for the
 left template only in the left side and opposite for the right template
 matches.
 
-\subsection{Test 1 - Unknown Subject.}
+\subsubsection{Test 1 - Unknown Subject.}
 
 \begin{figure}[htbp]
 \centering
@@ -200,7 +182,7 @@ subject to move more freely and still finding matches in both sides.
 Again we see a big difference in which sides that struggle and which
 that finds multible matches.
 
-\subsection{Test 2 - Young Master Ghurt - recorded tuesday 12/03/13}
+\subsubsection{Test 2 - Young Master Ghurt - recorded tuesday 12/03/13}
 
 \begin{figure}[htbp]
 \centering
@@ -236,7 +218,7 @@ setup for further development, as the ``bad'' results easily could be
 filtered away. (in the sense that too many matches are better than none
 at all).
 
-\section{Concluding on the results and improving the method:}
+\subsection{Concluding on the results and improving the method:}
 
 It is obvious that our implementation can be improved. As in all the
 different techniques mentioned in this report, controlling the

@@ -63,36 +63,8 @@ The hough-space is therefore also increased by one dimension, to accommodate the
 The openCV method first performs a canny edge detection, and then uses a bit more complex voting method using the gradient directions to guide the Hough voting process. (Presumably using the methods we described earlier , sorting out voting results, where the angle between the gradient, and the circle normal within a defined threshold. Although the OpenCv documentation is not quite clear on this point).
 
 **Our Implementation:**
-
-    def detectPupilHough(gray):
-        #The method takes a gray-scale image.
-            blur = cv2.GaussianBlur(gray, (81,81), 11)
-        #The image is blurred to remove noise, that could potentially create gradiants where there are no edge. Its a fine line though, as the blurring potentially could make it harder to find the edges we're trying to locate.
-            slidervals = getSliderVals()
-        #This is so we can adjust the min/max radius for accepted circles.
-            dp = 6; minDist = 30
-        #This determines the resolution of the Hough-space and the minimum distance between found circles.
-            highThr = 20
-        #As the Cv2 uses canny edge detection, this sets the threshold for accepting “line” pixels.
-            accThr = 150;
-        #Determins how many votes that a circle should receive to be accepted (and drawn).
-            minRadius = slidervals['Hough pupil size']-7;
-            maxRadius = slidervals['Hough pupil size']+7;
-        #Sets the size of the accepted circles.
-            circles = cv2.HoughCircles(blur,cv2.cv.CV_HOUGH_GRADIENT, dp,minDist,                 None, highThr,accThr,minRadius, maxRadius)
-        #The actual cv2 method that uses all the parameters just explained.
-        #The rest is just drawing the circles (drawing a red circle for the circle with most votes.)
-            gColor = cv2.cvtColor(gray, cv2.COLOR_GRAY2BGR)
-            if (circles !=None):
-                    all_circles = circles[0]
-                    M,N = all_circles.shape
-                    k=1
-                    for c in all_circles:
-                    cv2.circle(gColor, (int(c[0]),int(c[1])),c[2], (int(k*255/M),k*128,0))
-                    K=k+1
-                            c=all_circles[0,:]
-                            cv2.circle(gColor, (int(c[0]),int(c[1])),c[2], (0,0,255),5)
-    cv2.imshow("houghPupil",gColor)
+See figure \ref{detectPupilHough}
+![detectPupilHough \label{detectPupilHough}](pics/hough/detect.png)
 
 ## Our Results
 

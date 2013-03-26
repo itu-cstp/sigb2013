@@ -9,28 +9,28 @@
 \contentsline {subsubsection}{Theory}{9}{section*.9}
 \contentsline {subsubsection}{Our implementation}{9}{section*.10}
 \contentsline {subsubsection}{Usefulness of the k-Means algorithm}{10}{section*.11}
-\contentsline {section}{Template Matching}{10}{section*.12}
+\contentsline {section}{Template Matching}{11}{section*.12}
 \contentsline {subsection}{Main Theory: Use filtering methods}{11}{section*.13}
 \contentsline {subsubsection}{Correlation}{11}{section*.14}
 \contentsline {subsection}{Our Results: (Also see video)}{13}{section*.15}
 \contentsline {subsubsection}{Test 1 - Unknown Subject.}{13}{section*.16}
-\contentsline {subsubsection}{Test 2 - Young Master Ghurt - recorded tuesday 12/03/13}{15}{section*.17}
-\contentsline {subsection}{Concluding on the results and improving the method:}{19}{section*.18}
-\contentsline {section}{Edges and Gradients}{20}{section*.19}
-\contentsline {subsection}{Overall rationale and theory}{20}{section*.20}
-\contentsline {subsection}{Using gradient magnitudes}{20}{section*.21}
-\contentsline {subsection}{Using gradient orientation}{21}{section*.22}
-\contentsline {section}{Hough Transformation}{22}{section*.23}
-\contentsline {subsection}{Main Theory:}{22}{section*.24}
-\contentsline {subsubsection}{How does it work?}{22}{section*.25}
-\contentsline {subsection}{Polar representation}{26}{section*.26}
-\contentsline {subsection}{Hough Circle Transform:}{26}{section*.27}
-\contentsline {subsection}{Our Results}{27}{section*.28}
-\contentsline {subsubsection}{Test 1. Unknown subject closeup.}{28}{section*.29}
-\contentsline {subsubsection}{Test 2. Young Master Roed recorded 12/03/13 Pupil Detection.}{28}{section*.30}
-\contentsline {subsubsection}{Test 3. Young Master Roed recorded 12/03/13 Iris Detection.}{28}{section*.31}
-\contentsline {subsection}{Our Impressions of the technique:}{38}{section*.32}
-\contentsline {subsubsection}{When does it work?}{38}{section*.33}
-\contentsline {subsubsection}{When does it not work?}{38}{section*.34}
-\contentsline {subsection}{Improving the method:}{38}{section*.35}
-\contentsline {subsection}{Conclusion:}{38}{section*.36}
+\contentsline {subsubsection}{Test 2 - Young Master Ghurt - recorded tuesday 12/03/13}{13}{section*.17}
+\contentsline {subsection}{Concluding on the results and improving the method:}{20}{section*.18}
+\contentsline {section}{Edges and Gradients}{21}{section*.19}
+\contentsline {subsection}{Overall rationale and theory}{21}{section*.20}
+\contentsline {subsection}{Using gradient magnitudes}{21}{section*.21}
+\contentsline {subsection}{Using gradient orientation}{22}{section*.22}
+\contentsline {section}{Hough Transformation}{23}{section*.23}
+\contentsline {subsection}{Main Theory:}{23}{section*.24}
+\contentsline {subsubsection}{How does it work?}{23}{section*.25}
+\contentsline {subsection}{Polar representation}{27}{section*.26}
+\contentsline {subsection}{Hough Circle Transform:}{27}{section*.27}
+\contentsline {subsection}{Our Results}{28}{section*.28}
+\contentsline {subsubsection}{Test 1. Unknown subject closeup.}{29}{section*.29}
+\contentsline {subsubsection}{Test 2. Young Master Roed recorded 12/03/13 Pupil Detection.}{29}{section*.30}
+\contentsline {subsubsection}{Test 3. Young Master Roed recorded 12/03/13 Iris Detection.}{29}{section*.31}
+\contentsline {subsection}{Our Impressions of the technique:}{39}{section*.32}
+\contentsline {subsubsection}{When does it work?}{39}{section*.33}
+\contentsline {subsubsection}{When does it not work?}{39}{section*.34}
+\contentsline {subsection}{Improving the method:}{39}{section*.35}
+\contentsline {subsection}{Conclusion:}{39}{section*.36}
