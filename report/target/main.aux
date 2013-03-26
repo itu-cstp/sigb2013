@@ -60,40 +60,38 @@
 \@writefile{toc}{\contentsline {subsection}{Overall rationale and theory}{20}{section*.20}}
 \newlabel{iristhresh}{{}{20}{Overall rationale and theory\relax }{section*.20}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces An attempt at using binary thresholding to locate the iris. while the iris is not a continuous blob, it is starting to converge with the sclera.}}{20}{figure.14}}
-\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces \textbf  {Left:} Black dots are the highest gradient magnitudes found on the grey lines (here, 2 per line). The white circle is the initial estimate of the pupils location. \textbf  {Right:} The set of gradient magnitudes represented as an image.}}{20}{figure.15}}
-\@writefile{toc}{\contentsline {subsection}{Using gradient magnitudes}{21}{section*.21}}
+\@writefile{toc}{\contentsline {subsection}{Using gradient magnitudes}{20}{section*.21}}
+\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces \textbf  {Left:} Black dots are the highest gradient magnitudes found on the grey lines (here, 2 per line). The white circle is the initial estimate of the pupils location. \textbf  {Right:} The set of gradient magnitudes represented as an image.}}{21}{figure.15}}
 \@writefile{toc}{\contentsline {subsection}{Using gradient orientation}{21}{section*.22}}
 \@writefile{toc}{\contentsline {section}{Hough Transformation}{22}{section*.23}}
 \@writefile{toc}{\contentsline {subsection}{Main Theory:}{22}{section*.24}}
-\@writefile{lof}{\contentsline {figure}{\numberline {16}{\ignorespaces Hough space }}{22}{figure.16}}
-\newlabel{hough1}{{16}{22}{Hough space \label {hough1}\relax }{figure.16}{}}
-\@writefile{toc}{\contentsline {subsubsection}{How does it work?}{23}{section*.25}}
+\@writefile{toc}{\contentsline {subsubsection}{How does it work?}{22}{section*.25}}
+\@writefile{lof}{\contentsline {figure}{\numberline {16}{\ignorespaces Hough space }}{23}{figure.16}}
+\newlabel{hough1}{{16}{23}{Hough space \label {hough1}\relax }{figure.16}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {17}{\ignorespaces Sobel kernel }}{23}{figure.17}}
 \newlabel{hough2}{{17}{23}{Sobel kernel \label {hough2}\relax }{figure.17}{}}
-\@writefile{toc}{\contentsline {subsection}{Polar representation}{23}{section*.26}}
 \@writefile{lof}{\contentsline {figure}{\numberline {18}{\ignorespaces Our calculated edge magnitude image for a closeup image of an eye. Brighter spots equals a longer gradient which means a larger contrast }}{24}{figure.18}}
 \newlabel{hough3}{{18}{24}{Our calculated edge magnitude image for a closeup image of an eye. Brighter spots equals a longer gradient which means a larger contrast \label {hough3}\relax }{figure.18}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {19}{\ignorespaces Thresholded magnitude image }}{25}{figure.19}}
 \newlabel{hough4}{{19}{25}{Thresholded magnitude image \label {hough4}\relax }{figure.19}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {20}{\ignorespaces Upvoted point }}{25}{figure.20}}
 \newlabel{hough5}{{20}{25}{Upvoted point \label {hough5}\relax }{figure.20}{}}
+\@writefile{toc}{\contentsline {subsection}{Polar representation}{26}{section*.26}}
 \@writefile{lof}{\contentsline {figure}{\numberline {21}{\ignorespaces Hough space sinusoid curve. (Here rather illustrative but alas not very informative, as it is without coordinates.) }}{26}{figure.21}}
 \newlabel{hough6}{{21}{26}{Hough space sinusoid curve. (Here rather illustrative but alas not very informative, as it is without coordinates.) \label {hough6}\relax }{figure.21}{}}
 \@writefile{toc}{\contentsline {subsection}{Hough Circle Transform:}{26}{section*.27}}
 \@writefile{toc}{\contentsline {subsection}{Our Results}{27}{section*.28}}
-\@writefile{toc}{\contentsline {subsubsection}{Test 1. Unknown subject closeup.}{27}{section*.29}}
+\@writefile{toc}{\contentsline {subsubsection}{Test 1. Unknown subject closeup.}{28}{section*.29}}
 \@writefile{lof}{\contentsline {figure}{\numberline {22}{\ignorespaces These circumstances are ideal for detecting the iris, as the iris itself is highly visible and a lot of high contrast circle poins help determine the circle placement. The top of the circle may be detected on the eyelid rather than the iris though, as the contrast there is larger that on the actual iris. }}{28}{figure.22}}
 \newlabel{hough7}{{22}{28}{These circumstances are ideal for detecting the iris, as the iris itself is highly visible and a lot of high contrast circle poins help determine the circle placement. The top of the circle may be detected on the eyelid rather than the iris though, as the contrast there is larger that on the actual iris. \label {hough7}\relax }{figure.22}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Test 2. Young Master Roed recorded 12/03/13 Pupil Detection.}{28}{section*.30}}
+\@writefile{toc}{\contentsline {subsubsection}{Test 3. Young Master Roed recorded 12/03/13 Iris Detection.}{28}{section*.31}}
 \@writefile{lof}{\contentsline {figure}{\numberline {23}{\ignorespaces On this image we se why the hough transformation is really reliable. The circle is detected even though the eyelids top and bottom cover some of the iris. The points at the sides makes up for that and casts enough votes on there being a full circle where the iris is, therefore overcomming the problem that some of the iris is not visible. }}{29}{figure.23}}
 \newlabel{hough8}{{23}{29}{On this image we se why the hough transformation is really reliable. The circle is detected even though the eyelids top and bottom cover some of the iris. The points at the sides makes up for that and casts enough votes on there being a full circle where the iris is, therefore overcomming the problem that some of the iris is not visible. \label {hough8}\relax }{figure.23}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {24}{\ignorespaces Even at the sides the method detects a circle, through movement and other distractions. The circle jumps a lot, as more that one circle is detected around the iris and they each take turns getting the most votes, but overall a good result in these ideal circumstances. }}{30}{figure.24}}
 \newlabel{hough9}{{24}{30}{Even at the sides the method detects a circle, through movement and other distractions. The circle jumps a lot, as more that one circle is detected around the iris and they each take turns getting the most votes, but overall a good result in these ideal circumstances. \label {hough9}\relax }{figure.24}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Test 2. Young Master Roed recorded 12/03/13 Pupil Detection.}{31}{section*.30}}
 \@writefile{lof}{\contentsline {figure}{\numberline {25}{\ignorespaces This image contains many distractions. The infrared lights made a massive four reflections in the glasses covering the pupil. Instead of finding the pupil, a part of the iris is detected as a circle edge. }}{31}{figure.25}}
 \newlabel{hough10}{{25}{31}{This image contains many distractions. The infrared lights made a massive four reflections in the glasses covering the pupil. Instead of finding the pupil, a part of the iris is detected as a circle edge. \label {hough10}\relax }{figure.25}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Test 3. Young Master Roed recorded 12/03/13 Iris Detection.}{31}{section*.31}}
-\@writefile{toc}{\contentsline {subsection}{Our Impressions of the technique:}{31}{section*.32}}
-\@writefile{toc}{\contentsline {subsubsection}{When does it work?}{31}{section*.33}}
 \@writefile{lof}{\contentsline {figure}{\numberline {26}{\ignorespaces The distractions keep having an influence on the result, as on this image, where the best circle match is the circular reflection of the infrared light. THis could be compensated for by lowering the threshold ond filtering the bads results afterwards. }}{32}{figure.26}}
 \newlabel{hough11}{{26}{32}{The distractions keep having an influence on the result, as on this image, where the best circle match is the circular reflection of the infrared light. THis could be compensated for by lowering the threshold ond filtering the bads results afterwards. \label {hough11}\relax }{figure.26}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {27}{\ignorespaces The distractions just proved to be too large an obstacle, as the eye movements keeps concealing most of the pupil. Even though the Hough method is pretty stable, it still requires a bit more controlled environment. }}{33}{figure.27}}
@@ -106,6 +104,8 @@
 \newlabel{label15}{{30}{36}{In this fram, there's just not enought circle edge points visable to determine the presence of a circle. The right side of the iris could help, but its just not enought without lowering the threshold even further. \label {label15}\relax }{figure.30}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {31}{\ignorespaces The threshold has been lowered even further here to 90 and other circles appear. The most votes are still placed on the correct circle though. }}{37}{figure.31}}
 \newlabel{label16}{{31}{37}{The threshold has been lowered even further here to 90 and other circles appear. The most votes are still placed on the correct circle though. \label {label16}\relax }{figure.31}{}}
+\@writefile{toc}{\contentsline {subsection}{Our Impressions of the technique:}{38}{section*.32}}
+\@writefile{toc}{\contentsline {subsubsection}{When does it work?}{38}{section*.33}}
 \@writefile{toc}{\contentsline {subsubsection}{When does it not work?}{38}{section*.34}}
 \@writefile{toc}{\contentsline {subsection}{Improving the method:}{38}{section*.35}}
 \@writefile{toc}{\contentsline {subsection}{Conclusion:}{38}{section*.36}}
