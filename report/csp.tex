@@ -223,19 +223,28 @@ straight forward and imperative:
 for candA in glints:
     for candB in glints:
     #only accepting points with a certain distance to each other.
-        if (Distance(candA[0],candB[0])> sliderVals['glintMinDist'] and Distance(candA[0],candB[0]) < sliderVals['glintMaxDist']):
+        if (Distance(candA[0],candB[0])> sliderVals['glintMinDist']
+         and Distance(candA[0],candB[0]) < sliderVals['glintMaxDist']):
             glintList.append(candA)
 
-#run through the remaining glints, keeping those that are close to the pupil candidates.
+#run through the remaining glints, keeping those that are 
+#close to the pupil candidates.
 for glintCand in glintList:
         for pupCand in pupils:
-            if(Distance(glintCand[0],pupCand[0])>sliderVals['glint&pubMINDist'] and Distance(glintCand[0],pupCand[0])<sliderVals['glint&pubMAXDist']):
+            if(Distance(glintCand[0],pupCand[0])>
+            sliderVals['glint&pubMINDist'] and 
+            Distance(glintCand[0],pupCand[0])<
+            sliderVals['glint&pubMAXDist']):
                 glintList1.append(glintCand)
 
-#run through the pupil candidates keeping those that are close to the fina glints list
+#run through the pupil candidates keeping those that are close to 
+#the fina glints list
 for candP in pupils:
     for glintCand in glintList1:
-        if(Distance(candP[0],glintCand[0])>sliderVals['glint&pubMINDist'] and Distance(candP[0],glintCand[0])<sliderVals['glint&pubMAXDist']):
+        if(Distance(candP[0],glintCand[0])>
+        sliderVals['glint&pubMINDist'] and 
+        Distance(candP[0],glintCand[0])<
+        sliderVals['glint&pubMAXDist']):
             pupilList.append(candP)
 
 #sort out the pupils too far away from the found glints.
