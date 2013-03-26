@@ -3,7 +3,7 @@
 \subsection{Overall rationale and theory}
 Extending on the previously described means of detecting the pupil, image
 intensity gradients provide a method for finding the edge between pupil and
-iris, as well as the limbus (the edge between iris and sclera).The problem of
+iris, as well as the limbus (the edge between iris and sclera). The problem of
 finding edges in an image can be reduced to the problem of finding high
 magnitudes in the image's gradients.
 In practice:
@@ -14,6 +14,18 @@ In practice:
 original image.
 \end{itemize}
 
+\label{iristhresh}
+\begin{figure}[htbp]
+%\centering
+\includegraphics{pics/iris_threshold.png}
+\caption{An attempt at using binary thresholding to locate the iris.
+while the iris is not a continuous blob, it is starting to converge with the sclera.}
+\end{figure}
+
+This solution is explored partly as an alternative to finding the limbus via
+thresholding. \ref{iristhresh}, illustrates the difficulty of finding a good threshold for the iris. 
+
+
 \begin{figure}[htbp]
 %\centering
 \includegraphics{pics/normallines_with_maxima_vs_gradient.png}
@@ -22,7 +34,7 @@ lines (here, 2 per line). The white circle is the initial estimate of the
 pupils location. \textbf{Right:} The set of gradient magnitudes represented as an image.}
 \end{figure}
 
-\subsubsection{Using gradient magnitudes}
+\subsection{Using gradient magnitudes}
 A bilateral filter was chosen for noise reduction. In contrast to blurs like
 gaussian filters, bilateral filters weigh the inputs according to both
 euclidean distance to the output pixel, and the intensities in the source
@@ -38,13 +50,15 @@ image. That is; the rate of change in intensity in a specific pixel. An
 ''edge'' is a continuous path of high gradient magnitudes. The gradient
 magnitude in the point $(i,j)$ is found by $$\sqrt{x^2+y^2}$$ where $$x =
 \frac{\delta z}{\delta i}, \quad y = \frac{\delta z}{\delta j}$$ and $z$
-denotes pixel intensity. The scanned lines are chosen as the normals of a
+denotes pixel intensity. 
+
+The scanned lines are chosen as the normals of a
 previously found estimate of pupil, here scaled to 4.5 times the estimate’s
 radius, and spaced with 0.314 radians. In principle this method should provide
 20 points on the periphery of the pupil, and should be extensible to finding
 the limbus. In practice, however, a few problems might arise.
 
-\subsubsection{Using gradient orientation}
+\subsection{Using gradient orientation}
 When examining the above two images of the eye, it becomes obvious that the
 pupils edge might not be have the highest gradient magnitude. For example, the
 eyelashes and glints might give a larger intensity change, than the
@@ -64,13 +78,9 @@ the atan2 operator proves to be heavy enough that it became necessary to reduce
 the size of the input image. As this method assumes a previous estimate of the
 pupil’s location, it might be preferable to select an image patch around the
 eye, rather than actually downsampling the input image. Though the latter will
-be less robust to change in eye size or distance to the camera. The described
-method is applicable to limbus detection, but in practice the iris is much
-harder to detect. This is probably due to the smaller contrast between iris and
-sclera, as well as to the edge between them being ‘jagged’ (this is most
-visible in the right side of iris in the above gradient image).
+be less robust to change in eye size or distance to the camera.
 
-%In the current
-%configuration, the provided code does not do limbus detection as it turns out
-%to require a lot of tweaking.The theory applied should, however, be applicable
-%for limbus detection.
+The described method is applicable to limbus detection, but in practice the
+iris is much harder to detect. This is probably due to the smaller contrast
+between iris and sclera, as well as to the edge between them being ‘jagged’
+(this is most visible in the right side of iris in the above gradient image).
