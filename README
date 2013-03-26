@@ -1,0 +1,12 @@
+Hello,
+
+In this .zip you'll find our implementation of assignment1 in Assignment1.py
+
+At the top of the file there is an section for settings which impacts performance. 
+Toggling these from true to false will disable features they represent (k-means, gradient weighting and hough transform). 
+It will however also speed up the program severely
+
+In sequences we've included only one default test sequence. 
+We trust that you have more to try out the program with without damaging learnit servers further
+
+In Recorded Results we've recorded some test runs of the program
