@@ -14,16 +14,16 @@ In practice:
 original image.
 \end{itemize}
 
-\label{iristhresh}
 \begin{figure}[htbp]
 %\centering
 \includegraphics{pics/iris_threshold.png}
 \caption{An attempt at using binary thresholding to locate the iris.
 while the iris is not a continuous blob, it is starting to converge with the sclera.}
+\label{fig:iristhresh}
 \end{figure}
 
 This solution is explored partly as an alternative to finding the limbus via
-thresholding. \ref{iristhresh}, illustrates the difficulty of finding a good threshold for the iris. 
+thresholding. Figure \ref{fig:iristhresh}, illustrates the difficulty of finding a good threshold for the iris. 
 
 
 \begin{figure}[htbp]
@@ -32,11 +32,12 @@ thresholding. \ref{iristhresh}, illustrates the difficulty of finding a good thr
 \caption{\textbf{Left:} Black dots are the highest gradient magnitudes found on the grey
 lines (here, 2 per line). The white circle is the initial estimate of the
 pupils location. \textbf{Right:} The set of gradient magnitudes represented as an image.}
+\label{fig:normalsVsGradient}
 \end{figure}
 
 \subsection{Using gradient magnitudes}
 A bilateral filter was chosen for noise reduction. In contrast to blurs like
-gaussian filters, bilateral filters weigh the inputs according to both
+Gaussian filters, bilateral filters weigh the inputs according to both
 euclidean distance to the output pixel, and the intensities in the source
 patch. The consideration of intensity differences makes bilateral filters edge
 preserving which, not surprisingly, is crucial for edge detection.
@@ -59,12 +60,12 @@ radius, and spaced with 0.314 radians. In principle this method should provide
 the limbus. In practice, however, a few problems might arise.
 
 \subsection{Using gradient orientation}
-When examining the above two images of the eye, it becomes obvious that the
+When examining figure \ref{fig:normalsVsGradient}, it becomes obvious that the
 pupils edge might not be have the highest gradient magnitude. For example, the
 eyelashes and glints might give a larger intensity change, than the
 black-to-grey change between pupil and iris.Luckily this problem can be
 bettered using information already available, namely the image gradients’
-orientations. By considering the gradient’s angle to the pupil normal, some of
+orientations. By considering the gradients angle to the pupil normal, some of
 the high gradients can be discarded. This works on the assumption that the
 pupil is fairly circular, and that estimated pupil location is somewhat
 correct. Thus, the angle between normal and gradient on the pupil edge will be
@@ -77,7 +78,7 @@ The use of gradient orientation presents a new problem; performance. The use of
 the atan2 operator proves to be heavy enough that it became necessary to reduce
 the size of the input image. As this method assumes a previous estimate of the
 pupil’s location, it might be preferable to select an image patch around the
-eye, rather than actually downsampling the input image. Though the latter will
+eye, rather than actually down sampling the input image. Though the latter will
 be less robust to change in eye size or distance to the camera.
 
 The described method is applicable to limbus detection, but in practice the
